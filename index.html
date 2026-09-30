@@ -1066,7 +1066,7 @@
 
   </style>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
 
 </head>
@@ -1309,6 +1309,19 @@
     const ACTIVE_CHAT_KEY = "faynex_active_chat_v2";
     const OLD_STORAGE_KEY = "faynex_current_conversation_v1";
 
+    window.addEventListener("error", event => {
+      console.error("FAYNEX frontend error:", event.error || event.message);
+      const text = String(event?.message || "");
+      if (text) {
+        const toastEl = document.getElementById("toast");
+        if (toastEl) {
+          toastEl.textContent = "FAYNEX frontend error. Please refresh the page.";
+          toastEl.classList.add("show");
+          setTimeout(() => toastEl.classList.remove("show"), 3500);
+        }
+      }
+    });
+
     let conversations = [];
     let activeConversationId = null;
 
@@ -1500,10 +1513,21 @@
       });
     }
 
-    marked.setOptions({
-      gfm: true,
-      breaks: true
-    });
+    /* =========================
+       MARKDOWN ENGINE
+       Keep the app usable even if the CDN is temporarily unavailable.
+    ========================== */
+
+    const HAS_MARKED =
+      typeof window.marked !== "undefined" &&
+      typeof window.marked.parse === "function";
+
+    if (HAS_MARKED && typeof window.marked.setOptions === "function") {
+      window.marked.setOptions({
+        gfm: true,
+        breaks: true
+      });
+    }
 
     function escapeHtml(text) {
       const div = document.createElement("div");
@@ -1512,10 +1536,33 @@
     }
 
     function renderMarkdown(text) {
-      const rawHtml = marked.parse(text || "");
-      return DOMPurify.sanitize(rawHtml, {
-        USE_PROFILES: { html: true }
-      });
+      const source = String(text || "");
+
+      let rawHtml;
+
+      if (
+        typeof window.marked !== "undefined" &&
+        typeof window.marked.parse === "function"
+      ) {
+        rawHtml = window.marked.parse(source);
+      } else {
+        // Safe plain-text fallback. The chat remains functional even
+        // when the Markdown CDN cannot be reached.
+        rawHtml = escapeHtml(source)
+          .replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>")
+          .replace(/\n/g, "<br>");
+      }
+
+      if (
+        typeof window.DOMPurify !== "undefined" &&
+        typeof window.DOMPurify.sanitize === "function"
+      ) {
+        return window.DOMPurify.sanitize(rawHtml, {
+          USE_PROFILES: { html: true }
+        });
+      }
+
+      return rawHtml;
     }
 
     function scrollToBottom(smooth = false) {
