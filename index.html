@@ -1,1117 +1,1427 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>FAYNEX AI</title>
-  <meta
-    name="description"
-    content="FAYNEX AI — Next-Generation Intelligence"
-  />
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --bg: #06070b;
-      --panel: #0b0d13;
-      --panel-2: #10131b;
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #f5f7fb;
-      --muted: #858b9a;
-      --accent: #8b5cf6;
-      --accent-2: #6366f1;
-      --danger: #ef4444;
-    }
-
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(
-          circle at 50% -10%,
-          rgba(99, 102, 241, 0.18),
-          transparent 35%
-        ),
-        radial-gradient(
-          circle at 0% 100%,
-          rgba(139, 92, 246, 0.08),
-          transparent 30%
-        ),
-        var(--bg);
-      color: var(--text);
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-      overflow: hidden;
-    }
-
-    button,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-    }
-
-    /* =========================
-       APP
-    ========================= */
-
-    .app {
-      height: 100vh;
-      display: flex;
-      position: relative;
-    }
-
-    /* =========================
-       SIDEBAR
-    ========================= */
-
-    .sidebar {
-      width: 270px;
-      height: 100vh;
-      background: rgba(8, 10, 15, 0.92);
-      border-right: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      display: flex;
-      flex-direction: column;
-      padding: 22px 16px;
-      z-index: 20;
-      transition: transform 0.3s ease;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 4px 8px 25px;
-    }
-
-    .brand-logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background:
-        linear-gradient(135deg, var(--accent), var(--accent-2));
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      font-weight: 800;
-      box-shadow:
-        0 0 25px rgba(99, 102, 241, 0.35);
-    }
-
-    .brand-name {
-      font-size: 19px;
-      font-weight: 750;
-      letter-spacing: 0.5px;
-    }
-
-    .brand-subtitle {
-      color: var(--muted);
-      font-size: 10px;
-      margin-top: 2px;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-    }
-
-    .new-chat {
-      width: 100%;
-      padding: 13px 15px;
-      border-radius: 12px;
-      color: white;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(139, 92, 246, 0.95),
-          rgba(99, 102, 241, 0.95)
-        );
-      font-weight: 650;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
-      transition: 0.2s ease;
-    }
-
-    .new-chat:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 35px rgba(99, 102, 241, 0.3);
-    }
-
-    .sidebar-section {
-      margin-top: 28px;
-    }
-
-    .section-title {
-      color: #686e7c;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      padding: 0 10px 10px;
-    }
-
-    .nav-item {
-      width: 100%;
-      padding: 11px 12px;
-      background: transparent;
-      color: #a9aebb;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      text-align: left;
-      margin-bottom: 3px;
-      transition: 0.2s ease;
-    }
-
-    .nav-item:hover {
-      background: rgba(255, 255, 255, 0.045);
-      color: white;
-    }
-
-    .nav-icon {
-      width: 20px;
-      text-align: center;
-      opacity: 0.9;
-    }
-
-    .recent {
-      margin-top: 8px;
-      overflow: hidden;
-    }
-
-    .recent-item {
-      color: #777e8e;
-      font-size: 12px;
-      padding: 9px 11px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      border-radius: 8px;
-    }
-
-    .recent-item:hover {
-      background: rgba(255, 255, 255, 0.035);
-      color: #bfc4cf;
-    }
-
-    .sidebar-bottom {
-      margin-top: auto;
-    }
-
-    .status-card {
-      padding: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.025);
-      border-radius: 12px;
-    }
-
-    .status-line {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #aeb4c1;
-      font-size: 11px;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      background: #22c55e;
-      border-radius: 50%;
-      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
-    }
-
-    /* =========================
-       MAIN
-    ========================= */
-
-    .main {
-      flex: 1;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .topbar {
-      height: 70px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 26px;
-      background: rgba(6, 7, 11, 0.65);
-      backdrop-filter: blur(18px);
-    }
-
-    .model-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .model-orb {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 14px rgba(139, 92, 246, 0.9);
-    }
-
-    .model-name {
-      font-size: 13px;
-      font-weight: 650;
-    }
-
-    .model-state {
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 7px;
-    }
-
-    .icon-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: transparent;
-      color: #8e95a4;
-      display: grid;
-      place-items: center;
-      font-size: 16px;
-      transition: 0.2s ease;
-    }
-
-    .icon-btn:hover {
-      background: rgba(255, 255, 255, 0.06);
-      color: white;
-    }
-
-    .mobile-menu {
-      display: none;
-    }
-
-    /* =========================
-       CHAT
-    ========================= */
-
-    .chat-area {
-      flex: 1;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
-
-    .chat-area::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .chat-area::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-    }
-
-    .welcome {
-      min-height: calc(100vh - 220px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 20px;
-      text-align: center;
-    }
-
-    .welcome-orb {
-      width: 76px;
-      height: 76px;
-      border-radius: 24px;
-      background:
-        radial-gradient(
-          circle at 30% 25%,
-          #c4b5fd,
-          transparent 20%
-        ),
-        linear-gradient(
-          135deg,
-          #7c3aed,
-          #4f46e5
-        );
-      display: grid;
-      place-items: center;
-      font-size: 27px;
-      font-weight: 850;
-      box-shadow:
-        0 0 55px rgba(99, 102, 241, 0.3);
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-7px);
-      }
-    }
-
-    .welcome h1 {
-      margin-top: 26px;
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1.05;
-      letter-spacing: -1.8px;
-    }
-
-    .gradient-text {
-      background:
-        linear-gradient(
-          90deg,
-          #ffffff,
-          #a78bfa,
-          #818cf8
-        );
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .welcome p {
-      max-width: 580px;
-      margin-top: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .suggestions {
-      width: min(760px, 100%);
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 32px;
-    }
-
-    .suggestion {
-      text-align: left;
-      padding: 15px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.025);
-      color: #b6bbc7;
-      border-radius: 13px;
-      transition: 0.2s ease;
-    }
-
-    .suggestion:hover {
-      border-color: rgba(139, 92, 246, 0.35);
-      background: rgba(139, 92, 246, 0.06);
-      transform: translateY(-1px);
-    }
-
-    .suggestion strong {
-      display: block;
-      color: #e8eaf0;
-      font-size: 12px;
-      margin-bottom: 5px;
-    }
-
-    .suggestion span {
-      font-size: 11px;
-      color: #727988;
-    }
-
-    /* =========================
-       MESSAGES
-    ========================= */
-
-    .messages {
-      width: min(900px, 100%);
-      margin: 0 auto;
-      padding: 35px 20px 150px;
-    }
-
-    .message {
-      display: flex;
-      gap: 13px;
-      margin-bottom: 28px;
-      animation: messageIn 0.25s ease;
-    }
-
-    @keyframes messageIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .avatar {
-      flex: 0 0 34px;
-      width: 34px;
-      height: 34px;
-      border-radius: 11px;
-      display: grid;
-      place-items: center;
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .avatar.user {
-      background: #20242f;
-      color: #d5d9e2;
-    }
-
-    .avatar.ai {
-      background:
-        linear-gradient(
-          135deg,
-          #7c3aed,
-          #4f46e5
-        );
-      color: white;
-    }
-
-    .message-content {
-      min-width: 0;
-      padding-top: 4px;
-    }
-
-    .message-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #9ca2af;
-      margin-bottom: 7px;
-    }
-
-    .message-text {
-      color: #d9dce4;
-      font-size: 14px;
-      line-height: 1.75;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    /* =========================
-       COMPOSER
-    ========================= */
-
-    .composer-wrap {
-      position: absolute;
-      left: 270px;
-      right: 0;
-      bottom: 0;
-      padding: 18px 24px 22px;
-      background:
-        linear-gradient(
-          to top,
-          rgba(6, 7, 11, 1) 55%,
-          rgba(6, 7, 11, 0)
-        );
-    }
-
-    .composer {
-      width: min(850px, 100%);
-      margin: auto;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(13, 15, 22, 0.92);
-      backdrop-filter: blur(20px);
-      border-radius: 18px;
-      padding: 11px;
-      box-shadow:
-        0 15px 50px rgba(0, 0, 0, 0.35);
-    }
-
-    .composer textarea {
-      width: 100%;
-      resize: none;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      color: white;
-      padding: 8px 10px;
-      min-height: 44px;
-      max-height: 150px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .composer textarea::placeholder {
-      color: #626978;
-    }
-
-    .composer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 3px 3px 2px;
-    }
-
-    .composer-tools {
-      display: flex;
-      gap: 3px;
-    }
-
-    .tool-btn {
-      width: 35px;
-      height: 35px;
-      border-radius: 9px;
-      background: transparent;
-      color: #7e8594;
-      display: grid;
-      place-items: center;
-      transition: 0.2s ease;
-    }
-
-    .tool-btn:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .send-btn {
-      width: 39px;
-      height: 39px;
-      border-radius: 11px;
-      background:
-        linear-gradient(
-          135deg,
-          #8b5cf6,
-          #6366f1
-        );
-      color: white;
-      display: grid;
-      place-items: center;
-      font-size: 16px;
-      transition: 0.2s ease;
-      box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
-    }
-
-    .send-btn:hover {
-      transform: scale(1.04);
-      box-shadow: 0 7px 25px rgba(99, 102, 241, 0.4);
-    }
-
-    .disclaimer {
-      text-align: center;
-      color: #505664;
-      font-size: 9px;
-      margin-top: 9px;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 800px) {
-      .sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        transform: translateX(-100%);
-        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
-      }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-
-      .mobile-menu {
-        display: grid;
-      }
-
-      .topbar {
-        padding: 0 15px;
-      }
-
-      .composer-wrap {
-        left: 0;
-        padding: 12px 12px 15px;
-      }
-
-      .welcome {
-        min-height: calc(100vh - 190px);
-      }
-
-      .suggestions {
-        grid-template-columns: 1fr;
-      }
-
-      .welcome h1 {
-        font-size: 34px;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .model-state {
-        display: none;
-      }
-
-      .top-actions .icon-btn:nth-child(2) {
-        display: none;
-      }
-
-      .welcome {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
-
-      .welcome-orb {
-        width: 65px;
-        height: 65px;
-        border-radius: 20px;
-      }
-
-      .welcome p {
-        font-size: 13px;
-      }
-
-      .messages {
-        padding-left: 13px;
-        padding-right: 13px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FAYNEX AI</title>
+<meta name="description" content="FAYNEX AI — Next-Generation Intelligence">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+--bg:#06070b;
+--panel:#0b0d13;
+--panel2:#10131b;
+--border:rgba(255,255,255,.08);
+--text:#f5f7fb;
+--muted:#858b9a;
+--accent:#8b5cf6;
+--accent2:#6366f1;
+}
+
+body{
+min-height:100vh;
+background:
+radial-gradient(circle at 50% -10%,rgba(99,102,241,.18),transparent 35%),
+radial-gradient(circle at 0% 100%,rgba(139,92,246,.08),transparent 30%),
+var(--bg);
+color:var(--text);
+font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+overflow:hidden;
+}
+
+button,textarea{font:inherit}
+button{border:0;cursor:pointer}
+
+.app{
+height:100vh;
+display:flex;
+position:relative;
+}
+
+.sidebar{
+width:270px;
+height:100vh;
+background:rgba(8,10,15,.92);
+border-right:1px solid var(--border);
+backdrop-filter:blur(20px);
+display:flex;
+flex-direction:column;
+padding:22px 16px;
+z-index:20;
+transition:transform .3s ease;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+padding:4px 8px 25px;
+}
+
+.brand-logo{
+width:38px;
+height:38px;
+border-radius:12px;
+background:linear-gradient(135deg,var(--accent),var(--accent2));
+display:grid;
+place-items:center;
+font-size:18px;
+font-weight:800;
+box-shadow:0 0 25px rgba(99,102,241,.35);
+}
+
+.brand-name{
+font-size:19px;
+font-weight:750;
+letter-spacing:.5px;
+}
+
+.brand-subtitle{
+color:var(--muted);
+font-size:10px;
+margin-top:2px;
+letter-spacing:1.2px;
+text-transform:uppercase;
+}
+
+.new-chat{
+width:100%;
+padding:13px 15px;
+border-radius:12px;
+color:white;
+background:linear-gradient(135deg,rgba(139,92,246,.95),rgba(99,102,241,.95));
+font-weight:650;
+display:flex;
+align-items:center;
+gap:10px;
+box-shadow:0 8px 30px rgba(99,102,241,.15);
+transition:.2s ease;
+}
+
+.new-chat:hover{
+transform:translateY(-1px);
+box-shadow:0 10px 35px rgba(99,102,241,.3);
+}
+
+.sidebar-section{margin-top:28px}
+
+.section-title{
+color:#686e7c;
+font-size:10px;
+font-weight:700;
+letter-spacing:1.4px;
+text-transform:uppercase;
+padding:0 10px 10px;
+}
+
+.nav-item{
+width:100%;
+padding:11px 12px;
+background:transparent;
+color:#a9aebb;
+border-radius:10px;
+display:flex;
+align-items:center;
+gap:11px;
+text-align:left;
+margin-bottom:3px;
+transition:.2s ease;
+}
+
+.nav-item:hover{
+background:rgba(255,255,255,.045);
+color:white;
+}
+
+.nav-icon{
+width:20px;
+text-align:center;
+opacity:.9;
+}
+
+.recent{
+margin-top:8px;
+overflow:hidden;
+}
+
+.recent-item{
+color:#777e8e;
+font-size:12px;
+padding:9px 11px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+border-radius:8px;
+}
+
+.recent-item:hover{
+background:rgba(255,255,255,.035);
+color:#bfc4cf;
+}
+
+.sidebar-bottom{
+margin-top:auto;
+}
+
+.status-card{
+padding:12px;
+border:1px solid var(--border);
+background:rgba(255,255,255,.025);
+border-radius:12px;
+}
+
+.status-line{
+display:flex;
+align-items:center;
+gap:8px;
+color:#aeb4c1;
+font-size:11px;
+}
+
+.status-dot{
+width:7px;
+height:7px;
+background:#22c55e;
+border-radius:50%;
+box-shadow:0 0 10px rgba(34,197,94,.8);
+}
+
+.main{
+flex:1;
+height:100vh;
+display:flex;
+flex-direction:column;
+min-width:0;
+}
+
+.topbar{
+height:70px;
+border-bottom:1px solid var(--border);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 26px;
+background:rgba(6,7,11,.65);
+backdrop-filter:blur(18px);
+}
+
+.model-info{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.model-orb{
+width:9px;
+height:9px;
+border-radius:50%;
+background:var(--accent);
+box-shadow:0 0 14px rgba(139,92,246,.9);
+}
+
+.model-name{
+font-size:13px;
+font-weight:650;
+}
+
+.model-state{
+color:var(--muted);
+font-size:11px;
+}
+
+.top-actions{
+display:flex;
+gap:7px;
+}
+
+.icon-btn{
+width:38px;
+height:38px;
+border-radius:10px;
+background:transparent;
+color:#8e95a4;
+display:grid;
+place-items:center;
+font-size:16px;
+transition:.2s ease;
+}
+
+.icon-btn:hover{
+background:rgba(255,255,255,.06);
+color:white;
+}
+
+.mobile-menu{display:none}
+
+.chat-area{
+flex:1;
+overflow-y:auto;
+scroll-behavior:smooth;
+}
+
+.chat-area::-webkit-scrollbar{width:6px}
+
+.chat-area::-webkit-scrollbar-thumb{
+background:rgba(255,255,255,.08);
+border-radius:20px;
+}
+
+.welcome{
+min-height:calc(100vh - 220px);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:30px 20px;
+text-align:center;
+}
+
+.welcome-orb{
+width:76px;
+height:76px;
+border-radius:24px;
+background:
+radial-gradient(circle at 30% 25%,#c4b5fd,transparent 20%),
+linear-gradient(135deg,#7c3aed,#4f46e5);
+display:grid;
+place-items:center;
+font-size:27px;
+font-weight:850;
+box-shadow:0 0 55px rgba(99,102,241,.3);
+animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-7px)}
+}
+
+.welcome h1{
+margin-top:26px;
+font-size:clamp(30px,5vw,48px);
+line-height:1.05;
+letter-spacing:-1.8px;
+}
+
+.gradient-text{
+background:linear-gradient(90deg,#fff,#a78bfa,#818cf8);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+}
+
+.welcome p{
+max-width:580px;
+margin-top:14px;
+color:var(--muted);
+line-height:1.7;
+font-size:14px;
+}
+
+.suggestions{
+width:min(760px,100%);
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin-top:32px;
+}
+
+.suggestion{
+text-align:left;
+padding:15px;
+border:1px solid var(--border);
+background:rgba(255,255,255,.025);
+color:#b6bbc7;
+border-radius:13px;
+transition:.2s ease;
+}
+
+.suggestion:hover{
+border-color:rgba(139,92,246,.35);
+background:rgba(139,92,246,.06);
+transform:translateY(-1px);
+}
+
+.suggestion strong{
+display:block;
+color:#e8eaf0;
+font-size:12px;
+margin-bottom:5px;
+}
+
+.suggestion span{
+font-size:11px;
+color:#727988;
+}
+
+.messages{
+width:min(900px,100%);
+margin:0 auto;
+padding:35px 20px 150px;
+}
+
+.message{
+display:flex;
+gap:13px;
+margin-bottom:28px;
+animation:messageIn .25s ease;
+}
+
+@keyframes messageIn{
+from{opacity:0;transform:translateY(6px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.avatar{
+flex:0 0 34px;
+width:34px;
+height:34px;
+border-radius:11px;
+display:grid;
+place-items:center;
+font-size:11px;
+font-weight:800;
+}
+
+.avatar.user{
+background:#20242f;
+color:#d5d9e2;
+}
+
+.avatar.ai{
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+color:white;
+}
+
+.message-content{
+min-width:0;
+padding-top:4px;
+}
+
+.message-label{
+font-size:11px;
+font-weight:700;
+color:#9ca2af;
+margin-bottom:7px;
+}
+
+.message-text{
+color:#d9dce4;
+font-size:14px;
+line-height:1.75;
+white-space:pre-wrap;
+word-break:break-word;
+}
+
+.composer-wrap{
+position:absolute;
+left:270px;
+right:0;
+bottom:0;
+padding:18px 24px 22px;
+background:linear-gradient(to top,rgba(6,7,11,1) 55%,rgba(6,7,11,0));
+}
+
+.composer{
+width:min(850px,100%);
+margin:auto;
+border:1px solid rgba(255,255,255,.1);
+background:rgba(13,15,22,.92);
+backdrop-filter:blur(20px);
+border-radius:18px;
+padding:11px;
+box-shadow:0 15px 50px rgba(0,0,0,.35);
+}
+
+.composer textarea{
+width:100%;
+resize:none;
+border:0;
+outline:0;
+background:transparent;
+color:white;
+padding:8px 10px;
+min-height:44px;
+max-height:150px;
+font-size:14px;
+line-height:1.5;
+}
+
+.composer textarea::placeholder{
+color:#626978;
+}
+
+.composer-bottom{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:3px 3px 2px;
+}
+
+.composer-tools{
+display:flex;
+gap:3px;
+}
+
+.tool-btn{
+width:35px;
+height:35px;
+border-radius:9px;
+background:transparent;
+color:#7e8594;
+display:grid;
+place-items:center;
+transition:.2s ease;
+}
+
+.tool-btn:hover{
+color:white;
+background:rgba(255,255,255,.06);
+}
+
+.send-btn{
+width:39px;
+height:39px;
+border-radius:11px;
+background:linear-gradient(135deg,#8b5cf6,#6366f1);
+color:white;
+display:grid;
+place-items:center;
+font-size:16px;
+transition:.2s ease;
+box-shadow:0 5px 20px rgba(99,102,241,.2);
+}
+
+.send-btn:hover{
+transform:scale(1.04);
+box-shadow:0 7px 25px rgba(99,102,241,.4);
+}
+
+.send-btn:disabled{
+transform:none;
+}
+
+.disclaimer{
+text-align:center;
+color:#505664;
+font-size:9px;
+margin-top:9px;
+}
+
+@media(max-width:800px){
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+transform:translateX(-100%);
+box-shadow:20px 0 50px rgba(0,0,0,.5);
+}
+
+.sidebar.open{
+transform:translateX(0);
+}
+
+.mobile-menu{
+display:grid;
+}
+
+.topbar{
+padding:0 15px;
+}
+
+.composer-wrap{
+left:0;
+padding:12px 12px 15px;
+}
+
+.welcome{
+min-height:calc(100vh - 190px);
+}
+
+.suggestions{
+grid-template-columns:1fr;
+}
+
+.welcome h1{
+font-size:34px;
+}
+}
+
+@media(max-width:500px){
+
+.model-state{
+display:none;
+}
+
+.top-actions .icon-btn:nth-child(2){
+display:none;
+}
+
+.welcome{
+padding-left:15px;
+padding-right:15px;
+}
+
+.welcome-orb{
+width:65px;
+height:65px;
+border-radius:20px;
+}
+
+.welcome p{
+font-size:13px;
+}
+
+.messages{
+padding-left:13px;
+padding-right:13px;
+}
+
+.composer{
+border-radius:15px;
+}
+
+}
+</style>
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
 
-    <aside class="sidebar" id="sidebar">
+<div class="brand">
+<div class="brand-logo">F</div>
 
-      <div class="brand">
-        <div class="brand-logo">F</div>
+<div>
+<div class="brand-name">FAYNEX</div>
+<div class="brand-subtitle">Next-Generation Intelligence</div>
+</div>
+</div>
 
-        <div>
-          <div class="brand-name">FAYNEX</div>
-          <div class="brand-subtitle">Next-Generation Intelligence</div>
-        </div>
-      </div>
+<button class="new-chat" id="newChatBtn">
+<span>＋</span>
+<span>New conversation</span>
+</button>
 
-      <button class="new-chat" id="newChatBtn">
-        <span>＋</span>
-        <span>New conversation</span>
-      </button>
+<div class="sidebar-section">
 
-      <div class="sidebar-section">
+<div class="section-title">Workspace</div>
 
-        <div class="section-title">Workspace</div>
+<button class="nav-item">
+<span class="nav-icon">⌂</span>
+<span>Home</span>
+</button>
 
-        <button class="nav-item">
-          <span class="nav-icon">⌂</span>
-          <span>Home</span>
-        </button>
+<button class="nav-item">
+<span class="nav-icon">◉</span>
+<span>Explore</span>
+</button>
 
-        <button class="nav-item">
-          <span class="nav-icon">◉</span>
-          <span>Explore</span>
-        </button>
+<button class="nav-item">
+<span class="nav-icon">⌕</span>
+<span>Search chats</span>
+</button>
 
-        <button class="nav-item">
-          <span class="nav-icon">⌕</span>
-          <span>Search chats</span>
-        </button>
+</div>
 
-      </div>
+<div class="sidebar-section recent">
 
-      <div class="sidebar-section recent">
+<div class="section-title">Recent</div>
 
-        <div class="section-title">Recent</div>
+<div class="recent-item">Welcome to FAYNEX</div>
+<div class="recent-item">Creative ideas</div>
+<div class="recent-item">New conversation</div>
 
-        <div class="recent-item">
-          Welcome to FAYNEX
-        </div>
+</div>
 
-        <div class="recent-item">
-          Creative ideas
-        </div>
+<div class="sidebar-bottom">
 
-        <div class="recent-item">
-          New conversation
-        </div>
+<div class="status-card">
 
-      </div>
+<div class="status-line">
+<span class="status-dot"></span>
+<span id="systemStatus">FAYNEX systems online</span>
+</div>
 
-      <div class="sidebar-bottom">
+</div>
 
-        <div class="status-card">
-          <div class="status-line">
-            <span class="status-dot"></span>
-            <span>FAYNEX systems online</span>
-          </div>
-        </div>
+<button class="nav-item" style="margin-top:8px">
+<span class="nav-icon">⚙</span>
+<span>Settings</span>
+</button>
 
-        <button class="nav-item" style="margin-top: 8px;">
-          <span class="nav-icon">⚙</span>
-          <span>Settings</span>
-        </button>
+</div>
 
-      </div>
+</aside>
 
-    </aside>
 
+<!-- MAIN -->
+<main class="main">
 
-    <!-- =========================
-         MAIN
-    ========================== -->
+<header class="topbar">
 
-    <main class="main">
+<div class="model-info">
 
-      <header class="topbar">
+<button
+class="icon-btn mobile-menu"
+id="menuBtn"
+aria-label="Open menu">
+☰
+</button>
 
-        <div class="model-info">
+<span class="model-orb"></span>
 
-          <button
-            class="icon-btn mobile-menu"
-            id="menuBtn"
-            aria-label="Open menu"
-          >
-            ☰
-          </button>
+<div>
+<div class="model-name">FAYNEX AI</div>
+<div class="model-state" id="modelState">
+Ready for your command
+</div>
+</div>
 
-          <span class="model-orb"></span>
+</div>
 
-          <div>
-            <div class="model-name">FAYNEX AI</div>
-            <div class="model-state">Ready for your command</div>
-          </div>
+<div class="top-actions">
 
-        </div>
+<button class="icon-btn" title="Search">⌕</button>
+<button class="icon-btn" title="Settings">⚙</button>
+<button class="icon-btn" title="More">⋯</button>
 
-        <div class="top-actions">
+</div>
 
-          <button class="icon-btn" title="Search">
-            ⌕
-          </button>
+</header>
 
-          <button class="icon-btn" title="Settings">
-            ⚙
-          </button>
 
-          <button class="icon-btn" title="More">
-            ⋯
-          </button>
+<!-- CHAT -->
+<section class="chat-area" id="chatArea">
 
-        </div>
+<div class="welcome" id="welcome">
 
-      </header>
+<div class="welcome-orb">F</div>
 
+<h1>
+Meet
+<span class="gradient-text">FAYNEX</span>
+</h1>
 
-      <!-- =========================
-           CHAT AREA
-      ========================== -->
+<p>
+A next-generation AI assistant built to help you
+think, create, learn, code and explore.
+</p>
 
-      <section class="chat-area" id="chatArea">
+<div class="suggestions">
 
-        <div class="welcome" id="welcome">
+<button
+class="suggestion"
+data-prompt="Give me some creative ideas for a modern design project.">
 
-          <div class="welcome-orb">
-            F
-          </div>
+<strong>✦ Create something</strong>
+<span>Generate creative ideas and concepts</span>
 
-          <h1>
-            Meet
-            <span class="gradient-text">
-              FAYNEX
-            </span>
-          </h1>
+</button>
 
-          <p>
-            A next-generation AI assistant built to help you
-            think, create, learn, code and explore.
-          </p>
+<button
+class="suggestion"
+data-prompt="Explain artificial intelligence in a simple way.">
 
-          <div class="suggestions">
+<strong>◈ Learn something</strong>
+<span>Understand complex topics easily</span>
 
-            <button class="suggestion" data-prompt="Give me some creative ideas for a modern design project.">
-              <strong>✦ Create something</strong>
-              <span>Generate creative ideas and concepts</span>
-            </button>
+</button>
 
-            <button class="suggestion" data-prompt="Explain artificial intelligence in a simple way.">
-              <strong>◈ Learn something</strong>
-              <span>Understand complex topics easily</span>
-            </button>
+<button
+class="suggestion"
+data-prompt="Help me write clean and modern HTML and CSS.">
 
-            <button class="suggestion" data-prompt="Help me write clean and modern HTML and CSS.">
-              <strong>⌘ Build with code</strong>
-              <span>Develop websites and applications</span>
-            </button>
+<strong>⌘ Build with code</strong>
+<span>Develop websites and applications</span>
 
-            <button class="suggestion" data-prompt="Give me five useful ideas I can explore today.">
-              <strong>✧ Explore</strong>
-              <span>Discover new possibilities</span>
-            </button>
+</button>
 
-          </div>
+<button
+class="suggestion"
+data-prompt="Give me five useful ideas I can explore today.">
 
-        </div>
+<strong>✧ Explore</strong>
+<span>Discover new possibilities</span>
 
+</button>
 
-        <div class="messages" id="messages"></div>
+</div>
 
-      </section>
+</div>
 
+<div class="messages" id="messages"></div>
 
-      <!-- =========================
-           COMPOSER
-      ========================== -->
+</section>
 
-      <div class="composer-wrap">
 
-        <div class="composer">
+<!-- COMPOSER -->
+<div class="composer-wrap">
 
-          <textarea
-            id="promptInput"
-            rows="1"
-            placeholder="Ask FAYNEX anything..."
-          ></textarea>
+<div class="composer">
 
-          <div class="composer-bottom">
+<textarea
+id="promptInput"
+rows="1"
+placeholder="Ask FAYNEX anything..."
+></textarea>
 
-            <div class="composer-tools">
+<div class="composer-bottom">
 
-              <button class="tool-btn" title="Attach file">
-                ＋
-              </button>
+<div class="composer-tools">
 
-              <button class="tool-btn" title="Voice">
-                ◉
-              </button>
+<button
+class="tool-btn"
+title="Attach file"
+id="attachBtn">
+＋
+</button>
 
-            </div>
+<button
+class="tool-btn"
+title="Voice"
+id="voiceBtn">
+◉
+</button>
 
-            <button
-              class="send-btn"
-              id="sendBtn"
-              title="Send"
-            >
-              ↑
-            </button>
+</div>
 
-          </div>
+<button
+class="send-btn"
+id="sendBtn"
+title="Send">
+↑
+</button>
 
-        </div>
+</div>
 
-        <div class="disclaimer">
-          FAYNEX AI can make mistakes. Verify important information.
-        </div>
+</div>
 
-      </div>
+<div class="disclaimer">
+FAYNEX AI can make mistakes. Verify important information.
+</div>
 
-    </main>
+</div>
 
-  </div>
+</main>
 
+</div>
 
-  <script>
 
-    const input = document.getElementById("promptInput");
-    const sendBtn = document.getElementById("sendBtn");
-    const messages = document.getElementById("messages");
-    const welcome = document.getElementById("welcome");
-    const chatArea = document.getElementById("chatArea");
-    const newChatBtn = document.getElementById("newChatBtn");
-    const menuBtn = document.getElementById("menuBtn");
-    const sidebar = document.getElementById("sidebar");
+<script>
 
-    /* =========================
-       AUTO RESIZE
-    ========================== */
+/* =========================================
+   FAYNEX AI — GEMINI CONNECTION
+========================================= */
 
-    input.addEventListener("input", () => {
-      input.style.height = "auto";
-      input.style.height =
-        Math.min(input.scrollHeight, 150) + "px";
-    });
+const API_URL =
+"https://faynex-ai-api.mf16348011.workers.dev";
 
 
-    /* =========================
-       SEND MESSAGE
-    ========================== */
+/* =========================================
+   ELEMENTS
+========================================= */
 
-    function sendMessage() {
+const input =
+document.getElementById("promptInput");
 
-      const text = input.value.trim();
+const sendBtn =
+document.getElementById("sendBtn");
 
-      if (!text) return;
+const messages =
+document.getElementById("messages");
 
-      welcome.style.display = "none";
+const welcome =
+document.getElementById("welcome");
 
-      addMessage("user", text);
+const chatArea =
+document.getElementById("chatArea");
 
-      input.value = "";
-      input.style.height = "auto";
+const newChatBtn =
+document.getElementById("newChatBtn");
 
-      /*
-        Backend connection will be added later.
-        For now this only demonstrates the UI.
-      */
+const menuBtn =
+document.getElementById("menuBtn");
 
-      setTimeout(() => {
+const sidebar =
+document.getElementById("sidebar");
 
-        addMessage(
-          "ai",
-          "FAYNEX is ready. The AI engine will be connected in the next stage."
-        );
+const systemStatus =
+document.getElementById("systemStatus");
 
-      }, 500);
+const modelState =
+document.getElementById("modelState");
 
-    }
+const attachBtn =
+document.getElementById("attachBtn");
 
+const voiceBtn =
+document.getElementById("voiceBtn");
 
-    /* =========================
-       ADD MESSAGE
-    ========================== */
 
-    function addMessage(type, text) {
+let isGenerating = false;
 
-      const message = document.createElement("div");
 
-      message.className = "message";
+/* =========================================
+   AUTO RESIZE
+========================================= */
 
-      const avatar = document.createElement("div");
+input.addEventListener("input", () => {
 
-      avatar.className =
-        "avatar " + (type === "user" ? "user" : "ai");
+input.style.height = "auto";
 
-      avatar.textContent =
-        type === "user" ? "YOU" : "F";
+input.style.height =
+Math.min(input.scrollHeight,150) + "px";
 
-      const content = document.createElement("div");
+});
 
-      content.className = "message-content";
 
-      const label = document.createElement("div");
+/* =========================================
+   ADD MESSAGE
+========================================= */
 
-      label.className = "message-label";
+function addMessage(type,text){
 
-      label.textContent =
-        type === "user" ? "You" : "FAYNEX";
+const message =
+document.createElement("div");
 
-      const messageText = document.createElement("div");
+message.className = "message";
 
-      messageText.className = "message-text";
 
-      messageText.textContent = text;
+const avatar =
+document.createElement("div");
 
-      content.appendChild(label);
-      content.appendChild(messageText);
+avatar.className =
+"avatar " +
+(type === "user" ? "user" : "ai");
 
-      message.appendChild(avatar);
-      message.appendChild(content);
+avatar.textContent =
+type === "user" ? "YOU" : "F";
 
-      messages.appendChild(message);
 
-      chatArea.scrollTo({
-        top: chatArea.scrollHeight,
-        behavior: "smooth"
-      });
+const content =
+document.createElement("div");
 
-    }
+content.className =
+"message-content";
 
 
-    /* =========================
-       ENTER TO SEND
-    ========================== */
+const label =
+document.createElement("div");
 
-    input.addEventListener("keydown", (event) => {
+label.className =
+"message-label";
 
-      if (
-        event.key === "Enter" &&
-        !event.shiftKey
-      ) {
+label.textContent =
+type === "user" ? "You" : "FAYNEX";
 
-        event.preventDefault();
 
-        sendMessage();
+const messageText =
+document.createElement("div");
 
-      }
+messageText.className =
+"message-text";
 
-    });
+messageText.textContent = text;
 
 
-    sendBtn.addEventListener(
-      "click",
-      sendMessage
-    );
+content.appendChild(label);
 
+content.appendChild(messageText);
 
-    /* =========================
-       SUGGESTIONS
-    ========================== */
+message.appendChild(avatar);
 
-    document
-      .querySelectorAll(".suggestion")
-      .forEach(button => {
+message.appendChild(content);
 
-        button.addEventListener("click", () => {
+messages.appendChild(message);
 
-          input.value =
-            button.dataset.prompt;
 
-          input.dispatchEvent(
-            new Event("input")
-          );
+chatArea.scrollTo({
+top:chatArea.scrollHeight,
+behavior:"smooth"
+});
 
-          input.focus();
 
-        });
+return messageText;
 
-      });
+}
 
 
-    /* =========================
-       NEW CHAT
-    ========================== */
+/* =========================================
+   SEND MESSAGE TO GEMINI
+========================================= */
 
-    newChatBtn.addEventListener("click", () => {
+async function sendMessage(){
 
-      messages.innerHTML = "";
+if(isGenerating)return;
 
-      welcome.style.display = "flex";
 
-      input.value = "";
+const text =
+input.value.trim();
 
-      input.style.height = "auto";
 
-    });
+if(!text)return;
 
 
-    /* =========================
-       MOBILE MENU
-    ========================== */
+isGenerating = true;
 
-    menuBtn.addEventListener("click", () => {
 
-      sidebar.classList.toggle("open");
+/* Hide welcome */
 
-    });
+welcome.style.display = "none";
 
-  </script>
+
+/* Add user message */
+
+addMessage("user",text);
+
+
+/* Clear input */
+
+input.value = "";
+
+input.style.height = "auto";
+
+
+/* Add temporary AI message */
+
+const aiMessage =
+addMessage(
+"ai",
+"FAYNEX is thinking..."
+);
+
+
+/* Disable send */
+
+sendBtn.disabled = true;
+
+sendBtn.style.opacity = "0.5";
+
+sendBtn.style.cursor = "wait";
+
+
+modelState.textContent =
+"Thinking...";
+
+
+try{
+
+const response =
+await fetch(API_URL,{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+message:text
+})
+
+});
+
+
+let data;
+
+try{
+
+data = await response.json();
+
+}catch{
+
+throw new Error(
+"Invalid response received from FAYNEX API."
+);
+
+}
+
+
+/* API error */
+
+if(!response.ok){
+
+throw new Error(
+
+data?.details ||
+data?.error ||
+`API request failed with status ${response.status}.`
+
+);
+
+}
+
+
+/* Empty response */
+
+if(!data?.answer){
+
+throw new Error(
+"FAYNEX received an empty response from Gemini."
+);
+
+}
+
+
+/* Show answer */
+
+aiMessage.textContent =
+data.answer;
+
+
+/* Scroll */
+
+chatArea.scrollTo({
+top:chatArea.scrollHeight,
+behavior:"smooth"
+});
+
+
+modelState.textContent =
+"Ready for your command";
+
+
+}catch(error){
+
+console.error(
+"FAYNEX API error:",
+error
+);
+
+
+aiMessage.textContent =
+"Sorry, I couldn't connect to the FAYNEX AI engine right now.\n\n" +
+"Error: " +
+(error?.message || "Unknown error.");
+
+
+modelState.textContent =
+"Connection error";
+
+
+}finally{
+
+isGenerating = false;
+
+sendBtn.disabled = false;
+
+sendBtn.style.opacity = "1";
+
+sendBtn.style.cursor = "pointer";
+
+input.focus();
+
+}
+
+}
+
+
+/* =========================================
+   ENTER TO SEND
+========================================= */
+
+input.addEventListener(
+"keydown",
+(event)=>{
+
+if(
+event.key === "Enter" &&
+!event.shiftKey
+){
+
+event.preventDefault();
+
+sendMessage();
+
+}
+
+});
+
+
+/* =========================================
+   SEND BUTTON
+========================================= */
+
+sendBtn.addEventListener(
+"click",
+sendMessage
+);
+
+
+/* =========================================
+   SUGGESTIONS
+========================================= */
+
+document
+.querySelectorAll(".suggestion")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+()=>{
+
+input.value =
+button.dataset.prompt;
+
+input.dispatchEvent(
+new Event("input")
+);
+
+input.focus();
+
+});
+
+});
+
+
+/* =========================================
+   NEW CHAT
+========================================= */
+
+newChatBtn.addEventListener(
+"click",
+()=>{
+
+if(isGenerating)return;
+
+messages.innerHTML = "";
+
+welcome.style.display =
+"flex";
+
+input.value = "";
+
+input.style.height =
+"auto";
+
+modelState.textContent =
+"Ready for your command";
+
+input.focus();
+
+});
+
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+menuBtn.addEventListener(
+"click",
+()=>{
+
+sidebar.classList.toggle("open");
+
+});
+
+
+/* =========================================
+   CLOSE MOBILE MENU
+========================================= */
+
+document
+.querySelectorAll(".nav-item")
+.forEach(item=>{
+
+item.addEventListener(
+"click",
+()=>{
+
+if(window.innerWidth <= 800){
+
+sidebar.classList.remove("open");
+
+}
+
+});
+
+});
+
+
+/* =========================================
+   ATTACH BUTTON
+========================================= */
+
+attachBtn.addEventListener(
+"click",
+()=>{
+
+alert(
+"File upload will be connected in the next FAYNEX update."
+);
+
+});
+
+
+/* =========================================
+   VOICE BUTTON
+========================================= */
+
+voiceBtn.addEventListener(
+"click",
+()=>{
+
+if(
+!("webkitSpeechRecognition" in window) &&
+!("SpeechRecognition" in window)
+){
+
+alert(
+"Voice input is not supported in this browser."
+);
+
+return;
+
+}
+
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+
+const recognition =
+new SpeechRecognition();
+
+
+recognition.lang = "en-US";
+
+recognition.interimResults = false;
+
+recognition.continuous = false;
+
+
+voiceBtn.style.color =
+"#8b5cf6";
+
+
+recognition.onstart = ()=>{
+
+modelState.textContent =
+"Listening...";
+
+};
+
+
+recognition.onresult =
+(event)=>{
+
+const transcript =
+event.results[0][0].transcript;
+
+input.value = transcript;
+
+input.dispatchEvent(
+new Event("input")
+);
+
+input.focus();
+
+};
+
+
+recognition.onerror =
+()=>{
+
+modelState.textContent =
+"Voice error";
+
+};
+
+
+recognition.onend =
+()=>{
+
+voiceBtn.style.color = "";
+
+if(!isGenerating){
+
+modelState.textContent =
+"Ready for your command";
+
+}
+
+};
+
+
+recognition.start();
+
+});
+
+
+/* =========================================
+   API HEALTH CHECK
+========================================= */
+
+async function checkFaynexAPI(){
+
+try{
+
+const response =
+await fetch(API_URL);
+
+
+if(!response.ok){
+
+throw new Error(
+"API offline"
+);
+
+}
+
+
+const data =
+await response.json();
+
+
+if(data?.ok){
+
+systemStatus.textContent =
+"FAYNEX systems online";
+
+modelState.textContent =
+"Ready for your command";
+
+}else{
+
+throw new Error(
+"API unavailable"
+);
+
+}
+
+}catch(error){
+
+console.warn(
+"FAYNEX API health check failed:",
+error
+);
+
+systemStatus.textContent =
+"FAYNEX connection unavailable";
+
+modelState.textContent =
+"API unavailable";
+
+}
+
+}
+
+
+/* =========================================
+   START HEALTH CHECK
+========================================= */
+
+checkFaynexAPI();
+
+</script>
 
 </body>
 </html>
