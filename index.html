@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>FAYNEX AI</title>
+
   <meta
     name="description"
     content="FAYNEX AI — Next-Generation Intelligence"
   />
 
-  <!-- Markdown + Sanitizer -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
-
   <style>
+
     * {
       margin: 0;
       padding: 0;
@@ -40,7 +43,9 @@
     }
 
     body {
+
       min-height: 100vh;
+
       background:
         radial-gradient(
           circle at 50% -10%,
@@ -83,8 +88,11 @@
     ========================== */
 
     .app {
+
       height: 100vh;
+
       display: flex;
+
       position: relative;
     }
 
@@ -93,6 +101,7 @@
     ========================== */
 
     .sidebar {
+
       width: 270px;
       height: 100vh;
 
@@ -109,18 +118,23 @@
 
       z-index: 20;
 
-      transition: transform 0.3s ease;
+      transition:
+        transform 0.3s ease;
     }
 
     .brand {
+
       display: flex;
       align-items: center;
+
       gap: 12px;
 
-      padding: 4px 8px 25px;
+      padding:
+        4px 8px 25px;
     }
 
     .brand-logo {
+
       width: 38px;
       height: 38px;
 
@@ -140,29 +154,38 @@
       font-weight: 800;
 
       box-shadow:
-        0 0 25px rgba(99, 102, 241, 0.35);
+        0 0 25px
+        rgba(99, 102, 241, 0.35);
     }
 
     .brand-name {
+
       font-size: 19px;
+
       font-weight: 750;
+
       letter-spacing: 0.5px;
     }
 
     .brand-subtitle {
+
       color: var(--muted);
+
       font-size: 10px;
 
       margin-top: 2px;
 
       letter-spacing: 1.2px;
+
       text-transform: uppercase;
     }
 
     .new-chat {
+
       width: 100%;
 
-      padding: 13px 15px;
+      padding:
+        13px 15px;
 
       border-radius: 12px;
 
@@ -179,42 +202,54 @@
 
       display: flex;
       align-items: center;
+
       gap: 10px;
 
       box-shadow:
-        0 8px 30px rgba(99, 102, 241, 0.15);
+        0 8px 30px
+        rgba(99, 102, 241, 0.15);
 
-      transition: 0.2s ease;
+      transition:
+        0.2s ease;
     }
 
     .new-chat:hover {
-      transform: translateY(-1px);
+
+      transform:
+        translateY(-1px);
 
       box-shadow:
-        0 10px 35px rgba(99, 102, 241, 0.3);
+        0 10px 35px
+        rgba(99, 102, 241, 0.3);
     }
 
     .sidebar-section {
+
       margin-top: 28px;
     }
 
     .section-title {
+
       color: #686e7c;
 
       font-size: 10px;
+
       font-weight: 700;
 
       letter-spacing: 1.4px;
 
       text-transform: uppercase;
 
-      padding: 0 10px 10px;
+      padding:
+        0 10px 10px;
     }
 
     .nav-item {
+
       width: 100%;
 
-      padding: 11px 12px;
+      padding:
+        11px 12px;
 
       background: transparent;
 
@@ -231,31 +266,42 @@
 
       margin-bottom: 3px;
 
-      transition: 0.2s ease;
+      transition:
+        0.2s ease;
     }
 
     .nav-item:hover {
-      background: rgba(255, 255, 255, 0.045);
+
+      background:
+        rgba(255, 255, 255, 0.045);
+
       color: white;
     }
 
     .nav-icon {
+
       width: 20px;
+
       text-align: center;
+
       opacity: 0.9;
     }
 
     .recent {
+
       margin-top: 8px;
+
       overflow: hidden;
     }
 
     .recent-item {
+
       color: #777e8e;
 
       font-size: 12px;
 
-      padding: 9px 11px;
+      padding:
+        9px 11px;
 
       white-space: nowrap;
 
@@ -267,26 +313,35 @@
     }
 
     .recent-item:hover {
-      background: rgba(255, 255, 255, 0.035);
+
+      background:
+        rgba(255, 255, 255, 0.035);
+
       color: #bfc4cf;
     }
 
     .sidebar-bottom {
+
       margin-top: auto;
     }
 
     .status-card {
+
       padding: 12px;
 
-      border: 1px solid var(--border);
+      border:
+        1px solid var(--border);
 
-      background: rgba(255, 255, 255, 0.025);
+      background:
+        rgba(255, 255, 255, 0.025);
 
       border-radius: 12px;
     }
 
     .status-line {
+
       display: flex;
+
       align-items: center;
 
       gap: 8px;
@@ -297,6 +352,7 @@
     }
 
     .status-dot {
+
       width: 7px;
       height: 7px;
 
@@ -305,7 +361,8 @@
       border-radius: 50%;
 
       box-shadow:
-        0 0 10px rgba(34, 197, 94, 0.8);
+        0 0 10px
+        rgba(34, 197, 94, 0.8);
     }
 
     /* =========================
@@ -313,67 +370,92 @@
     ========================== */
 
     .main {
+
       flex: 1;
 
       height: 100vh;
 
       display: flex;
+
       flex-direction: column;
 
       min-width: 0;
     }
 
+    /* =========================
+       TOPBAR
+    ========================== */
+
     .topbar {
+
       height: 70px;
 
-      border-bottom: 1px solid var(--border);
+      border-bottom:
+        1px solid var(--border);
 
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
 
-      padding: 0 26px;
+      padding:
+        0 26px;
 
       background:
         rgba(6, 7, 11, 0.65);
 
-      backdrop-filter: blur(18px);
+      backdrop-filter:
+        blur(18px);
     }
 
     .model-info {
+
       display: flex;
+
       align-items: center;
+
       gap: 10px;
     }
 
     .model-orb {
+
       width: 9px;
       height: 9px;
 
       border-radius: 50%;
 
-      background: var(--accent);
+      background:
+        var(--accent);
 
       box-shadow:
-        0 0 14px rgba(139, 92, 246, 0.9);
+        0 0 14px
+        rgba(139, 92, 246, 0.9);
     }
 
     .model-name {
+
       font-size: 13px;
+
       font-weight: 650;
     }
 
     .model-state {
+
       color: var(--muted);
+
       font-size: 11px;
     }
 
     .top-actions {
+
       display: flex;
+
       gap: 7px;
     }
 
     .icon-btn {
+
       width: 38px;
       height: 38px;
 
@@ -384,27 +466,34 @@
       color: #8e95a4;
 
       display: grid;
+
       place-items: center;
 
       font-size: 16px;
 
-      transition: 0.2s ease;
+      transition:
+        0.2s ease;
     }
 
     .icon-btn:hover {
-      background: rgba(255, 255, 255, 0.06);
+
+      background:
+        rgba(255, 255, 255, 0.06);
+
       color: white;
     }
 
     .mobile-menu {
+
       display: none;
     }
 
     /* =========================
-       CHAT
+       CHAT AREA
     ========================== */
 
     .chat-area {
+
       flex: 1;
 
       overflow-y: auto;
@@ -413,17 +502,26 @@
     }
 
     .chat-area::-webkit-scrollbar {
+
       width: 6px;
     }
 
     .chat-area::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.08);
+
+      background:
+        rgba(255, 255, 255, 0.08);
 
       border-radius: 20px;
     }
 
+    /* =========================
+       WELCOME
+    ========================== */
+
     .welcome {
-      min-height: calc(100vh - 220px);
+
+      min-height:
+        calc(100vh - 220px);
 
       display: flex;
 
@@ -433,23 +531,27 @@
 
       justify-content: center;
 
-      padding: 30px 20px;
+      padding:
+        30px 20px;
 
       text-align: center;
     }
 
     .welcome-orb {
+
       width: 76px;
       height: 76px;
 
       border-radius: 24px;
 
       background:
+
         radial-gradient(
           circle at 30% 25%,
           #c4b5fd,
           transparent 20%
         ),
+
         linear-gradient(
           135deg,
           #7c3aed,
@@ -457,6 +559,7 @@
         );
 
       display: grid;
+
       place-items: center;
 
       font-size: 27px;
@@ -464,35 +567,48 @@
       font-weight: 850;
 
       box-shadow:
-        0 0 55px rgba(99, 102, 241, 0.3);
+        0 0 55px
+        rgba(99, 102, 241, 0.3);
 
       animation:
-        float 4s ease-in-out infinite;
+        float 4s
+        ease-in-out
+        infinite;
     }
 
     @keyframes float {
+
       0%,
       100% {
-        transform: translateY(0);
+        transform:
+          translateY(0);
       }
 
       50% {
-        transform: translateY(-7px);
+        transform:
+          translateY(-7px);
       }
     }
 
     .welcome h1 {
+
       margin-top: 26px;
 
       font-size:
-        clamp(30px, 5vw, 48px);
+        clamp(
+          30px,
+          5vw,
+          48px
+        );
 
       line-height: 1.05;
 
-      letter-spacing: -1.8px;
+      letter-spacing:
+        -1.8px;
     }
 
     .gradient-text {
+
       background:
         linear-gradient(
           90deg,
@@ -501,13 +617,17 @@
           #818cf8
         );
 
-      -webkit-background-clip: text;
-      background-clip: text;
+      -webkit-background-clip:
+        text;
+
+      background-clip:
+        text;
 
       color: transparent;
     }
 
     .welcome p {
+
       max-width: 580px;
 
       margin-top: 14px;
@@ -520,7 +640,12 @@
     }
 
     .suggestions {
-      width: min(760px, 100%);
+
+      width:
+        min(
+          760px,
+          100%
+        );
 
       display: grid;
 
@@ -533,11 +658,13 @@
     }
 
     .suggestion {
+
       text-align: left;
 
       padding: 15px;
 
-      border: 1px solid var(--border);
+      border:
+        1px solid var(--border);
 
       background:
         rgba(255, 255, 255, 0.025);
@@ -546,21 +673,34 @@
 
       border-radius: 13px;
 
-      transition: 0.2s ease;
+      transition:
+        0.2s ease;
     }
 
     .suggestion:hover {
+
       border-color:
-        rgba(139, 92, 246, 0.35);
+        rgba(
+          139,
+          92,
+          246,
+          0.35
+        );
 
       background:
-        rgba(139, 92, 246, 0.06);
+        rgba(
+          139,
+          92,
+          246,
+          0.06
+        );
 
       transform:
         translateY(-1px);
     }
 
     .suggestion strong {
+
       display: block;
 
       color: #e8eaf0;
@@ -571,6 +711,7 @@
     }
 
     .suggestion span {
+
       font-size: 11px;
 
       color: #727988;
@@ -581,15 +722,22 @@
     ========================== */
 
     .messages {
-      width: min(900px, 100%);
 
-      margin: 0 auto;
+      width:
+        min(
+          900px,
+          100%
+        );
+
+      margin:
+        0 auto;
 
       padding:
         35px 20px 150px;
     }
 
     .message {
+
       display: flex;
 
       gap: 13px;
@@ -597,10 +745,12 @@
       margin-bottom: 28px;
 
       animation:
-        messageIn 0.25s ease;
+        messageIn
+        0.25s ease;
     }
 
     @keyframes messageIn {
+
       from {
         opacity: 0;
         transform:
@@ -615,7 +765,9 @@
     }
 
     .avatar {
-      flex: 0 0 34px;
+
+      flex:
+        0 0 34px;
 
       width: 34px;
       height: 34px;
@@ -632,11 +784,16 @@
     }
 
     .avatar.user {
-      background: #20242f;
-      color: #d5d9e2;
+
+      background:
+        #20242f;
+
+      color:
+        #d5d9e2;
     }
 
     .avatar.ai {
+
       background:
         linear-gradient(
           135deg,
@@ -648,14 +805,16 @@
     }
 
     .message-content {
+
       min-width: 0;
 
       padding-top: 4px;
 
-      flex: 1;
+      width: 100%;
     }
 
     .message-label {
+
       font-size: 11px;
 
       font-weight: 700;
@@ -666,256 +825,354 @@
     }
 
     .message-text {
-      color: #d9dce4;
+
+      color:
+        #d9dce4;
 
       font-size: 14px;
 
       line-height: 1.75;
 
-      white-space: pre-wrap;
+      white-space:
+        pre-wrap;
 
-      word-break: break-word;
+      word-break:
+        break-word;
     }
 
     /* =========================
        MARKDOWN
     ========================== */
 
-    .message-text.markdown-body {
-      white-space: normal;
+    .message-text.markdown {
+
+      white-space:
+        normal;
     }
 
-    .markdown-body p {
-      margin: 0 0 14px;
+    .message-text.markdown p {
+
+      margin:
+        0 0 12px;
     }
 
-    .markdown-body p:last-child {
+    .message-text.markdown p:last-child {
+
       margin-bottom: 0;
     }
 
-    .markdown-body strong {
-      color: #ffffff;
-      font-weight: 700;
-    }
+    .message-text.markdown h1,
+    .message-text.markdown h2,
+    .message-text.markdown h3 {
 
-    .markdown-body em {
-      color: #e4e7ef;
-    }
+      color: #f4f5f8;
 
-    .markdown-body h1,
-    .markdown-body h2,
-    .markdown-body h3,
-    .markdown-body h4 {
-      color: #ffffff;
+      margin:
+        18px 0 9px;
 
       line-height: 1.3;
+    }
+
+    .message-text.markdown h1 {
+
+      font-size: 22px;
+    }
+
+    .message-text.markdown h2 {
+
+      font-size: 19px;
+    }
+
+    .message-text.markdown h3 {
+
+      font-size: 16px;
+    }
+
+    .message-text.markdown ul,
+    .message-text.markdown ol {
 
       margin:
-        22px 0 10px;
-
-      letter-spacing: -0.3px;
+        8px 0 12px 22px;
     }
 
-    .markdown-body h1 {
-      font-size: 25px;
-    }
+    .message-text.markdown li {
 
-    .markdown-body h2 {
-      font-size: 21px;
-    }
-
-    .markdown-body h3 {
-      font-size: 17px;
-    }
-
-    .markdown-body ul,
-    .markdown-body ol {
       margin:
-        10px 0 16px 22px;
-
-      padding: 0;
+        4px 0;
     }
 
-    .markdown-body li {
-      margin: 6px 0;
-      padding-left: 3px;
-    }
+    .message-text.markdown blockquote {
 
-    .markdown-body blockquote {
-      margin: 14px 0;
+      margin:
+        12px 0;
 
-      padding: 10px 15px;
+      padding:
+        8px 14px;
 
       border-left:
-        3px solid var(--accent);
+        3px solid
+        #8b5cf6;
+
+      color:
+        #aeb4c2;
 
       background:
-        rgba(139, 92, 246, 0.06);
-
-      color: #b9bfcc;
+        rgba(
+          139,
+          92,
+          246,
+          0.06
+        );
 
       border-radius:
         0 8px 8px 0;
     }
 
-    .markdown-body a {
-      color: #a78bfa;
+    .message-text.markdown a {
 
-      text-decoration: none;
+      color:
+        #a78bfa;
     }
 
-    .markdown-body a:hover {
-      text-decoration: underline;
-    }
+    .message-text.markdown code {
 
-    .markdown-body hr {
-      border: 0;
+      padding:
+        2px 6px;
 
-      border-top:
-        1px solid var(--border);
+      border-radius:
+        6px;
 
-      margin: 20px 0;
-    }
-
-    .markdown-body code {
       background:
-        rgba(255, 255, 255, 0.08);
+        rgba(
+          255,
+          255,
+          255,
+          0.07
+        );
 
-      color: #ddd6fe;
+      color:
+        #ddd6fe;
 
-      padding: 2px 6px;
-
-      border-radius: 6px;
-
-      font-family:
-        "SFMono-Regular",
-        Consolas,
-        "Liberation Mono",
-        monospace;
-
-      font-size: 0.9em;
-    }
-
-    .markdown-body pre {
-      position: relative;
-
-      margin: 16px 0;
-
-      padding: 16px;
-
-      overflow-x: auto;
-
-      background: #090b10;
-
-      border:
-        1px solid rgba(255, 255, 255, 0.08);
-
-      border-radius: 12px;
-    }
-
-    .markdown-body pre code {
-      display: block;
-
-      padding: 0;
-
-      background: transparent;
-
-      color: #e5e7eb;
-
-      font-size: 13px;
-
-      line-height: 1.65;
-
-      white-space: pre;
-    }
-
-    .markdown-body table {
-      width: 100%;
-
-      margin: 16px 0;
-
-      border-collapse: collapse;
-
-      border:
-        1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .markdown-body th,
-    .markdown-body td {
-      padding: 10px 12px;
-
-      text-align: left;
-
-      border:
-        1px solid rgba(255, 255, 255, 0.07);
-    }
-
-    .markdown-body th {
-      background:
-        rgba(139, 92, 246, 0.10);
-
-      color: #ffffff;
-
-      font-weight: 700;
-    }
-
-    .markdown-body td {
-      color: #cbd0db;
-    }
-
-    .markdown-body tr:nth-child(even) td {
-      background:
-        rgba(255, 255, 255, 0.02);
+      font-size:
+        0.92em;
     }
 
     /* =========================
-       CODE COPY
+       CODE BLOCK
     ========================== */
 
-    .code-wrapper {
+    .code-wrap {
+
       position: relative;
 
-      margin: 16px 0;
+      margin:
+        12px 0;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.08
+        );
+
+      border-radius:
+        12px;
+
+      overflow: hidden;
+
+      background:
+        #090b10;
     }
 
-    .code-wrapper pre {
+    .code-wrap pre {
+
       margin: 0;
 
-      padding-top: 42px;
+      padding: 15px;
+
+      overflow-x: auto;
+
+      font-size: 12px;
+
+      line-height: 1.65;
     }
 
-    .copy-code-btn {
+    .code-wrap pre code {
+
+      padding: 0;
+
+      background:
+        transparent;
+
+      color:
+        #e5e7eb;
+
+      white-space:
+        pre;
+    }
+
+    .copy-code {
+
       position: absolute;
 
       top: 8px;
+
       right: 8px;
 
-      z-index: 2;
+      padding:
+        6px 9px;
 
-      padding: 6px 9px;
-
-      border-radius: 7px;
-
-      border:
-        1px solid rgba(255, 255, 255, 0.10);
+      border-radius:
+        7px;
 
       background:
-        rgba(255, 255, 255, 0.06);
+        rgba(
+          255,
+          255,
+          255,
+          0.07
+        );
 
-      color: #aeb4c1;
+      color:
+        #aeb4c2;
 
-      font-size: 10px;
-
-      cursor: pointer;
-
-      transition: 0.2s ease;
+      font-size:
+        10px;
     }
 
-    .copy-code-btn:hover {
-      background:
-        rgba(139, 92, 246, 0.18);
+    .copy-code:hover {
 
-      color: #ffffff;
+      color: white;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.12
+        );
+    }
+
+    /* =========================
+       MESSAGE ACTIONS
+    ========================== */
+
+    .message-actions {
+
+      display: flex;
+
+      gap: 6px;
+
+      margin-top: 10px;
+    }
+
+    .message-action {
+
+      padding:
+        5px 8px;
+
+      border-radius:
+        7px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.04
+        );
+
+      color:
+        #747b8a;
+
+      font-size:
+        10px;
+    }
+
+    .message-action:hover {
+
+      color: white;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.08
+        );
+    }
+
+    /* =========================
+       TYPING
+    ========================== */
+
+    .typing {
+
+      display:
+        inline-flex;
+
+      gap: 4px;
+
+      align-items:
+        center;
+
+      min-height:
+        20px;
+    }
+
+    .typing span {
+
+      width: 5px;
+      height: 5px;
+
+      border-radius:
+        50%;
+
+      background:
+        #8b5cf6;
+
+      animation:
+        typing
+        1s
+        infinite
+        ease-in-out;
+    }
+
+    .typing span:nth-child(2) {
+
+      animation-delay:
+        0.15s;
+    }
+
+    .typing span:nth-child(3) {
+
+      animation-delay:
+        0.30s;
+    }
+
+    @keyframes typing {
+
+      0%,
+      60%,
+      100% {
+
+        transform:
+          translateY(0);
+
+        opacity:
+          0.35;
+      }
+
+      30% {
+
+        transform:
+          translateY(-4px);
+
+        opacity:
+          1;
+      }
     }
 
     /* =========================
@@ -923,6 +1180,7 @@
     ========================== */
 
     .composer-wrap {
+
       position: absolute;
 
       left: 270px;
@@ -941,98 +1199,151 @@
     }
 
     .composer {
-      width: min(850px, 100%);
 
-      margin: auto;
+      width:
+        min(
+          850px,
+          100%
+        );
+
+      margin:
+        auto;
 
       border:
-        1px solid rgba(255, 255, 255, 0.1);
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.1
+        );
 
       background:
-        rgba(13, 15, 22, 0.92);
+        rgba(
+          13,
+          15,
+          22,
+          0.92
+        );
 
       backdrop-filter:
         blur(20px);
 
-      border-radius: 18px;
+      border-radius:
+        18px;
 
-      padding: 11px;
+      padding:
+        11px;
 
       box-shadow:
-        0 15px 50px rgba(0, 0, 0, 0.35);
+        0 15px 50px
+        rgba(
+          0,
+          0,
+          0,
+          0.35
+        );
     }
 
     .composer textarea {
+
       width: 100%;
 
       resize: none;
 
       border: 0;
+
       outline: 0;
 
-      background: transparent;
+      background:
+        transparent;
 
       color: white;
 
-      padding: 8px 10px;
+      padding:
+        8px 10px;
 
-      min-height: 44px;
-      max-height: 150px;
+      min-height:
+        44px;
 
-      font-size: 14px;
+      max-height:
+        150px;
 
-      line-height: 1.5;
+      font-size:
+        14px;
+
+      line-height:
+        1.5;
     }
 
     .composer textarea::placeholder {
-      color: #626978;
+
+      color:
+        #626978;
     }
 
     .composer-bottom {
+
       display: flex;
 
       align-items: center;
 
-      justify-content: space-between;
+      justify-content:
+        space-between;
 
       padding:
         3px 3px 2px;
     }
 
     .composer-tools {
+
       display: flex;
+
       gap: 3px;
     }
 
     .tool-btn {
+
       width: 35px;
       height: 35px;
 
-      border-radius: 9px;
+      border-radius:
+        9px;
 
-      background: transparent;
+      background:
+        transparent;
 
-      color: #7e8594;
+      color:
+        #7e8594;
 
       display: grid;
 
       place-items: center;
 
-      transition: 0.2s ease;
+      transition:
+        0.2s ease;
     }
 
     .tool-btn:hover {
+
       color: white;
 
       background:
-        rgba(255, 255, 255, 0.06);
+        rgba(
+          255,
+          255,
+          255,
+          0.06
+        );
     }
 
     .send-btn {
+
       width: 39px;
       height: 39px;
 
-      border-radius: 11px;
+      border-radius:
+        11px;
 
       background:
         linear-gradient(
@@ -1049,35 +1360,63 @@
 
       font-size: 16px;
 
-      transition: 0.2s ease;
+      transition:
+        0.2s ease;
 
       box-shadow:
-        0 5px 20px rgba(99, 102, 241, 0.2);
+        0 5px 20px
+        rgba(
+          99,
+          102,
+          241,
+          0.2
+        );
     }
 
     .send-btn:hover {
-      transform: scale(1.04);
+
+      transform:
+        scale(1.04);
 
       box-shadow:
-        0 7px 25px rgba(99, 102, 241, 0.4);
+        0 7px 25px
+        rgba(
+          99,
+          102,
+          241,
+          0.4
+        );
     }
 
-    .send-btn:disabled {
-      opacity: 0.55;
+    .send-btn.stop {
 
-      cursor: not-allowed;
+      background:
+        rgba(
+          239,
+          68,
+          68,
+          0.15
+        );
 
-      transform: none;
+      color:
+        #fca5a5;
+
+      box-shadow:
+        none;
     }
 
     .disclaimer {
+
       text-align: center;
 
-      color: #505664;
+      color:
+        #505664;
 
-      font-size: 9px;
+      font-size:
+        9px;
 
-      margin-top: 9px;
+      margin-top:
+        9px;
     }
 
     /* =========================
@@ -1087,6 +1426,7 @@
     @media (max-width: 800px) {
 
       .sidebar {
+
         position: fixed;
 
         left: 0;
@@ -1096,23 +1436,34 @@
           translateX(-100%);
 
         box-shadow:
-          20px 0 50px rgba(0, 0, 0, 0.5);
+          20px 0 50px
+          rgba(
+            0,
+            0,
+            0,
+            0.5
+          );
       }
 
       .sidebar.open {
+
         transform:
           translateX(0);
       }
 
       .mobile-menu {
+
         display: grid;
       }
 
       .topbar {
-        padding: 0 15px;
+
+        padding:
+          0 15px;
       }
 
       .composer-wrap {
+
         left: 0;
 
         padding:
@@ -1120,60 +1471,85 @@
       }
 
       .welcome {
+
         min-height:
-          calc(100vh - 190px);
+          calc(
+            100vh - 190px
+          );
       }
 
       .suggestions {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
       }
 
       .welcome h1 {
-        font-size: 34px;
-      }
 
-      .markdown-body table {
-        display: block;
-
-        overflow-x: auto;
-
-        white-space: nowrap;
+        font-size:
+          34px;
       }
     }
 
     @media (max-width: 500px) {
 
       .model-state {
+
         display: none;
       }
 
       .top-actions
-        .icon-btn:nth-child(2) {
+      .icon-btn:nth-child(2) {
+
         display: none;
       }
 
       .welcome {
-        padding-left: 15px;
-        padding-right: 15px;
+
+        padding-left:
+          15px;
+
+        padding-right:
+          15px;
       }
 
       .welcome-orb {
+
         width: 65px;
         height: 65px;
 
-        border-radius: 20px;
+        border-radius:
+          20px;
       }
 
       .welcome p {
-        font-size: 13px;
+
+        font-size:
+          13px;
       }
 
       .messages {
-        padding-left: 13px;
-        padding-right: 13px;
+
+        padding-left:
+          13px;
+
+        padding-right:
+          13px;
       }
     }
+
   </style>
+
+  <!-- Markdown -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
+  </script>
+
+  <!-- Security for rendered HTML -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js">
+  </script>
+
 </head>
 
 <body>
@@ -1280,16 +1656,13 @@
           Recent
         </div>
 
-
         <div class="recent-item">
           Welcome to FAYNEX
         </div>
 
-
         <div class="recent-item">
           Creative ideas
         </div>
-
 
         <div class="recent-item">
           New conversation
@@ -1306,8 +1679,8 @@
 
             <span class="status-dot"></span>
 
-            <span id="systemStatus">
-              Checking FAYNEX systems...
+            <span id="statusText">
+              Checking FAYNEX...
             </span>
 
           </div>
@@ -1353,9 +1726,7 @@
             ☰
           </button>
 
-
           <span class="model-orb"></span>
-
 
           <div>
 
@@ -1367,7 +1738,7 @@
               class="model-state"
               id="modelState"
             >
-              Connecting to AI engine...
+              Ready for your command
             </div>
 
           </div>
@@ -1384,14 +1755,12 @@
             ⌕
           </button>
 
-
           <button
             class="icon-btn"
             title="Settings"
           >
             ⚙
           </button>
-
 
           <button
             class="icon-btn"
@@ -1406,7 +1775,7 @@
 
 
       <!-- =========================
-           CHAT AREA
+           CHAT
       ========================== -->
 
       <section
@@ -1442,7 +1811,6 @@
 
 
           <div class="suggestions">
-
 
             <button
               class="suggestion"
@@ -1532,21 +1900,17 @@
             id="promptInput"
             rows="1"
             placeholder="Ask FAYNEX anything..."
-            aria-label="Ask FAYNEX anything"
           ></textarea>
 
 
           <div class="composer-bottom">
 
-
             <div class="composer-tools">
-
 
               <button
                 class="tool-btn"
                 id="attachBtn"
                 title="Attach file"
-                type="button"
               >
                 ＋
               </button>
@@ -1556,11 +1920,9 @@
                 class="tool-btn"
                 id="voiceBtn"
                 title="Voice input"
-                type="button"
               >
                 ◉
               </button>
-
 
             </div>
 
@@ -1569,7 +1931,6 @@
               class="send-btn"
               id="sendBtn"
               title="Send"
-              type="button"
             >
               ↑
             </button>
@@ -1580,7 +1941,10 @@
 
 
         <div class="disclaimer">
-          FAYNEX AI can make mistakes. Verify important information.
+
+          FAYNEX AI can make mistakes.
+          Verify important information.
+
         </div>
 
       </div>
@@ -1597,15 +1961,21 @@
   <script>
 
     /* =========================
-       FAYNEX CONFIG
+       CONFIG
     ========================== */
 
     const API_URL =
       "https://faynex-ai-api.mf16348011.workers.dev";
 
+    const STORAGE_KEY =
+      "faynex_current_conversation_v2";
+
+    const RECENT_KEY =
+      "faynex_recent_conversations_v2";
+
 
     /* =========================
-       DOM
+       ELEMENTS
     ========================== */
 
     const input =
@@ -1648,6 +2018,16 @@
         "sidebar"
       );
 
+    const statusText =
+      document.getElementById(
+        "statusText"
+      );
+
+    const modelState =
+      document.getElementById(
+        "modelState"
+      );
+
     const attachBtn =
       document.getElementById(
         "attachBtn"
@@ -1658,63 +2038,32 @@
         "voiceBtn"
       );
 
-    const systemStatus =
-      document.getElementById(
-        "systemStatus"
-      );
 
-    const modelState =
-      document.getElementById(
-        "modelState"
-      );
+    /* =========================
+       STATE
+    ========================== */
 
+    let conversation = [];
 
-    let isSending = false;
+    let isGenerating = false;
+
+    let abortController = null;
+
+    let currentStreamingText = "";
 
 
     /* =========================
-       MARKDOWN CONFIG
+       MARKDOWN
     ========================== */
 
-    if (
-      typeof marked !== "undefined"
-    ) {
+    marked.setOptions({
 
-      marked.setOptions({
+      gfm: true,
 
-        gfm: true,
+      breaks: true
 
-        breaks: true
+    });
 
-      });
-
-    }
-
-
-    /* =========================
-       AUTO RESIZE
-    ========================== */
-
-    input.addEventListener(
-      "input",
-      () => {
-
-        input.style.height =
-          "auto";
-
-        input.style.height =
-          Math.min(
-            input.scrollHeight,
-            150
-          ) + "px";
-
-      }
-    );
-
-
-    /* =========================
-       SAFE MARKDOWN
-    ========================== */
 
     function renderMarkdown(text) {
 
@@ -1722,47 +2071,22 @@
         typeof marked ===
         "undefined"
       ) {
-
-        return escapeHtml(
-          text
-        ).replace(
-          /\n/g,
-          "<br>"
-        );
-
+        return escapeHtml(text);
       }
 
-
-      const rawHtml =
-        marked.parse(text);
-
+      const html =
+        marked.parse(
+          text || ""
+        );
 
       return DOMPurify.sanitize(
-        rawHtml,
+        html,
         {
-
           USE_PROFILES: {
             html: true
-          },
-
-          FORBID_TAGS: [
-            "script",
-            "iframe",
-            "object",
-            "embed",
-            "form"
-          ],
-
-          FORBID_ATTR: [
-            "onerror",
-            "onload",
-            "onclick",
-            "onmouseover"
-          ]
-
+          }
         }
       );
-
     }
 
 
@@ -1777,138 +2101,73 @@
         text;
 
       return div.innerHTML;
+    }
+
+
+    /* =========================
+       SCROLL
+    ========================== */
+
+    function scrollToBottom(
+      smooth = false
+    ) {
+
+      chatArea.scrollTo({
+
+        top:
+          chatArea.scrollHeight,
+
+        behavior:
+          smooth
+            ? "smooth"
+            : "auto"
+
+      });
 
     }
 
 
     /* =========================
-       COPY CODE BUTTONS
+       GENERATING STATE
     ========================== */
 
-    function addCodeCopyButtons(
-      container
+    function setGeneratingState(
+      generating
     ) {
 
-      container
-        .querySelectorAll("pre")
-        .forEach(pre => {
+      isGenerating =
+        generating;
 
-          if (
-            pre.parentElement
-              .classList
-              .contains(
-                "code-wrapper"
-              )
-          ) {
+      if (generating) {
 
-            return;
+        sendBtn.classList.add(
+          "stop"
+        );
 
-          }
+        sendBtn.textContent =
+          "■";
 
+        sendBtn.title =
+          "Stop generating";
 
-          const wrapper =
-            document.createElement(
-              "div"
-            );
+        modelState.textContent =
+          "Generating response...";
 
-          wrapper.className =
-            "code-wrapper";
+      } else {
 
+        sendBtn.classList.remove(
+          "stop"
+        );
 
-          pre.parentNode
-            .insertBefore(
-              wrapper,
-              pre
-            );
+        sendBtn.textContent =
+          "↑";
 
+        sendBtn.title =
+          "Send";
 
-          wrapper.appendChild(
-            pre
-          );
-
-
-          const copyButton =
-            document.createElement(
-              "button"
-            );
-
-
-          copyButton.className =
-            "copy-code-btn";
-
-          copyButton.type =
-            "button";
-
-          copyButton.textContent =
-            "Copy";
-
-
-          copyButton.addEventListener(
-            "click",
-            async () => {
-
-              const code =
-                pre.querySelector(
-                  "code"
-                );
-
-
-              if (!code) {
-                return;
-              }
-
-
-              try {
-
-                await navigator
-                  .clipboard
-                  .writeText(
-                    code.innerText
-                  );
-
-
-                copyButton.textContent =
-                  "Copied";
-
-
-                setTimeout(
-                  () => {
-
-                    copyButton.textContent =
-                      "Copy";
-
-                  },
-                  1500
-                );
-
-
-              } catch (error) {
-
-                copyButton.textContent =
-                  "Failed";
-
-
-                setTimeout(
-                  () => {
-
-                    copyButton.textContent =
-                      "Copy";
-
-                  },
-                  1500
-                );
-
-              }
-
-            }
-          );
-
-
-          wrapper.appendChild(
-            copyButton
-          );
-
-        });
+        modelState.textContent =
+          "Ready for your command";
+      }
 
     }
 
@@ -1919,14 +2178,14 @@
 
     function addMessage(
       type,
-      text
+      text = "",
+      options = {}
     ) {
 
       const message =
         document.createElement(
           "div"
         );
-
 
       message.className =
         "message";
@@ -1937,7 +2196,6 @@
           "div"
         );
 
-
       avatar.className =
         "avatar " +
         (
@@ -1945,7 +2203,6 @@
             ? "user"
             : "ai"
         );
-
 
       avatar.textContent =
         type === "user"
@@ -1958,7 +2215,6 @@
           "div"
         );
 
-
       content.className =
         "message-content";
 
@@ -1968,10 +2224,8 @@
           "div"
         );
 
-
       label.className =
         "message-label";
-
 
       label.textContent =
         type === "user"
@@ -1984,30 +2238,40 @@
           "div"
         );
 
-
       messageText.className =
         "message-text";
 
 
       if (
-        type === "ai"
+        options.typing
+      ) {
+
+        messageText.innerHTML = `
+
+          <div
+            class="typing"
+            aria-label="FAYNEX is thinking"
+          >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+          </div>
+
+        `;
+
+      } else if (
+        type === "ai" &&
+        options.markdown !== false
       ) {
 
         messageText.classList.add(
-          "markdown-body"
+          "markdown"
         );
-
 
         messageText.innerHTML =
-          renderMarkdown(
-            text
-          );
-
-
-        addCodeCopyButtons(
-          messageText
-        );
-
+          renderMarkdown(text);
 
       } else {
 
@@ -2021,155 +2285,942 @@
         label
       );
 
-
       content.appendChild(
         messageText
       );
+
+
+      if (
+        type === "ai" &&
+        options.actions !== false
+      ) {
+
+        addMessageActions(
+          content,
+          messageText
+        );
+
+      }
 
 
       message.appendChild(
         avatar
       );
 
-
       message.appendChild(
         content
       );
-
 
       messages.appendChild(
         message
       );
 
 
-      requestAnimationFrame(
-        () => {
+      scrollToBottom(true);
 
-          chatArea.scrollTo({
 
-            top:
-              chatArea.scrollHeight,
+      return messageText;
+    }
 
-            behavior:
-              "smooth"
 
-          });
+    /* =========================
+       MESSAGE ACTIONS
+    ========================== */
+
+    function addMessageActions(
+      content,
+      messageText
+    ) {
+
+      if (
+        content.querySelector(
+          ".message-actions"
+        )
+      ) {
+        return;
+      }
+
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+      actions.className =
+        "message-actions";
+
+
+      actions.innerHTML = `
+
+        <button
+          class="message-action copy-answer"
+          type="button"
+        >
+          Copy
+        </button>
+
+        <button
+          class="message-action regenerate-answer"
+          type="button"
+        >
+          Regenerate
+        </button>
+
+      `;
+
+
+      content.appendChild(
+        actions
+      );
+
+
+      const copyBtn =
+        actions.querySelector(
+          ".copy-answer"
+        );
+
+
+      copyBtn.addEventListener(
+        "click",
+        async () => {
+
+          const text =
+            messageText.textContent ||
+            "";
+
+          try {
+
+            await navigator
+              .clipboard
+              .writeText(text);
+
+            copyBtn.textContent =
+              "Copied";
+
+            setTimeout(() => {
+
+              copyBtn.textContent =
+                "Copy";
+
+            }, 1200);
+
+          } catch {
+
+            copyBtn.textContent =
+              "Failed";
+
+          }
 
         }
       );
 
 
-      return message;
+      const regenerateBtn =
+        actions.querySelector(
+          ".regenerate-answer"
+        );
+
+
+      regenerateBtn.addEventListener(
+        "click",
+        () => {
+
+          regenerateLastAnswer();
+
+        }
+      );
 
     }
 
 
     /* =========================
-       LOADING MESSAGE
+       CODE BLOCK COPY
     ========================== */
 
-    function addLoadingMessage() {
+    function enhanceCodeBlocks(
+      root
+    ) {
 
-      const message =
-        document.createElement(
-          "div"
-        );
-
-
-      message.className =
-        "message";
+      if (!root) return;
 
 
-      const avatar =
-        document.createElement(
-          "div"
-        );
+      root
+        .querySelectorAll(
+          "pre"
+        )
+        .forEach(pre => {
+
+          if (
+            pre.parentElement &&
+            pre.parentElement.classList
+              .contains(
+                "code-wrap"
+              )
+          ) {
+            return;
+          }
 
 
-      avatar.className =
-        "avatar ai";
+          const wrapper =
+            document.createElement(
+              "div"
+            );
+
+          wrapper.className =
+            "code-wrap";
 
 
-      avatar.textContent =
-        "F";
+          const copyBtn =
+            document.createElement(
+              "button"
+            );
+
+          copyBtn.type =
+            "button";
+
+          copyBtn.className =
+            "copy-code";
+
+          copyBtn.textContent =
+            "Copy";
 
 
-      const content =
-        document.createElement(
-          "div"
-        );
+          copyBtn.addEventListener(
+            "click",
+            async () => {
+
+              const code =
+                pre.innerText ||
+                "";
+
+              try {
+
+                await navigator
+                  .clipboard
+                  .writeText(code);
+
+                copyBtn.textContent =
+                  "Copied";
+
+                setTimeout(() => {
+
+                  copyBtn.textContent =
+                    "Copy";
+
+                }, 1200);
+
+              } catch {
+
+                copyBtn.textContent =
+                  "Failed";
+
+              }
+
+            }
+          );
 
 
-      content.className =
-        "message-content";
+          pre.parentNode.insertBefore(
+            wrapper,
+            pre
+          );
+
+          wrapper.appendChild(
+            pre
+          );
+
+          wrapper.appendChild(
+            copyBtn
+          );
+
+        });
+
+    }
 
 
-      const label =
-        document.createElement(
-          "div"
-        );
+    /* =========================
+       UPDATE STREAMING MESSAGE
+    ========================== */
 
+    function updateAIMessage(
+      messageText,
+      text
+    ) {
 
-      label.className =
-        "message-label";
-
-
-      label.textContent =
-        "FAYNEX";
-
-
-      const messageText =
-        document.createElement(
-          "div"
-        );
-
-
-      messageText.className =
-        "message-text";
-
-
-      messageText.innerHTML =
-        "FAYNEX is thinking" +
-        "<span style='opacity:.45'>...</span>";
-
-
-      content.appendChild(
-        label
+      messageText.classList.add(
+        "markdown"
       );
 
+      messageText.innerHTML =
+        renderMarkdown(text);
 
-      content.appendChild(
+      enhanceCodeBlocks(
         messageText
       );
 
+      scrollToBottom(false);
 
-      message.appendChild(
-        avatar
+    }
+
+
+    /* =========================
+       LOCAL MEMORY
+    ========================== */
+
+    function saveConversation() {
+
+      try {
+
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify(
+            conversation
+          )
+        );
+
+      } catch (error) {
+
+        console.warn(
+          "Could not save conversation:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function loadConversation() {
+
+      try {
+
+        const saved =
+          JSON.parse(
+            localStorage.getItem(
+              STORAGE_KEY
+            ) || "[]"
+          );
+
+
+        if (
+          !Array.isArray(saved) ||
+          saved.length === 0
+        ) {
+          return;
+        }
+
+
+        conversation =
+          saved
+            .filter(item =>
+
+              item &&
+
+              (
+                item.role === "user" ||
+                item.role === "assistant"
+              ) &&
+
+              typeof item.content ===
+                "string"
+
+            )
+            .slice(-60);
+
+
+        welcome.style.display =
+          "none";
+
+
+        conversation.forEach(
+          item => {
+
+            addMessage(
+
+              item.role === "user"
+                ? "user"
+                : "ai",
+
+              item.content,
+
+              {
+                actions:
+                  item.role ===
+                  "assistant"
+              }
+
+            );
+
+          }
+        );
+
+      } catch (error) {
+
+        console.warn(
+          "Could not load conversation:",
+          error
+        );
+
+        conversation = [];
+
+      }
+
+    }
+
+
+    /* =========================
+       RECENT TITLES
+    ========================== */
+
+    function saveRecentTitle(
+      text
+    ) {
+
+      try {
+
+        const title =
+          text
+            .replace(
+              /\s+/g,
+              " "
+            )
+            .trim()
+            .slice(
+              0,
+              48
+            );
+
+
+        if (!title) return;
+
+
+        const saved =
+          JSON.parse(
+            localStorage.getItem(
+              RECENT_KEY
+            ) || "[]"
+          );
+
+
+        const recent =
+          Array.isArray(saved)
+            ? saved
+            : [];
+
+
+        const next = [
+
+          title,
+
+          ...recent
+
+        ]
+          .filter(
+            (item, index, array) =>
+              array.indexOf(item) ===
+              index
+          )
+          .slice(
+            0,
+            5
+          );
+
+
+        localStorage.setItem(
+          RECENT_KEY,
+          JSON.stringify(next)
+        );
+
+
+        renderRecentTitles(
+          next
+        );
+
+      } catch (error) {
+
+        console.warn(
+          "Could not save recent title:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function renderRecentTitles(
+      titles
+    ) {
+
+      const recentContainer =
+        document.querySelector(
+          ".recent"
+        );
+
+
+      if (!recentContainer) {
+        return;
+      }
+
+
+      recentContainer.innerHTML = "";
+
+
+      const heading =
+        document.createElement(
+          "div"
+        );
+
+      heading.className =
+        "section-title";
+
+      heading.textContent =
+        "Recent";
+
+
+      recentContainer.appendChild(
+        heading
       );
 
 
-      message.appendChild(
-        content
+      titles.forEach(
+        title => {
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+          item.className =
+            "recent-item";
+
+          item.textContent =
+            title;
+
+          recentContainer.appendChild(
+            item
+          );
+
+        }
+      );
+
+    }
+
+
+    function loadRecentTitles() {
+
+      try {
+
+        const saved =
+          JSON.parse(
+            localStorage.getItem(
+              RECENT_KEY
+            ) || "[]"
+          );
+
+
+        if (
+          Array.isArray(saved)
+        ) {
+
+          renderRecentTitles(
+            saved
+          );
+
+        }
+
+      } catch {
+
+        // Ignore localStorage errors.
+
+      }
+
+    }
+
+
+    /* =========================
+       STREAM GEMINI
+    ========================== */
+
+    async function streamGeminiResponse(
+      currentMessage,
+      aiMessage
+    ) {
+
+      abortController =
+        new AbortController();
+
+
+      /*
+        IMPORTANT:
+
+        conversation already contains:
+
+        {
+          role: "user",
+          content: currentMessage
+        }
+
+        Worker adds the current message itself.
+
+        Therefore we send only previous
+        conversation history here.
+      */
+
+      const history =
+        conversation
+          .slice(
+            0,
+            -1
+          )
+          .slice(
+            -30
+          )
+          .map(item => ({
+
+            role:
+              item.role,
+
+            content:
+              item.content
+
+          }));
+
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+
+            method:
+              "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json"
+
+            },
+
+            body:
+              JSON.stringify({
+
+                message:
+                  currentMessage,
+
+                history:
+                  history
+
+              }),
+
+            signal:
+              abortController.signal
+
+          }
+        );
+
+
+      /* =========================
+         API ERROR
+      ========================== */
+
+      if (
+        !response.ok
+      ) {
+
+        let errorData =
+          null;
+
+
+        try {
+
+          errorData =
+            await response.json();
+
+        } catch {
+
+          // Response may not be JSON.
+
+        }
+
+
+        throw new Error(
+
+          errorData?.details ||
+
+          errorData?.error ||
+
+          `API request failed with status ${response.status}.`
+
+        );
+
+      }
+
+
+      /* =========================
+         STREAM SUPPORT
+      ========================== */
+
+      if (
+        !response.body
+      ) {
+
+        throw new Error(
+          "Streaming is not supported by this browser."
+        );
+
+      }
+
+
+      const reader =
+        response.body.getReader();
+
+
+      const decoder =
+        new TextDecoder(
+          "utf-8"
+        );
+
+
+      let buffer = "";
+
+      let fullText = "";
+
+      let lastRender =
+        0;
+
+
+      /* =========================
+         PROCESS SSE EVENT
+      ========================== */
+
+      function processEvent(
+        eventText
+      ) {
+
+        const lines =
+          eventText.split(
+            /\r?\n/
+          );
+
+
+        const dataLines =
+          lines
+
+            .filter(
+              line =>
+                line.startsWith(
+                  "data:"
+                )
+            )
+
+            .map(
+              line =>
+                line
+                  .slice(5)
+                  .trimStart()
+            );
+
+
+        if (
+          dataLines.length ===
+          0
+        ) {
+          return;
+        }
+
+
+        const dataText =
+          dataLines
+            .join("\n")
+            .trim();
+
+
+        if (
+          !dataText ||
+          dataText ===
+            "[DONE]"
+        ) {
+
+          return;
+
+        }
+
+
+        let payload;
+
+
+        try {
+
+          payload =
+            JSON.parse(
+              dataText
+            );
+
+        } catch {
+
+          /*
+            Sometimes an incomplete SSE
+            JSON fragment may appear.
+          */
+
+          return;
+
+        }
+
+
+        const parts =
+          payload
+            ?.candidates?.[0]
+            ?.content?.parts ||
+          [];
+
+
+        for (
+          const part
+          of parts
+        ) {
+
+          if (
+            typeof part?.text ===
+            "string"
+          ) {
+
+            fullText +=
+              part.text;
+
+
+            const now =
+              performance.now();
+
+
+            /*
+              Avoid re-rendering Markdown
+              too many times per second.
+            */
+
+            if (
+              now -
+              lastRender >
+              45
+            ) {
+
+              updateAIMessage(
+                aiMessage,
+                fullText
+              );
+
+              lastRender =
+                now;
+
+            }
+
+          }
+
+        }
+
+      }
+
+
+      /* =========================
+         READ STREAM
+      ========================== */
+
+      while (true) {
+
+        const {
+          value,
+          done
+        } =
+          await reader.read();
+
+
+        if (done) {
+          break;
+        }
+
+
+        buffer +=
+          decoder.decode(
+            value,
+            {
+              stream:
+                true
+            }
+          );
+
+
+        /*
+          SSE events are separated
+          by a blank line.
+        */
+
+        const events =
+          buffer.split(
+            /\r?\n\r?\n/
+          );
+
+
+        buffer =
+          events.pop() ||
+          "";
+
+
+        for (
+          const eventText
+          of events
+        ) {
+
+          processEvent(
+            eventText
+          );
+
+        }
+
+      }
+
+
+      /*
+        Flush decoder.
+      */
+
+      buffer +=
+        decoder.decode();
+
+
+      if (
+        buffer.trim()
+      ) {
+
+        processEvent(
+          buffer
+        );
+
+      }
+
+
+      if (
+        !fullText.trim()
+      ) {
+
+        throw new Error(
+          "FAYNEX received an empty response from Gemini."
+        );
+
+      }
+
+
+      /*
+        Final render.
+      */
+
+      updateAIMessage(
+        aiMessage,
+        fullText
       );
 
 
-      messages.appendChild(
-        message
-      );
-
-
-      chatArea.scrollTo({
-
-        top:
-          chatArea.scrollHeight,
-
-        behavior:
-          "smooth"
-
-      });
-
-
-      return message;
+      return fullText;
 
     }
 
@@ -2178,15 +3229,31 @@
        SEND MESSAGE
     ========================== */
 
-    async function sendMessage() {
+    async function sendMessage(
+      customText = null
+    ) {
 
-      if (isSending) {
+      /*
+        If generation is active,
+        clicking Send acts as Stop.
+      */
+
+      if (
+        isGenerating
+      ) {
+
+        stopGeneration();
+
         return;
+
       }
 
 
       const text =
-        input.value.trim();
+        (
+          customText ??
+          input.value
+        ).trim();
 
 
       if (!text) {
@@ -2194,155 +3261,464 @@
       }
 
 
-      isSending = true;
-
-
-      sendBtn.disabled =
-        true;
-
-
       welcome.style.display =
         "none";
 
 
-      addMessage(
-        "user",
-        text
-      );
-
-
-      input.value =
-        "";
-
+      input.value = "";
 
       input.style.height =
         "auto";
 
 
-      const loadingMessage =
-        addLoadingMessage();
+      /* =========================
+         SAVE USER MESSAGE
+      ========================== */
+
+      conversation.push({
+
+        role:
+          "user",
+
+        content:
+          text
+
+      });
+
+
+      addMessage(
+        "user",
+        text,
+        {
+          markdown:
+            false,
+          actions:
+            false
+        }
+      );
+
+
+      /* =========================
+         AI PLACEHOLDER
+      ========================== */
+
+      const aiMessage =
+        addMessage(
+          "ai",
+          "",
+          {
+            typing:
+              true,
+            actions:
+              false
+          }
+        );
+
+
+      saveConversation();
+
+      saveRecentTitle(
+        text
+      );
+
+
+      setGeneratingState(
+        true
+      );
+
+
+      currentStreamingText =
+        "";
 
 
       try {
 
-        const response =
-          await fetch(
-            API_URL,
-            {
-
-              method:
-                "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:
-                JSON.stringify({
-                  message: text
-                })
-
-            }
+        const answer =
+          await streamGeminiResponse(
+            text,
+            aiMessage
           );
 
 
-        let data = null;
+        currentStreamingText =
+          answer;
 
 
-        try {
+        /* =========================
+           SAVE AI RESPONSE
+        ========================== */
 
-          data =
-            await response.json();
+        conversation.push({
 
-        } catch {
+          role:
+            "assistant",
 
-          data = null;
+          content:
+            answer
 
-        }
+        });
 
 
-        loadingMessage.remove();
+        saveConversation();
+
+
+        /* =========================
+           ADD ACTION BUTTONS
+        ========================== */
+
+        const content =
+          aiMessage.parentElement;
 
 
         if (
-          !response.ok
+          content &&
+          !content.querySelector(
+            ".message-actions"
+          )
         ) {
 
-          const errorMessage =
-            data?.details ||
-            data?.error ||
-            `Request failed with status ${response.status}.`;
-
-
-          addMessage(
-            "ai",
-
-            `Sorry, I couldn't connect to the FAYNEX AI engine right now.
-
-**Error:** ${errorMessage}`
+          addMessageActions(
+            content,
+            aiMessage
           );
 
-
-          return;
-
         }
-
-
-        if (
-          !data?.ok ||
-          !data?.answer
-        ) {
-
-          addMessage(
-            "ai",
-
-            "Sorry, FAYNEX received an empty response from the AI engine."
-          );
-
-
-          return;
-
-        }
-
-
-        addMessage(
-          "ai",
-          data.answer
-        );
 
 
       } catch (error) {
 
-        loadingMessage.remove();
+        /*
+          If user pressed Stop,
+          keep the partial response.
+        */
+
+        if (
+          error?.name ===
+          "AbortError"
+        ) {
+
+          const partial =
+            currentStreamingText.trim();
 
 
-        addMessage(
-          "ai",
+          if (
+            partial
+          ) {
 
-          `Sorry, I couldn't connect to the FAYNEX AI engine right now.
+            conversation.push({
 
-**Error:** ${
-            error?.message ||
-            "Network error."
-          }`
-        );
+              role:
+                "assistant",
+
+              content:
+                partial
+
+            });
+
+
+            saveConversation();
+
+
+            const content =
+              aiMessage.parentElement;
+
+
+            if (
+              content &&
+              !content.querySelector(
+                ".message-actions"
+              )
+            ) {
+
+              addMessageActions(
+                content,
+                aiMessage
+              );
+
+            }
+
+          }
+
+
+        } else {
+
+          console.error(
+            "FAYNEX API error:",
+            error
+          );
+
+
+          const errorText =
+
+            "Sorry, I couldn't connect to the FAYNEX AI engine right now.\n\n" +
+
+            "Error: " +
+
+            (
+              error?.message ||
+              "Unknown error."
+            );
+
+
+          aiMessage.classList.remove(
+            "markdown"
+          );
+
+
+          aiMessage.textContent =
+            errorText;
+
+
+          /*
+            Remove user message from
+            local conversation if API failed.
+          */
+
+          conversation =
+            conversation.filter(
+              item =>
+                !(
+                  item.role ===
+                  "user" &&
+                  item.content ===
+                  text
+                )
+            );
+
+
+          saveConversation();
+
+        }
 
       } finally {
 
-        isSending =
-          false;
+        abortController =
+          null;
 
+        currentStreamingText =
+          "";
 
-        sendBtn.disabled =
-          false;
-
+        setGeneratingState(
+          false
+        );
 
         input.focus();
 
       }
 
     }
+
+
+    /* =========================
+       STOP GENERATION
+    ========================== */
+
+    function stopGeneration() {
+
+      if (
+        abortController
+      ) {
+
+        abortController.abort();
+
+        abortController =
+          null;
+
+      }
+
+
+      setGeneratingState(
+        false
+      );
+
+      input.focus();
+
+    }
+
+
+    /* =========================
+       NEW CONVERSATION
+    ========================== */
+
+    function resetConversation() {
+
+      if (
+        isGenerating
+      ) {
+
+        stopGeneration();
+
+      }
+
+
+      conversation =
+        [];
+
+
+      localStorage.removeItem(
+        STORAGE_KEY
+      );
+
+
+      messages.innerHTML =
+        "";
+
+
+      welcome.style.display =
+        "flex";
+
+
+      input.value =
+        "";
+
+      input.style.height =
+        "auto";
+
+
+      input.focus();
+
+    }
+
+
+    /* =========================
+       REGENERATE
+    ========================== */
+
+    function regenerateLastAnswer() {
+
+      if (
+        isGenerating
+      ) {
+        return;
+      }
+
+
+      if (
+        conversation.length ===
+        0
+      ) {
+        return;
+      }
+
+
+      let lastUserIndex =
+        -1;
+
+
+      for (
+        let i =
+          conversation.length - 1;
+
+        i >= 0;
+
+        i--
+      ) {
+
+        if (
+          conversation[i].role ===
+          "user"
+        ) {
+
+          lastUserIndex =
+            i;
+
+          break;
+
+        }
+
+      }
+
+
+      if (
+        lastUserIndex ===
+        -1
+      ) {
+        return;
+      }
+
+
+      const lastUserMessage =
+        conversation[
+          lastUserIndex
+        ].content;
+
+
+      /*
+        Keep everything before
+        the last user message.
+
+        Then send it again.
+      */
+
+      conversation =
+        conversation.slice(
+          0,
+          lastUserIndex
+        );
+
+
+      saveConversation();
+
+
+      messages.innerHTML =
+        "";
+
+
+      welcome.style.display =
+        "none";
+
+
+      conversation.forEach(
+        item => {
+
+          addMessage(
+
+            item.role ===
+              "user"
+              ? "user"
+              : "ai",
+
+            item.content,
+
+            {
+              actions:
+                item.role ===
+                "assistant"
+            }
+
+          );
+
+        }
+      );
+
+
+      sendMessage(
+        lastUserMessage
+      );
+
+    }
+
+
+    /* =========================
+       TEXTAREA AUTO HEIGHT
+    ========================== */
+
+    input.addEventListener(
+      "input",
+      () => {
+
+        input.style.height =
+          "auto";
+
+
+        input.style.height =
+          Math.min(
+            input.scrollHeight,
+            150
+          ) + "px";
+
+      }
+    );
 
 
     /* =========================
@@ -2354,7 +3730,8 @@
       event => {
 
         if (
-          event.key === "Enter" &&
+          event.key ===
+            "Enter" &&
           !event.shiftKey
         ) {
 
@@ -2368,9 +3745,17 @@
     );
 
 
+    /* =========================
+       SEND BUTTON
+    ========================== */
+
     sendBtn.addEventListener(
       "click",
-      sendMessage
+      () => {
+
+        sendMessage();
+
+      }
     );
 
 
@@ -2382,28 +3767,31 @@
       .querySelectorAll(
         ".suggestion"
       )
-      .forEach(button => {
+      .forEach(
+        button => {
 
-        button.addEventListener(
-          "click",
-          () => {
+          button.addEventListener(
+            "click",
+            () => {
 
-            input.value =
-              button.dataset
-                .prompt;
+              input.value =
+                button.dataset
+                  .prompt ||
+                "";
 
+              input.dispatchEvent(
+                new Event(
+                  "input"
+                )
+              );
 
-            input.dispatchEvent(
-              new Event("input")
-            );
+              input.focus();
 
+            }
+          );
 
-            input.focus();
-
-          }
-        );
-
-      });
+        }
+      );
 
 
     /* =========================
@@ -2412,27 +3800,7 @@
 
     newChatBtn.addEventListener(
       "click",
-      () => {
-
-        messages.innerHTML =
-          "";
-
-
-        welcome.style.display =
-          "flex";
-
-
-        input.value =
-          "";
-
-
-        input.style.height =
-          "auto";
-
-
-        input.focus();
-
-      }
+      resetConversation
     );
 
 
@@ -2452,6 +3820,35 @@
     );
 
 
+    document
+      .querySelectorAll(
+        ".nav-item"
+      )
+      .forEach(
+        item => {
+
+          item.addEventListener(
+            "click",
+            () => {
+
+              if (
+                window.innerWidth <=
+                800
+              ) {
+
+                sidebar.classList.remove(
+                  "open"
+                );
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+
     /* =========================
        ATTACH BUTTON
     ========================== */
@@ -2461,7 +3858,7 @@
       () => {
 
         alert(
-          "File upload will be connected in the next FAYNEX update."
+          "File upload will be added in the next FAYNEX update."
         );
 
       }
@@ -2472,29 +3869,107 @@
        VOICE INPUT
     ========================== */
 
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
+    let recognition =
+      null;
 
 
     if (
-      SpeechRecognition
+      "SpeechRecognition"
+      in window ||
+      "webkitSpeechRecognition"
+      in window
     ) {
 
-      const recognition =
+      const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+      recognition =
         new SpeechRecognition();
 
 
       recognition.lang =
         "en-US";
 
-
-      recognition.interimResults =
-        false;
-
-
       recognition.continuous =
         false;
+
+      recognition.interimResults =
+        true;
+
+
+      recognition.onstart =
+        () => {
+
+          voiceBtn.textContent =
+            "●";
+
+          voiceBtn.style.color =
+            "#f87171";
+
+        };
+
+
+      recognition.onresult =
+        event => {
+
+          let transcript =
+            "";
+
+
+          for (
+            let i =
+              event.resultIndex;
+
+            i <
+              event.results.length;
+
+            i++
+          ) {
+
+            transcript +=
+              event.results[i][0]
+                .transcript;
+
+          }
+
+
+          input.value =
+            transcript;
+
+
+          input.dispatchEvent(
+            new Event(
+              "input"
+            )
+          );
+
+        };
+
+
+      recognition.onend =
+        () => {
+
+          voiceBtn.textContent =
+            "◉";
+
+          voiceBtn.style.color =
+            "";
+
+        };
+
+
+      recognition.onerror =
+        () => {
+
+          voiceBtn.textContent =
+            "◉";
+
+          voiceBtn.style.color =
+            "";
+
+        };
 
 
       voiceBtn.addEventListener(
@@ -2503,79 +3978,16 @@
 
           try {
 
-            voiceBtn.style.color =
-              "#a78bfa";
-
-
             recognition.start();
 
+          } catch {
 
-          } catch (error) {
-
-            console.warn(
-              "Speech recognition could not start.",
-              error
-            );
+            // Recognition already running.
 
           }
 
         }
       );
-
-
-      recognition.addEventListener(
-        "result",
-        event => {
-
-          const transcript =
-            event
-              .results?.[0]?.[0]
-              ?.transcript ||
-            "";
-
-
-          input.value =
-            transcript;
-
-
-          input.dispatchEvent(
-            new Event("input")
-          );
-
-
-          input.focus();
-
-        }
-      );
-
-
-      recognition.addEventListener(
-        "end",
-        () => {
-
-          voiceBtn.style.color =
-            "";
-
-        }
-      );
-
-
-      recognition.addEventListener(
-        "error",
-        error => {
-
-          console.warn(
-            "Voice input error:",
-            error
-          );
-
-
-          voiceBtn.style.color =
-            "";
-
-        }
-      );
-
 
     } else {
 
@@ -2584,7 +3996,7 @@
         () => {
 
           alert(
-            "Voice input is not supported in this browser."
+            "Voice input is not supported by this browser."
           );
 
         }
@@ -2626,22 +4038,20 @@
           data?.ok
         ) {
 
-          systemStatus.textContent =
+          statusText.textContent =
             "FAYNEX systems online";
 
 
           modelState.textContent =
-            "Ready for your command";
-
+            "Gemini streaming ready";
 
         } else {
 
           throw new Error(
-            "API unavailable"
+            "Invalid API status"
           );
 
         }
-
 
       } catch (error) {
 
@@ -2651,24 +4061,27 @@
         );
 
 
-        systemStatus.textContent =
-          "FAYNEX connection unavailable";
+        statusText.textContent =
+          "FAYNEX API offline";
 
 
         modelState.textContent =
-          "API unavailable";
+          "API connection unavailable";
 
       }
 
     }
 
 
-    checkFaynexAPI();
-
-
     /* =========================
-       INITIAL FOCUS
+       INITIALIZE
     ========================== */
+
+    loadRecentTitles();
+
+    loadConversation();
+
+    checkFaynexAPI();
 
     input.focus();
 
