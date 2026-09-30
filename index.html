@@ -1,12 +1,1117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>FAYNEX AI</title>
+  <meta
+    name="description"
+    content="FAYNEX AI — Next-Generation Intelligence"
+  />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #06070b;
+      --panel: #0b0d13;
+      --panel-2: #10131b;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f5f7fb;
+      --muted: #858b9a;
+      --accent: #8b5cf6;
+      --accent-2: #6366f1;
+      --danger: #ef4444;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 50% -10%,
+          rgba(99, 102, 241, 0.18),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 0% 100%,
+          rgba(139, 92, 246, 0.08),
+          transparent 30%
+        ),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      overflow: hidden;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    /* =========================
+       APP
+    ========================= */
+
+    .app {
+      height: 100vh;
+      display: flex;
+      position: relative;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+      width: 270px;
+      height: 100vh;
+      background: rgba(8, 10, 15, 0.92);
+      border-right: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      padding: 22px 16px;
+      z-index: 20;
+      transition: transform 0.3s ease;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 8px 25px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow:
+        0 0 25px rgba(99, 102, 241, 0.35);
+    }
+
+    .brand-name {
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 2px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .new-chat {
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 12px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(139, 92, 246, 0.95),
+          rgba(99, 102, 241, 0.95)
+        );
+      font-weight: 650;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
+      transition: 0.2s ease;
+    }
+
+    .new-chat:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 35px rgba(99, 102, 241, 0.3);
+    }
+
+    .sidebar-section {
+      margin-top: 28px;
+    }
+
+    .section-title {
+      color: #686e7c;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 0 10px 10px;
+    }
+
+    .nav-item {
+      width: 100%;
+      padding: 11px 12px;
+      background: transparent;
+      color: #a9aebb;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-align: left;
+      margin-bottom: 3px;
+      transition: 0.2s ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.045);
+      color: white;
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    .recent {
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .recent-item {
+      color: #777e8e;
+      font-size: 12px;
+      padding: 9px 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: 8px;
+    }
+
+    .recent-item:hover {
+      background: rgba(255, 255, 255, 0.035);
+      color: #bfc4cf;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+    }
+
+    .status-card {
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.025);
+      border-radius: 12px;
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #aeb4c1;
+      font-size: 11px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      flex: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 70px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(6, 7, 11, 0.65);
+      backdrop-filter: blur(18px);
+    }
+
+    .model-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .model-orb {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.9);
+    }
+
+    .model-name {
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .model-state {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 7px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: transparent;
+      color: #8e95a4;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: white;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    /* =========================
+       CHAT
+    ========================= */
+
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    .chat-area::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-area::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+    }
+
+    .welcome {
+      min-height: calc(100vh - 220px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .welcome-orb {
+      width: 76px;
+      height: 76px;
+      border-radius: 24px;
+      background:
+        radial-gradient(
+          circle at 30% 25%,
+          #c4b5fd,
+          transparent 20%
+        ),
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #4f46e5
+        );
+      display: grid;
+      place-items: center;
+      font-size: 27px;
+      font-weight: 850;
+      box-shadow:
+        0 0 55px rgba(99, 102, 241, 0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    .welcome h1 {
+      margin-top: 26px;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+    }
+
+    .gradient-text {
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff,
+          #a78bfa,
+          #818cf8
+        );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .welcome p {
+      max-width: 580px;
+      margin-top: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .suggestions {
+      width: min(760px, 100%);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .suggestion {
+      text-align: left;
+      padding: 15px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.025);
+      color: #b6bbc7;
+      border-radius: 13px;
+      transition: 0.2s ease;
+    }
+
+    .suggestion:hover {
+      border-color: rgba(139, 92, 246, 0.35);
+      background: rgba(139, 92, 246, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .suggestion strong {
+      display: block;
+      color: #e8eaf0;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .suggestion span {
+      font-size: 11px;
+      color: #727988;
+    }
+
+    /* =========================
+       MESSAGES
+    ========================= */
+
+    .messages {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding: 35px 20px 150px;
+    }
+
+    .message {
+      display: flex;
+      gap: 13px;
+      margin-bottom: 28px;
+      animation: messageIn 0.25s ease;
+    }
+
+    @keyframes messageIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .avatar {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .avatar.user {
+      background: #20242f;
+      color: #d5d9e2;
+    }
+
+    .avatar.ai {
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #4f46e5
+        );
+      color: white;
+    }
+
+    .message-content {
+      min-width: 0;
+      padding-top: 4px;
+    }
+
+    .message-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #9ca2af;
+      margin-bottom: 7px;
+    }
+
+    .message-text {
+      color: #d9dce4;
+      font-size: 14px;
+      line-height: 1.75;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* =========================
+       COMPOSER
+    ========================= */
+
+    .composer-wrap {
+      position: absolute;
+      left: 270px;
+      right: 0;
+      bottom: 0;
+      padding: 18px 24px 22px;
+      background:
+        linear-gradient(
+          to top,
+          rgba(6, 7, 11, 1) 55%,
+          rgba(6, 7, 11, 0)
+        );
+    }
+
+    .composer {
+      width: min(850px, 100%);
+      margin: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(13, 15, 22, 0.92);
+      backdrop-filter: blur(20px);
+      border-radius: 18px;
+      padding: 11px;
+      box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .composer textarea {
+      width: 100%;
+      resize: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      padding: 8px 10px;
+      min-height: 44px;
+      max-height: 150px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .composer textarea::placeholder {
+      color: #626978;
+    }
+
+    .composer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 3px 2px;
+    }
+
+    .composer-tools {
+      display: flex;
+      gap: 3px;
+    }
+
+    .tool-btn {
+      width: 35px;
+      height: 35px;
+      border-radius: 9px;
+      background: transparent;
+      color: #7e8594;
+      display: grid;
+      place-items: center;
+      transition: 0.2s ease;
+    }
+
+    .tool-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .send-btn {
+      width: 39px;
+      height: 39px;
+      border-radius: 11px;
+      background:
+        linear-gradient(
+          135deg,
+          #8b5cf6,
+          #6366f1
+        );
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      transition: 0.2s ease;
+      box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .send-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 7px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .disclaimer {
+      text-align: center;
+      color: #505664;
+      font-size: 9px;
+      margin-top: 9px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        transform: translateX(-100%);
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .mobile-menu {
+        display: grid;
+      }
+
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .composer-wrap {
+        left: 0;
+        padding: 12px 12px 15px;
+      }
+
+      .welcome {
+        min-height: calc(100vh - 190px);
+      }
+
+      .suggestions {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome h1 {
+        font-size: 34px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .model-state {
+        display: none;
+      }
+
+      .top-actions .icon-btn:nth-child(2) {
+        display: none;
+      }
+
+      .welcome {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .welcome-orb {
+        width: 65px;
+        height: 65px;
+        border-radius: 20px;
+      }
+
+      .welcome p {
+        font-size: 13px;
+      }
+
+      .messages {
+        padding-left: 13px;
+        padding-right: 13px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>FAYNEX AI</h1>
-  <p>Next-Generation Intelligence</p>
+
+  <div class="app">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="brand">
+        <div class="brand-logo">F</div>
+
+        <div>
+          <div class="brand-name">FAYNEX</div>
+          <div class="brand-subtitle">Next-Generation Intelligence</div>
+        </div>
+      </div>
+
+      <button class="new-chat" id="newChatBtn">
+        <span>＋</span>
+        <span>New conversation</span>
+      </button>
+
+      <div class="sidebar-section">
+
+        <div class="section-title">Workspace</div>
+
+        <button class="nav-item">
+          <span class="nav-icon">⌂</span>
+          <span>Home</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon">◉</span>
+          <span>Explore</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon">⌕</span>
+          <span>Search chats</span>
+        </button>
+
+      </div>
+
+      <div class="sidebar-section recent">
+
+        <div class="section-title">Recent</div>
+
+        <div class="recent-item">
+          Welcome to FAYNEX
+        </div>
+
+        <div class="recent-item">
+          Creative ideas
+        </div>
+
+        <div class="recent-item">
+          New conversation
+        </div>
+
+      </div>
+
+      <div class="sidebar-bottom">
+
+        <div class="status-card">
+          <div class="status-line">
+            <span class="status-dot"></span>
+            <span>FAYNEX systems online</span>
+          </div>
+        </div>
+
+        <button class="nav-item" style="margin-top: 8px;">
+          <span class="nav-icon">⚙</span>
+          <span>Settings</span>
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+      <header class="topbar">
+
+        <div class="model-info">
+
+          <button
+            class="icon-btn mobile-menu"
+            id="menuBtn"
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+
+          <span class="model-orb"></span>
+
+          <div>
+            <div class="model-name">FAYNEX AI</div>
+            <div class="model-state">Ready for your command</div>
+          </div>
+
+        </div>
+
+        <div class="top-actions">
+
+          <button class="icon-btn" title="Search">
+            ⌕
+          </button>
+
+          <button class="icon-btn" title="Settings">
+            ⚙
+          </button>
+
+          <button class="icon-btn" title="More">
+            ⋯
+          </button>
+
+        </div>
+
+      </header>
+
+
+      <!-- =========================
+           CHAT AREA
+      ========================== -->
+
+      <section class="chat-area" id="chatArea">
+
+        <div class="welcome" id="welcome">
+
+          <div class="welcome-orb">
+            F
+          </div>
+
+          <h1>
+            Meet
+            <span class="gradient-text">
+              FAYNEX
+            </span>
+          </h1>
+
+          <p>
+            A next-generation AI assistant built to help you
+            think, create, learn, code and explore.
+          </p>
+
+          <div class="suggestions">
+
+            <button class="suggestion" data-prompt="Give me some creative ideas for a modern design project.">
+              <strong>✦ Create something</strong>
+              <span>Generate creative ideas and concepts</span>
+            </button>
+
+            <button class="suggestion" data-prompt="Explain artificial intelligence in a simple way.">
+              <strong>◈ Learn something</strong>
+              <span>Understand complex topics easily</span>
+            </button>
+
+            <button class="suggestion" data-prompt="Help me write clean and modern HTML and CSS.">
+              <strong>⌘ Build with code</strong>
+              <span>Develop websites and applications</span>
+            </button>
+
+            <button class="suggestion" data-prompt="Give me five useful ideas I can explore today.">
+              <strong>✧ Explore</strong>
+              <span>Discover new possibilities</span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="messages" id="messages"></div>
+
+      </section>
+
+
+      <!-- =========================
+           COMPOSER
+      ========================== -->
+
+      <div class="composer-wrap">
+
+        <div class="composer">
+
+          <textarea
+            id="promptInput"
+            rows="1"
+            placeholder="Ask FAYNEX anything..."
+          ></textarea>
+
+          <div class="composer-bottom">
+
+            <div class="composer-tools">
+
+              <button class="tool-btn" title="Attach file">
+                ＋
+              </button>
+
+              <button class="tool-btn" title="Voice">
+                ◉
+              </button>
+
+            </div>
+
+            <button
+              class="send-btn"
+              id="sendBtn"
+              title="Send"
+            >
+              ↑
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="disclaimer">
+          FAYNEX AI can make mistakes. Verify important information.
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <script>
+
+    const input = document.getElementById("promptInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const messages = document.getElementById("messages");
+    const welcome = document.getElementById("welcome");
+    const chatArea = document.getElementById("chatArea");
+    const newChatBtn = document.getElementById("newChatBtn");
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+
+    /* =========================
+       AUTO RESIZE
+    ========================== */
+
+    input.addEventListener("input", () => {
+      input.style.height = "auto";
+      input.style.height =
+        Math.min(input.scrollHeight, 150) + "px";
+    });
+
+
+    /* =========================
+       SEND MESSAGE
+    ========================== */
+
+    function sendMessage() {
+
+      const text = input.value.trim();
+
+      if (!text) return;
+
+      welcome.style.display = "none";
+
+      addMessage("user", text);
+
+      input.value = "";
+      input.style.height = "auto";
+
+      /*
+        Backend connection will be added later.
+        For now this only demonstrates the UI.
+      */
+
+      setTimeout(() => {
+
+        addMessage(
+          "ai",
+          "FAYNEX is ready. The AI engine will be connected in the next stage."
+        );
+
+      }, 500);
+
+    }
+
+
+    /* =========================
+       ADD MESSAGE
+    ========================== */
+
+    function addMessage(type, text) {
+
+      const message = document.createElement("div");
+
+      message.className = "message";
+
+      const avatar = document.createElement("div");
+
+      avatar.className =
+        "avatar " + (type === "user" ? "user" : "ai");
+
+      avatar.textContent =
+        type === "user" ? "YOU" : "F";
+
+      const content = document.createElement("div");
+
+      content.className = "message-content";
+
+      const label = document.createElement("div");
+
+      label.className = "message-label";
+
+      label.textContent =
+        type === "user" ? "You" : "FAYNEX";
+
+      const messageText = document.createElement("div");
+
+      messageText.className = "message-text";
+
+      messageText.textContent = text;
+
+      content.appendChild(label);
+      content.appendChild(messageText);
+
+      message.appendChild(avatar);
+      message.appendChild(content);
+
+      messages.appendChild(message);
+
+      chatArea.scrollTo({
+        top: chatArea.scrollHeight,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    /* =========================
+       ENTER TO SEND
+    ========================== */
+
+    input.addEventListener("keydown", (event) => {
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+
+        sendMessage();
+
+      }
+
+    });
+
+
+    sendBtn.addEventListener(
+      "click",
+      sendMessage
+    );
+
+
+    /* =========================
+       SUGGESTIONS
+    ========================== */
+
+    document
+      .querySelectorAll(".suggestion")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          input.value =
+            button.dataset.prompt;
+
+          input.dispatchEvent(
+            new Event("input")
+          );
+
+          input.focus();
+
+        });
+
+      });
+
+
+    /* =========================
+       NEW CHAT
+    ========================== */
+
+    newChatBtn.addEventListener("click", () => {
+
+      messages.innerHTML = "";
+
+      welcome.style.display = "flex";
+
+      input.value = "";
+
+      input.style.height = "auto";
+
+    });
+
+
+    /* =========================
+       MOBILE MENU
+    ========================== */
+
+    menuBtn.addEventListener("click", () => {
+
+      sidebar.classList.toggle("open");
+
+    });
+
+  </script>
+
 </body>
 </html>
