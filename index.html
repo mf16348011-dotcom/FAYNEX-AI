@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>FAYNEX AI</title>
-
   <meta
     name="description"
     content="FAYNEX AI — Next-Generation Intelligence"
   />
 
   <style>
-
     * {
       margin: 0;
       padding: 0;
@@ -36,16 +29,8 @@
       --danger: #ef4444;
     }
 
-    html,
     body {
-      width: 100%;
-      height: 100%;
-    }
-
-    body {
-
       min-height: 100vh;
-
       background:
         radial-gradient(
           circle at 50% -10%,
@@ -58,9 +43,7 @@
           transparent 30%
         ),
         var(--bg);
-
       color: var(--text);
-
       font-family:
         Inter,
         ui-sans-serif,
@@ -69,7 +52,6 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-
       overflow: hidden;
     }
 
@@ -85,530 +67,496 @@
 
     /* =========================
        APP
-    ========================== */
+    ========================= */
 
     .app {
-
       height: 100vh;
-
       display: flex;
-
       position: relative;
     }
 
     /* =========================
        SIDEBAR
-    ========================== */
+    ========================= */
 
     .sidebar {
-
       width: 270px;
       height: 100vh;
-
       background: rgba(8, 10, 15, 0.92);
-
       border-right: 1px solid var(--border);
-
       backdrop-filter: blur(20px);
-
       display: flex;
       flex-direction: column;
-
       padding: 22px 16px;
-
       z-index: 20;
-
-      transition:
-        transform 0.3s ease;
+      transition: transform 0.3s ease;
     }
 
     .brand {
-
       display: flex;
       align-items: center;
-
       gap: 12px;
-
-      padding:
-        4px 8px 25px;
+      padding: 4px 8px 25px;
     }
 
     .brand-logo {
-
       width: 38px;
       height: 38px;
-
       border-radius: 12px;
-
       background:
-        linear-gradient(
-          135deg,
-          var(--accent),
-          var(--accent-2)
-        );
-
+        linear-gradient(135deg, var(--accent), var(--accent-2));
       display: grid;
       place-items: center;
-
       font-size: 18px;
       font-weight: 800;
-
       box-shadow:
-        0 0 25px
-        rgba(99, 102, 241, 0.35);
+        0 0 25px rgba(99, 102, 241, 0.35);
     }
 
     .brand-name {
-
       font-size: 19px;
-
       font-weight: 750;
-
       letter-spacing: 0.5px;
     }
 
     .brand-subtitle {
-
       color: var(--muted);
-
       font-size: 10px;
-
       margin-top: 2px;
-
       letter-spacing: 1.2px;
-
       text-transform: uppercase;
     }
 
     .new-chat {
-
       width: 100%;
-
-      padding:
-        13px 15px;
-
+      padding: 13px 15px;
       border-radius: 12px;
-
       color: white;
-
       background:
         linear-gradient(
           135deg,
           rgba(139, 92, 246, 0.95),
           rgba(99, 102, 241, 0.95)
         );
-
       font-weight: 650;
-
       display: flex;
       align-items: center;
-
       gap: 10px;
-
-      box-shadow:
-        0 8px 30px
-        rgba(99, 102, 241, 0.15);
-
-      transition:
-        0.2s ease;
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
+      transition: 0.2s ease;
     }
 
     .new-chat:hover {
-
-      transform:
-        translateY(-1px);
-
-      box-shadow:
-        0 10px 35px
-        rgba(99, 102, 241, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 35px rgba(99, 102, 241, 0.3);
     }
 
     .sidebar-section {
-
       margin-top: 28px;
     }
 
     .section-title {
-
       color: #686e7c;
-
       font-size: 10px;
-
       font-weight: 700;
-
       letter-spacing: 1.4px;
-
       text-transform: uppercase;
-
-      padding:
-        0 10px 10px;
+      padding: 0 10px 10px;
     }
 
     .nav-item {
-
       width: 100%;
-
-      padding:
-        11px 12px;
-
+      padding: 11px 12px;
       background: transparent;
-
       color: #a9aebb;
-
       border-radius: 10px;
-
       display: flex;
       align-items: center;
-
       gap: 11px;
-
       text-align: left;
-
       margin-bottom: 3px;
-
-      transition:
-        0.2s ease;
+      transition: 0.2s ease;
     }
 
     .nav-item:hover {
-
-      background:
-        rgba(255, 255, 255, 0.045);
-
+      background: rgba(255, 255, 255, 0.045);
       color: white;
     }
 
     .nav-icon {
-
       width: 20px;
-
       text-align: center;
-
       opacity: 0.9;
     }
 
     .recent {
-
       margin-top: 8px;
-
       overflow: hidden;
     }
 
     .recent-item {
-
       color: #777e8e;
-
       font-size: 12px;
-
-      padding:
-        9px 11px;
-
+      padding: 9px 11px;
       white-space: nowrap;
-
       overflow: hidden;
-
       text-overflow: ellipsis;
-
       border-radius: 8px;
     }
 
     .recent-item:hover {
-
-      background:
-        rgba(255, 255, 255, 0.035);
-
+      background: rgba(255, 255, 255, 0.035);
       color: #bfc4cf;
     }
 
-    .sidebar-bottom {
+    .recent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      max-height: 42vh;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
 
+    .recent-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .recent-list::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+    }
+
+    .recent-chat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .recent-chat.active {
+      background: rgba(139, 92, 246, 0.10);
+    }
+
+    .recent-chat-title {
+      flex: 1;
+      min-width: 0;
+      color: #8f96a5;
+      font-size: 12px;
+      padding: 9px 8px 9px 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: transparent;
+      text-align: left;
+      border-radius: 8px;
+    }
+
+    .recent-chat.active .recent-chat-title {
+      color: #ddd6fe;
+    }
+
+    .recent-chat-title:hover {
+      color: white;
+      background: rgba(255,255,255,0.035);
+    }
+
+    .recent-chat-actions {
+      display: flex;
+      gap: 1px;
+      opacity: 0;
+      transition: opacity .15s ease;
+    }
+
+    .recent-chat:hover .recent-chat-actions,
+    .recent-chat.active .recent-chat-actions {
+      opacity: 1;
+    }
+
+    .recent-mini {
+      width: 25px;
+      height: 25px;
+      border-radius: 7px;
+      background: transparent;
+      color: #686f7e;
+      font-size: 12px;
+    }
+
+    .recent-mini:hover {
+      color: white;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .empty-recent {
+      color: #555c6b;
+      font-size: 11px;
+      padding: 8px 11px;
+    }
+
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 90px 20px 20px;
+      background: rgba(0,0,0,0.58);
+      backdrop-filter: blur(8px);
+    }
+
+    .search-overlay.open {
+      display: flex;
+    }
+
+    .search-panel {
+      width: min(620px, 100%);
+      max-height: min(70vh, 620px);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      background: #0d1017;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.55);
+    }
+
+    .search-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      font-size: 14px;
+    }
+
+    .search-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.05);
+      color: #9da3b0;
+    }
+
+    .search-results {
+      overflow-y: auto;
+      max-height: 52vh;
+      padding: 8px;
+    }
+
+    .search-result {
+      width: 100%;
+      padding: 12px;
+      text-align: left;
+      border-radius: 11px;
+      background: transparent;
+      color: #d8dbe3;
+    }
+
+    .search-result:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .search-result-title {
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .search-result-meta {
+      margin-top: 4px;
+      color: #686f7d;
+      font-size: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-empty {
+      color: #646b79;
+      font-size: 12px;
+      padding: 20px 12px;
+      text-align: center;
+    }
+
+
+    .sidebar-bottom {
       margin-top: auto;
     }
 
     .status-card {
-
       padding: 12px;
-
-      border:
-        1px solid var(--border);
-
-      background:
-        rgba(255, 255, 255, 0.025);
-
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.025);
       border-radius: 12px;
     }
 
     .status-line {
-
       display: flex;
-
       align-items: center;
-
       gap: 8px;
-
       color: #aeb4c1;
-
       font-size: 11px;
     }
 
     .status-dot {
-
       width: 7px;
       height: 7px;
-
       background: #22c55e;
-
       border-radius: 50%;
-
-      box-shadow:
-        0 0 10px
-        rgba(34, 197, 94, 0.8);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
     }
 
     /* =========================
        MAIN
-    ========================== */
+    ========================= */
 
     .main {
-
       flex: 1;
-
       height: 100vh;
-
       display: flex;
-
       flex-direction: column;
-
       min-width: 0;
     }
 
-    /* =========================
-       TOPBAR
-    ========================== */
-
     .topbar {
-
       height: 70px;
-
-      border-bottom:
-        1px solid var(--border);
-
+      border-bottom: 1px solid var(--border);
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
-
-      padding:
-        0 26px;
-
-      background:
-        rgba(6, 7, 11, 0.65);
-
-      backdrop-filter:
-        blur(18px);
+      padding: 0 26px;
+      background: rgba(6, 7, 11, 0.65);
+      backdrop-filter: blur(18px);
     }
 
     .model-info {
-
       display: flex;
-
       align-items: center;
-
       gap: 10px;
     }
 
     .model-orb {
-
       width: 9px;
       height: 9px;
-
       border-radius: 50%;
-
-      background:
-        var(--accent);
-
-      box-shadow:
-        0 0 14px
-        rgba(139, 92, 246, 0.9);
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.9);
     }
 
     .model-name {
-
       font-size: 13px;
-
       font-weight: 650;
     }
 
     .model-state {
-
       color: var(--muted);
-
       font-size: 11px;
     }
 
     .top-actions {
-
       display: flex;
-
       gap: 7px;
     }
 
     .icon-btn {
-
       width: 38px;
       height: 38px;
-
       border-radius: 10px;
-
       background: transparent;
-
       color: #8e95a4;
-
       display: grid;
-
       place-items: center;
-
       font-size: 16px;
-
-      transition:
-        0.2s ease;
+      transition: 0.2s ease;
     }
 
     .icon-btn:hover {
-
-      background:
-        rgba(255, 255, 255, 0.06);
-
+      background: rgba(255, 255, 255, 0.06);
       color: white;
     }
 
     .mobile-menu {
-
       display: none;
     }
 
     /* =========================
-       CHAT AREA
-    ========================== */
+       CHAT
+    ========================= */
 
     .chat-area {
-
       flex: 1;
-
       overflow-y: auto;
-
       scroll-behavior: smooth;
     }
 
     .chat-area::-webkit-scrollbar {
-
       width: 6px;
     }
 
     .chat-area::-webkit-scrollbar-thumb {
-
-      background:
-        rgba(255, 255, 255, 0.08);
-
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 20px;
     }
 
-    /* =========================
-       WELCOME
-    ========================== */
-
     .welcome {
-
-      min-height:
-        calc(100vh - 220px);
-
+      min-height: calc(100vh - 220px);
       display: flex;
-
       flex-direction: column;
-
       align-items: center;
-
       justify-content: center;
-
-      padding:
-        30px 20px;
-
+      padding: 30px 20px;
       text-align: center;
     }
 
     .welcome-orb {
-
       width: 76px;
       height: 76px;
-
       border-radius: 24px;
-
       background:
-
         radial-gradient(
           circle at 30% 25%,
           #c4b5fd,
           transparent 20%
         ),
-
         linear-gradient(
           135deg,
           #7c3aed,
           #4f46e5
         );
-
       display: grid;
-
       place-items: center;
-
       font-size: 27px;
-
       font-weight: 850;
-
       box-shadow:
-        0 0 55px
-        rgba(99, 102, 241, 0.3);
-
-      animation:
-        float 4s
-        ease-in-out
-        infinite;
+        0 0 55px rgba(99, 102, 241, 0.3);
+      animation: float 4s ease-in-out infinite;
     }
 
     @keyframes float {
-
-      0%,
-      100% {
-        transform:
-          translateY(0);
+      0%, 100% {
+        transform: translateY(0);
       }
 
       50% {
-        transform:
-          translateY(-7px);
+        transform: translateY(-7px);
       }
     }
 
     .welcome h1 {
-
       margin-top: 26px;
-
-      font-size:
-        clamp(
-          30px,
-          5vw,
-          48px
-        );
-
+      font-size: clamp(30px, 5vw, 48px);
       line-height: 1.05;
-
-      letter-spacing:
-        -1.8px;
+      letter-spacing: -1.8px;
     }
 
     .gradient-text {
-
       background:
         linear-gradient(
           90deg,
@@ -616,580 +564,140 @@
           #a78bfa,
           #818cf8
         );
-
-      -webkit-background-clip:
-        text;
-
-      background-clip:
-        text;
-
+      -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
     .welcome p {
-
       max-width: 580px;
-
       margin-top: 14px;
-
       color: var(--muted);
-
       line-height: 1.7;
-
       font-size: 14px;
     }
 
     .suggestions {
-
-      width:
-        min(
-          760px,
-          100%
-        );
-
+      width: min(760px, 100%);
       display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-
       margin-top: 32px;
     }
 
     .suggestion {
-
       text-align: left;
-
       padding: 15px;
-
-      border:
-        1px solid var(--border);
-
-      background:
-        rgba(255, 255, 255, 0.025);
-
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.025);
       color: #b6bbc7;
-
       border-radius: 13px;
-
-      transition:
-        0.2s ease;
+      transition: 0.2s ease;
     }
 
     .suggestion:hover {
-
-      border-color:
-        rgba(
-          139,
-          92,
-          246,
-          0.35
-        );
-
-      background:
-        rgba(
-          139,
-          92,
-          246,
-          0.06
-        );
-
-      transform:
-        translateY(-1px);
+      border-color: rgba(139, 92, 246, 0.35);
+      background: rgba(139, 92, 246, 0.06);
+      transform: translateY(-1px);
     }
 
     .suggestion strong {
-
       display: block;
-
       color: #e8eaf0;
-
       font-size: 12px;
-
       margin-bottom: 5px;
     }
 
     .suggestion span {
-
       font-size: 11px;
-
       color: #727988;
     }
 
     /* =========================
        MESSAGES
-    ========================== */
+    ========================= */
 
     .messages {
-
-      width:
-        min(
-          900px,
-          100%
-        );
-
-      margin:
-        0 auto;
-
-      padding:
-        35px 20px 150px;
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding: 35px 20px 150px;
     }
 
     .message {
-
       display: flex;
-
       gap: 13px;
-
       margin-bottom: 28px;
-
-      animation:
-        messageIn
-        0.25s ease;
+      animation: messageIn 0.25s ease;
     }
 
     @keyframes messageIn {
-
       from {
         opacity: 0;
-        transform:
-          translateY(6px);
+        transform: translateY(6px);
       }
 
       to {
         opacity: 1;
-        transform:
-          translateY(0);
+        transform: translateY(0);
       }
     }
 
     .avatar {
-
-      flex:
-        0 0 34px;
-
+      flex: 0 0 34px;
       width: 34px;
       height: 34px;
-
       border-radius: 11px;
-
       display: grid;
-
       place-items: center;
-
       font-size: 11px;
-
       font-weight: 800;
     }
 
     .avatar.user {
-
-      background:
-        #20242f;
-
-      color:
-        #d5d9e2;
+      background: #20242f;
+      color: #d5d9e2;
     }
 
     .avatar.ai {
-
       background:
         linear-gradient(
           135deg,
           #7c3aed,
           #4f46e5
         );
-
       color: white;
     }
 
     .message-content {
-
       min-width: 0;
-
       padding-top: 4px;
-
-      width: 100%;
     }
 
     .message-label {
-
       font-size: 11px;
-
       font-weight: 700;
-
       color: #9ca2af;
-
       margin-bottom: 7px;
     }
 
     .message-text {
-
-      color:
-        #d9dce4;
-
+      color: #d9dce4;
       font-size: 14px;
-
       line-height: 1.75;
-
-      white-space:
-        pre-wrap;
-
-      word-break:
-        break-word;
-    }
-
-    /* =========================
-       MARKDOWN
-    ========================== */
-
-    .message-text.markdown {
-
-      white-space:
-        normal;
-    }
-
-    .message-text.markdown p {
-
-      margin:
-        0 0 12px;
-    }
-
-    .message-text.markdown p:last-child {
-
-      margin-bottom: 0;
-    }
-
-    .message-text.markdown h1,
-    .message-text.markdown h2,
-    .message-text.markdown h3 {
-
-      color: #f4f5f8;
-
-      margin:
-        18px 0 9px;
-
-      line-height: 1.3;
-    }
-
-    .message-text.markdown h1 {
-
-      font-size: 22px;
-    }
-
-    .message-text.markdown h2 {
-
-      font-size: 19px;
-    }
-
-    .message-text.markdown h3 {
-
-      font-size: 16px;
-    }
-
-    .message-text.markdown ul,
-    .message-text.markdown ol {
-
-      margin:
-        8px 0 12px 22px;
-    }
-
-    .message-text.markdown li {
-
-      margin:
-        4px 0;
-    }
-
-    .message-text.markdown blockquote {
-
-      margin:
-        12px 0;
-
-      padding:
-        8px 14px;
-
-      border-left:
-        3px solid
-        #8b5cf6;
-
-      color:
-        #aeb4c2;
-
-      background:
-        rgba(
-          139,
-          92,
-          246,
-          0.06
-        );
-
-      border-radius:
-        0 8px 8px 0;
-    }
-
-    .message-text.markdown a {
-
-      color:
-        #a78bfa;
-    }
-
-    .message-text.markdown code {
-
-      padding:
-        2px 6px;
-
-      border-radius:
-        6px;
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.07
-        );
-
-      color:
-        #ddd6fe;
-
-      font-size:
-        0.92em;
-    }
-
-    /* =========================
-       CODE BLOCK
-    ========================== */
-
-    .code-wrap {
-
-      position: relative;
-
-      margin:
-        12px 0;
-
-      border:
-        1px solid
-        rgba(
-          255,
-          255,
-          255,
-          0.08
-        );
-
-      border-radius:
-        12px;
-
-      overflow: hidden;
-
-      background:
-        #090b10;
-    }
-
-    .code-wrap pre {
-
-      margin: 0;
-
-      padding: 15px;
-
-      overflow-x: auto;
-
-      font-size: 12px;
-
-      line-height: 1.65;
-    }
-
-    .code-wrap pre code {
-
-      padding: 0;
-
-      background:
-        transparent;
-
-      color:
-        #e5e7eb;
-
-      white-space:
-        pre;
-    }
-
-    .copy-code {
-
-      position: absolute;
-
-      top: 8px;
-
-      right: 8px;
-
-      padding:
-        6px 9px;
-
-      border-radius:
-        7px;
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.07
-        );
-
-      color:
-        #aeb4c2;
-
-      font-size:
-        10px;
-    }
-
-    .copy-code:hover {
-
-      color: white;
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.12
-        );
-    }
-
-    /* =========================
-       MESSAGE ACTIONS
-    ========================== */
-
-    .message-actions {
-
-      display: flex;
-
-      gap: 6px;
-
-      margin-top: 10px;
-    }
-
-    .message-action {
-
-      padding:
-        5px 8px;
-
-      border-radius:
-        7px;
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.04
-        );
-
-      color:
-        #747b8a;
-
-      font-size:
-        10px;
-    }
-
-    .message-action:hover {
-
-      color: white;
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.08
-        );
-    }
-
-    /* =========================
-       TYPING
-    ========================== */
-
-    .typing {
-
-      display:
-        inline-flex;
-
-      gap: 4px;
-
-      align-items:
-        center;
-
-      min-height:
-        20px;
-    }
-
-    .typing span {
-
-      width: 5px;
-      height: 5px;
-
-      border-radius:
-        50%;
-
-      background:
-        #8b5cf6;
-
-      animation:
-        typing
-        1s
-        infinite
-        ease-in-out;
-    }
-
-    .typing span:nth-child(2) {
-
-      animation-delay:
-        0.15s;
-    }
-
-    .typing span:nth-child(3) {
-
-      animation-delay:
-        0.30s;
-    }
-
-    @keyframes typing {
-
-      0%,
-      60%,
-      100% {
-
-        transform:
-          translateY(0);
-
-        opacity:
-          0.35;
-      }
-
-      30% {
-
-        transform:
-          translateY(-4px);
-
-        opacity:
-          1;
-      }
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     /* =========================
        COMPOSER
-    ========================== */
+    ========================= */
 
     .composer-wrap {
-
       position: absolute;
-
       left: 270px;
       right: 0;
       bottom: 0;
-
-      padding:
-        18px 24px 22px;
-
+      padding: 18px 24px 22px;
       background:
         linear-gradient(
           to top,
@@ -1199,356 +707,367 @@
     }
 
     .composer {
-
-      width:
-        min(
-          850px,
-          100%
-        );
-
-      margin:
-        auto;
-
-      border:
-        1px solid
-        rgba(
-          255,
-          255,
-          255,
-          0.1
-        );
-
-      background:
-        rgba(
-          13,
-          15,
-          22,
-          0.92
-        );
-
-      backdrop-filter:
-        blur(20px);
-
-      border-radius:
-        18px;
-
-      padding:
-        11px;
-
+      width: min(850px, 100%);
+      margin: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(13, 15, 22, 0.92);
+      backdrop-filter: blur(20px);
+      border-radius: 18px;
+      padding: 11px;
       box-shadow:
-        0 15px 50px
-        rgba(
-          0,
-          0,
-          0,
-          0.35
-        );
+        0 15px 50px rgba(0, 0, 0, 0.35);
     }
 
     .composer textarea {
-
       width: 100%;
-
       resize: none;
-
       border: 0;
-
       outline: 0;
-
-      background:
-        transparent;
-
+      background: transparent;
       color: white;
-
-      padding:
-        8px 10px;
-
-      min-height:
-        44px;
-
-      max-height:
-        150px;
-
-      font-size:
-        14px;
-
-      line-height:
-        1.5;
+      padding: 8px 10px;
+      min-height: 44px;
+      max-height: 150px;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .composer textarea::placeholder {
-
-      color:
-        #626978;
+      color: #626978;
     }
 
     .composer-bottom {
-
       display: flex;
-
       align-items: center;
-
-      justify-content:
-        space-between;
-
-      padding:
-        3px 3px 2px;
+      justify-content: space-between;
+      padding: 3px 3px 2px;
     }
 
     .composer-tools {
-
       display: flex;
-
       gap: 3px;
     }
 
     .tool-btn {
-
       width: 35px;
       height: 35px;
-
-      border-radius:
-        9px;
-
-      background:
-        transparent;
-
-      color:
-        #7e8594;
-
+      border-radius: 9px;
+      background: transparent;
+      color: #7e8594;
       display: grid;
-
       place-items: center;
-
-      transition:
-        0.2s ease;
+      transition: 0.2s ease;
     }
 
     .tool-btn:hover {
-
       color: white;
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.06
-        );
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .send-btn {
-
       width: 39px;
       height: 39px;
-
-      border-radius:
-        11px;
-
+      border-radius: 11px;
       background:
         linear-gradient(
           135deg,
           #8b5cf6,
           #6366f1
         );
-
       color: white;
-
       display: grid;
-
       place-items: center;
-
       font-size: 16px;
-
-      transition:
-        0.2s ease;
-
-      box-shadow:
-        0 5px 20px
-        rgba(
-          99,
-          102,
-          241,
-          0.2
-        );
+      transition: 0.2s ease;
+      box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
     }
 
     .send-btn:hover {
-
-      transform:
-        scale(1.04);
-
-      box-shadow:
-        0 7px 25px
-        rgba(
-          99,
-          102,
-          241,
-          0.4
-        );
-    }
-
-    .send-btn.stop {
-
-      background:
-        rgba(
-          239,
-          68,
-          68,
-          0.15
-        );
-
-      color:
-        #fca5a5;
-
-      box-shadow:
-        none;
+      transform: scale(1.04);
+      box-shadow: 0 7px 25px rgba(99, 102, 241, 0.4);
     }
 
     .disclaimer {
-
       text-align: center;
-
-      color:
-        #505664;
-
-      font-size:
-        9px;
-
-      margin-top:
-        9px;
+      color: #505664;
+      font-size: 9px;
+      margin-top: 9px;
     }
 
     /* =========================
        MOBILE
-    ========================== */
+    ========================= */
 
     @media (max-width: 800px) {
-
       .sidebar {
-
         position: fixed;
-
         left: 0;
         top: 0;
-
-        transform:
-          translateX(-100%);
-
-        box-shadow:
-          20px 0 50px
-          rgba(
-            0,
-            0,
-            0,
-            0.5
-          );
+        transform: translateX(-100%);
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
       }
 
       .sidebar.open {
-
-        transform:
-          translateX(0);
+        transform: translateX(0);
       }
 
       .mobile-menu {
-
         display: grid;
       }
 
       .topbar {
-
-        padding:
-          0 15px;
+        padding: 0 15px;
       }
 
       .composer-wrap {
-
         left: 0;
-
-        padding:
-          12px 12px 15px;
+        padding: 12px 12px 15px;
       }
 
       .welcome {
-
-        min-height:
-          calc(
-            100vh - 190px
-          );
+        min-height: calc(100vh - 190px);
       }
 
       .suggestions {
-
-        grid-template-columns:
-          1fr;
+        grid-template-columns: 1fr;
       }
 
       .welcome h1 {
-
-        font-size:
-          34px;
+        font-size: 34px;
       }
     }
 
     @media (max-width: 500px) {
-
       .model-state {
-
         display: none;
       }
 
-      .top-actions
-      .icon-btn:nth-child(2) {
-
+      .top-actions .icon-btn:nth-child(2) {
         display: none;
       }
 
       .welcome {
-
-        padding-left:
-          15px;
-
-        padding-right:
-          15px;
+        padding-left: 15px;
+        padding-right: 15px;
       }
 
       .welcome-orb {
-
         width: 65px;
         height: 65px;
-
-        border-radius:
-          20px;
+        border-radius: 20px;
       }
 
       .welcome p {
-
-        font-size:
-          13px;
+        font-size: 13px;
       }
 
       .messages {
-
-        padding-left:
-          13px;
-
-        padding-right:
-          13px;
+        padding-left: 13px;
+        padding-right: 13px;
       }
+    }
+  
+    /* =========================
+       MARKDOWN / CODE
+    ========================== */
+
+    .message-text.markdown {
+      white-space: normal;
+    }
+
+    .message-text.markdown p {
+      margin: 0 0 12px;
+    }
+
+    .message-text.markdown p:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-text.markdown h1,
+    .message-text.markdown h2,
+    .message-text.markdown h3 {
+      color: #f4f5f8;
+      margin: 18px 0 9px;
+      line-height: 1.3;
+    }
+
+    .message-text.markdown h1 { font-size: 22px; }
+    .message-text.markdown h2 { font-size: 19px; }
+    .message-text.markdown h3 { font-size: 16px; }
+
+    .message-text.markdown ul,
+    .message-text.markdown ol {
+      margin: 8px 0 12px 22px;
+    }
+
+    .message-text.markdown li {
+      margin: 4px 0;
+    }
+
+    .message-text.markdown blockquote {
+      margin: 12px 0;
+      padding: 8px 14px;
+      border-left: 3px solid #8b5cf6;
+      color: #aeb4c2;
+      background: rgba(139, 92, 246, 0.06);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .message-text.markdown a {
+      color: #a78bfa;
+    }
+
+    .message-text.markdown code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.07);
+      color: #ddd6fe;
+      font-size: 0.92em;
+    }
+
+    .code-wrap {
+      position: relative;
+      margin: 12px 0;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #090b10;
+    }
+
+    .code-wrap pre {
+      margin: 0;
+      padding: 15px;
+      overflow-x: auto;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .code-wrap pre code {
+      padding: 0;
+      background: transparent;
+      color: #e5e7eb;
+      white-space: pre;
+    }
+
+    .copy-code {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 9px;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.07);
+      color: #aeb4c2;
+      font-size: 10px;
+    }
+
+    .copy-code:hover {
+      color: white;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .message-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .message-action {
+      padding: 5px 8px;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.04);
+      color: #747b8a;
+      font-size: 10px;
+    }
+
+    .message-action:hover {
+      color: white;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .typing {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      min-height: 20px;
+    }
+
+    .typing span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      animation: typing 1s infinite ease-in-out;
+    }
+
+    .typing span:nth-child(2) { animation-delay: .15s; }
+    .typing span:nth-child(3) { animation-delay: .30s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: .35; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    .voice-btn.listening {
+      background: rgba(239, 68, 68, 0.14);
+      color: #fca5a5;
+      box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.18) inset;
+      animation: voicePulse 1.2s infinite ease-in-out;
+    }
+
+    .voice-btn.unsupported {
+      opacity: 0.45;
+    }
+
+    @keyframes voicePulse {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.18) inset, 0 0 0 rgba(239, 68, 68, 0); }
+      50% { box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.18) inset, 0 0 18px rgba(239, 68, 68, 0.22); }
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 105px;
+      transform: translate(-50%, 12px);
+      z-index: 300;
+      max-width: min(460px, calc(100vw - 32px));
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      background: rgba(15, 18, 27, 0.96);
+      color: #e6e8ef;
+      font-size: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      backdrop-filter: blur(14px);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .message-action.speaking {
+      color: #c4b5fd;
+      background: rgba(139,92,246,0.10);
+    }
+
+    @media (max-width: 800px) {
+      .toast {
+        bottom: 125px;
+      }
+    }
+
+    .stop-btn {
+      background: rgba(239, 68, 68, 0.12) !important;
+      color: #fca5a5 !important;
     }
 
   </style>
 
-  <!-- Markdown -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
-  </script>
-
-  <!-- Security for rendered HTML -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js">
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
 
 </head>
 
@@ -1560,147 +1079,63 @@
          SIDEBAR
     ========================== -->
 
-    <aside
-      class="sidebar"
-      id="sidebar"
-    >
+    <aside class="sidebar" id="sidebar">
 
       <div class="brand">
-
-        <div class="brand-logo">
-          F
-        </div>
+        <div class="brand-logo">F</div>
 
         <div>
-
-          <div class="brand-name">
-            FAYNEX
-          </div>
-
-          <div class="brand-subtitle">
-            Next-Generation Intelligence
-          </div>
-
+          <div class="brand-name">FAYNEX</div>
+          <div class="brand-subtitle">Next-Generation Intelligence</div>
         </div>
-
       </div>
 
-
-      <button
-        class="new-chat"
-        id="newChatBtn"
-      >
-
+      <button class="new-chat" id="newChatBtn">
         <span>＋</span>
-
-        <span>
-          New conversation
-        </span>
-
+        <span>New conversation</span>
       </button>
-
 
       <div class="sidebar-section">
 
-        <div class="section-title">
-          Workspace
-        </div>
-
+        <div class="section-title">Workspace</div>
 
         <button class="nav-item">
-
-          <span class="nav-icon">
-            ⌂
-          </span>
-
-          <span>
-            Home
-          </span>
-
+          <span class="nav-icon">⌂</span>
+          <span>Home</span>
         </button>
 
-
         <button class="nav-item">
-
-          <span class="nav-icon">
-            ◉
-          </span>
-
-          <span>
-            Explore
-          </span>
-
+          <span class="nav-icon">◉</span>
+          <span>Explore</span>
         </button>
 
-
-        <button class="nav-item">
-
-          <span class="nav-icon">
-            ⌕
-          </span>
-
-          <span>
-            Search chats
-          </span>
-
+        <button class="nav-item" id="searchChatsBtn">
+          <span class="nav-icon">⌕</span>
+          <span>Search chats</span>
         </button>
 
       </div>
 
+      <div class="sidebar-section recent">
 
-      <div
-        class="sidebar-section recent"
-      >
+        <div class="section-title">Recent</div>
 
-        <div class="section-title">
-          Recent
-        </div>
-
-        <div class="recent-item">
-          Welcome to FAYNEX
-        </div>
-
-        <div class="recent-item">
-          Creative ideas
-        </div>
-
-        <div class="recent-item">
-          New conversation
-        </div>
+        <div class="recent-list" id="recentList"></div>
 
       </div>
-
 
       <div class="sidebar-bottom">
 
         <div class="status-card">
-
           <div class="status-line">
-
             <span class="status-dot"></span>
-
-            <span id="statusText">
-              Checking FAYNEX...
-            </span>
-
+            <span>FAYNEX systems online</span>
           </div>
-
         </div>
 
-
-        <button
-          class="nav-item"
-          style="margin-top: 8px;"
-        >
-
-          <span class="nav-icon">
-            ⚙
-          </span>
-
-          <span>
-            Settings
-          </span>
-
+        <button class="nav-item" style="margin-top: 8px;">
+          <span class="nav-icon">⚙</span>
+          <span>Settings</span>
         </button>
 
       </div>
@@ -1729,43 +1164,23 @@
           <span class="model-orb"></span>
 
           <div>
-
-            <div class="model-name">
-              FAYNEX AI
-            </div>
-
-            <div
-              class="model-state"
-              id="modelState"
-            >
-              Ready for your command
-            </div>
-
+            <div class="model-name">FAYNEX AI</div>
+            <div class="model-state">Ready for your command</div>
           </div>
 
         </div>
 
-
         <div class="top-actions">
 
-          <button
-            class="icon-btn"
-            title="Search"
-          >
+          <button class="icon-btn" title="Search">
             ⌕
           </button>
 
-          <button
-            class="icon-btn"
-            title="Settings"
-          >
+          <button class="icon-btn" title="Settings">
             ⚙
           </button>
 
-          <button
-            class="icon-btn"
-            title="More"
-          >
+          <button class="icon-btn" title="More">
             ⋯
           </button>
 
@@ -1775,104 +1190,49 @@
 
 
       <!-- =========================
-           CHAT
+           CHAT AREA
       ========================== -->
 
-      <section
-        class="chat-area"
-        id="chatArea"
-      >
+      <section class="chat-area" id="chatArea">
 
-        <div
-          class="welcome"
-          id="welcome"
-        >
+        <div class="welcome" id="welcome">
 
           <div class="welcome-orb">
             F
           </div>
 
-
           <h1>
-
             Meet
-
             <span class="gradient-text">
               FAYNEX
             </span>
-
           </h1>
-
 
           <p>
             A next-generation AI assistant built to help you
             think, create, learn, code and explore.
           </p>
 
-
           <div class="suggestions">
 
-            <button
-              class="suggestion"
-              data-prompt="Give me some creative ideas for a modern design project."
-            >
-
-              <strong>
-                ✦ Create something
-              </strong>
-
-              <span>
-                Generate creative ideas and concepts
-              </span>
-
+            <button class="suggestion" data-prompt="Give me some creative ideas for a modern design project.">
+              <strong>✦ Create something</strong>
+              <span>Generate creative ideas and concepts</span>
             </button>
 
-
-            <button
-              class="suggestion"
-              data-prompt="Explain artificial intelligence in a simple way."
-            >
-
-              <strong>
-                ◈ Learn something
-              </strong>
-
-              <span>
-                Understand complex topics easily
-              </span>
-
+            <button class="suggestion" data-prompt="Explain artificial intelligence in a simple way.">
+              <strong>◈ Learn something</strong>
+              <span>Understand complex topics easily</span>
             </button>
 
-
-            <button
-              class="suggestion"
-              data-prompt="Help me write clean and modern HTML and CSS."
-            >
-
-              <strong>
-                ⌘ Build with code
-              </strong>
-
-              <span>
-                Develop websites and applications
-              </span>
-
+            <button class="suggestion" data-prompt="Help me write clean and modern HTML and CSS.">
+              <strong>⌘ Build with code</strong>
+              <span>Develop websites and applications</span>
             </button>
 
-
-            <button
-              class="suggestion"
-              data-prompt="Give me five useful ideas I can explore today."
-            >
-
-              <strong>
-                ✧ Explore
-              </strong>
-
-              <span>
-                Discover new possibilities
-              </span>
-
+            <button class="suggestion" data-prompt="Give me five useful ideas I can explore today.">
+              <strong>✧ Explore</strong>
+              <span>Discover new possibilities</span>
             </button>
 
           </div>
@@ -1880,10 +1240,7 @@
         </div>
 
 
-        <div
-          class="messages"
-          id="messages"
-        ></div>
+        <div class="messages" id="messages"></div>
 
       </section>
 
@@ -1902,30 +1259,25 @@
             placeholder="Ask FAYNEX anything..."
           ></textarea>
 
-
           <div class="composer-bottom">
 
             <div class="composer-tools">
 
-              <button
-                class="tool-btn"
-                id="attachBtn"
-                title="Attach file"
-              >
+              <button class="tool-btn" title="Attach file">
                 ＋
               </button>
 
-
               <button
-                class="tool-btn"
+                class="tool-btn voice-btn"
                 id="voiceBtn"
                 title="Voice input"
+                type="button"
+                aria-label="Voice input"
               >
                 ◉
               </button>
 
             </div>
-
 
             <button
               class="send-btn"
@@ -1939,12 +1291,8 @@
 
         </div>
 
-
         <div class="disclaimer">
-
-          FAYNEX AI can make mistakes.
-          Verify important information.
-
+          FAYNEX AI can make mistakes. Verify important information.
         </div>
 
       </div>
@@ -1954,2138 +1302,1418 @@
   </div>
 
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
-
+  
   <script>
+    const API_URL = "https://faynex-ai-api.mf16348011.workers.dev";
+    const CHATS_KEY = "faynex_chats_v2";
+    const ACTIVE_CHAT_KEY = "faynex_active_chat_v2";
+    const OLD_STORAGE_KEY = "faynex_current_conversation_v1";
 
-    /* =========================
-       CONFIG
-    ========================== */
+    let conversations = [];
+    let activeConversationId = null;
 
-    const API_URL =
-      "https://faynex-ai-api.mf16348011.workers.dev";
-
-    const STORAGE_KEY =
-      "faynex_current_conversation_v2";
-
-    const RECENT_KEY =
-      "faynex_recent_conversations_v2";
-
-
-    /* =========================
-       ELEMENTS
-    ========================== */
-
-    const input =
-      document.getElementById(
-        "promptInput"
-      );
-
-    const sendBtn =
-      document.getElementById(
-        "sendBtn"
-      );
-
-    const messages =
-      document.getElementById(
-        "messages"
-      );
-
-    const welcome =
-      document.getElementById(
-        "welcome"
-      );
-
-    const chatArea =
-      document.getElementById(
-        "chatArea"
-      );
-
-    const newChatBtn =
-      document.getElementById(
-        "newChatBtn"
-      );
-
-    const menuBtn =
-      document.getElementById(
-        "menuBtn"
-      );
-
-    const sidebar =
-      document.getElementById(
-        "sidebar"
-      );
-
-    const statusText =
-      document.getElementById(
-        "statusText"
-      );
-
-    const modelState =
-      document.getElementById(
-        "modelState"
-      );
-
-    const attachBtn =
-      document.getElementById(
-        "attachBtn"
-      );
-
-    const voiceBtn =
-      document.getElementById(
-        "voiceBtn"
-      );
-
-
-    /* =========================
-       STATE
-    ========================== */
-
-    let conversation = [];
+    const input = document.getElementById("promptInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const messages = document.getElementById("messages");
+    const welcome = document.getElementById("welcome");
+    const chatArea = document.getElementById("chatArea");
+    const newChatBtn = document.getElementById("newChatBtn");
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
 
     let isGenerating = false;
-
     let abortController = null;
 
-    let currentStreamingText = "";
-
-
     /* =========================
-       MARKDOWN
+       VOICE SYSTEM
     ========================== */
 
-    marked.setOptions({
+    const voiceBtn = document.getElementById("voiceBtn");
+    const toast = document.getElementById("toast");
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition ||
+      null;
 
-      gfm: true,
+    let recognition = null;
+    let isListening = false;
+    let speechUtterance = null;
+    let activeSpeakButton = null;
 
-      breaks: true
+    function showToast(message, duration = 2600) {
+      if (!toast) return;
 
-    });
+      toast.textContent = message;
+      toast.classList.add("show");
 
-
-    function renderMarkdown(text) {
-
-      if (
-        typeof marked ===
-        "undefined"
-      ) {
-        return escapeHtml(text);
-      }
-
-      const html =
-        marked.parse(
-          text || ""
-        );
-
-      return DOMPurify.sanitize(
-        html,
-        {
-          USE_PROFILES: {
-            html: true
-          }
-        }
-      );
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, duration);
     }
 
+    function cleanTextForSpeech(markdown) {
+      const temp = document.createElement("div");
+      temp.innerHTML = renderMarkdown(markdown || "");
+      return (temp.textContent || temp.innerText || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function stopSpeech() {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+
+      speechUtterance = null;
+
+      if (activeSpeakButton) {
+        activeSpeakButton.classList.remove("speaking");
+        activeSpeakButton.textContent = "Speak";
+        activeSpeakButton = null;
+      }
+    }
+
+    function speakText(text, button = null) {
+      if (!("speechSynthesis" in window)) {
+        showToast("Voice output is not supported in this browser.");
+        return;
+      }
+
+      const clean = cleanTextForSpeech(text);
+
+      if (!clean) {
+        showToast("There is no readable text to speak.");
+        return;
+      }
+
+      if (activeSpeakButton === button) {
+        stopSpeech();
+        return;
+      }
+
+      stopSpeech();
+
+      speechUtterance = new SpeechSynthesisUtterance(clean);
+      speechUtterance.lang = "en-US";
+      speechUtterance.rate = 1;
+      speechUtterance.pitch = 1;
+      speechUtterance.volume = 1;
+
+      if (button) {
+        activeSpeakButton = button;
+        button.classList.add("speaking");
+        button.textContent = "Stop";
+      }
+
+      speechUtterance.onend = stopSpeech;
+      speechUtterance.onerror = () => {
+        stopSpeech();
+        showToast("Voice output could not be started.");
+      };
+
+      window.speechSynthesis.speak(speechUtterance);
+    }
+
+    function setupVoiceInput() {
+      if (!voiceBtn) return;
+
+      if (!SpeechRecognition) {
+        voiceBtn.classList.add("unsupported");
+        voiceBtn.title = "Voice input is not supported in this browser";
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        isListening = true;
+        voiceBtn.classList.add("listening");
+        voiceBtn.textContent = "●";
+        voiceBtn.title = "Listening... click to stop";
+        showToast("Listening… speak now.", 1800);
+      };
+
+      recognition.onresult = event => {
+        let finalText = "";
+        let interimText = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript =
+            event.results[i][0]?.transcript || "";
+
+          if (event.results[i].isFinal) {
+            finalText += transcript;
+          } else {
+            interimText += transcript;
+          }
+        }
+
+        const current =
+          (finalText || interimText).trim();
+
+        if (current) {
+          input.value = current;
+          input.dispatchEvent(new Event("input"));
+        }
+      };
+
+      recognition.onerror = event => {
+        const messages = {
+          "not-allowed": "Microphone permission was blocked. Allow microphone access and try again.",
+          "audio-capture": "No microphone was detected.",
+          "no-speech": "No speech detected. Try again.",
+          "network": "Voice recognition needs a network connection in this browser."
+        };
+
+        if (event.error !== "aborted") {
+          showToast(
+            messages[event.error] ||
+            "Voice recognition could not start."
+          );
+        }
+      };
+
+      recognition.onend = () => {
+        isListening = false;
+        voiceBtn.classList.remove("listening");
+        voiceBtn.textContent = "◉";
+        voiceBtn.title = "Voice input";
+        input.focus();
+      };
+
+      voiceBtn.addEventListener("click", () => {
+        if (isListening) {
+          recognition.stop();
+          return;
+        }
+
+        try {
+          recognition.start();
+        } catch (error) {
+          console.warn("Voice recognition start failed:", error);
+        }
+      });
+    }
+
+    marked.setOptions({
+      gfm: true,
+      breaks: true
+    });
 
     function escapeHtml(text) {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-      div.textContent =
-        text;
-
+      const div = document.createElement("div");
+      div.textContent = text;
       return div.innerHTML;
     }
 
-
-    /* =========================
-       SCROLL
-    ========================== */
-
-    function scrollToBottom(
-      smooth = false
-    ) {
-
-      chatArea.scrollTo({
-
-        top:
-          chatArea.scrollHeight,
-
-        behavior:
-          smooth
-            ? "smooth"
-            : "auto"
-
+    function renderMarkdown(text) {
+      const rawHtml = marked.parse(text || "");
+      return DOMPurify.sanitize(rawHtml, {
+        USE_PROFILES: { html: true }
       });
-
     }
 
+    function scrollToBottom(smooth = false) {
+      chatArea.scrollTo({
+        top: chatArea.scrollHeight,
+        behavior: smooth ? "smooth" : "auto"
+      });
+    }
 
-    /* =========================
-       GENERATING STATE
-    ========================== */
-
-    function setGeneratingState(
-      generating
-    ) {
-
-      isGenerating =
-        generating;
+    function setGeneratingState(generating) {
+      isGenerating = generating;
+      sendBtn.disabled = false;
+      sendBtn.style.opacity = "1";
+      sendBtn.style.cursor = "pointer";
 
       if (generating) {
-
-        sendBtn.classList.add(
-          "stop"
-        );
-
-        sendBtn.textContent =
-          "■";
-
-        sendBtn.title =
-          "Stop generating";
-
-        modelState.textContent =
-          "Generating response...";
-
+        sendBtn.classList.add("stop-btn");
+        sendBtn.title = "Stop generating";
+        sendBtn.textContent = "■";
       } else {
-
-        sendBtn.classList.remove(
-          "stop"
-        );
-
-        sendBtn.textContent =
-          "↑";
-
-        sendBtn.title =
-          "Send";
-
-        modelState.textContent =
-          "Ready for your command";
+        sendBtn.classList.remove("stop-btn");
+        sendBtn.title = "Send";
+        sendBtn.textContent = "↑";
       }
-
     }
 
+    function addMessage(type, text, options = {}) {
+      const message = document.createElement("div");
+      message.className = "message";
 
-    /* =========================
-       ADD MESSAGE
-    ========================== */
+      const avatar = document.createElement("div");
+      avatar.className = "avatar " + (type === "user" ? "user" : "ai");
+      avatar.textContent = type === "user" ? "YOU" : "F";
 
-    function addMessage(
-      type,
-      text = "",
-      options = {}
-    ) {
+      const content = document.createElement("div");
+      content.className = "message-content";
 
-      const message =
-        document.createElement(
-          "div"
-        );
+      const label = document.createElement("div");
+      label.className = "message-label";
+      label.textContent = type === "user" ? "You" : "FAYNEX";
 
-      message.className =
-        "message";
+      const messageText = document.createElement("div");
+      messageText.className = "message-text";
 
-
-      const avatar =
-        document.createElement(
-          "div"
-        );
-
-      avatar.className =
-        "avatar " +
-        (
-          type === "user"
-            ? "user"
-            : "ai"
-        );
-
-      avatar.textContent =
-        type === "user"
-          ? "YOU"
-          : "F";
-
-
-      const content =
-        document.createElement(
-          "div"
-        );
-
-      content.className =
-        "message-content";
-
-
-      const label =
-        document.createElement(
-          "div"
-        );
-
-      label.className =
-        "message-label";
-
-      label.textContent =
-        type === "user"
-          ? "You"
-          : "FAYNEX";
-
-
-      const messageText =
-        document.createElement(
-          "div"
-        );
-
-      messageText.className =
-        "message-text";
-
-
-      if (
-        options.typing
-      ) {
-
+      if (options.typing) {
         messageText.innerHTML = `
-
-          <div
-            class="typing"
-            aria-label="FAYNEX is thinking"
-          >
-
-            <span></span>
-            <span></span>
-            <span></span>
-
+          <div class="typing" aria-label="FAYNEX is thinking">
+            <span></span><span></span><span></span>
           </div>
-
         `;
-
-      } else if (
-        type === "ai" &&
-        options.markdown !== false
-      ) {
-
-        messageText.classList.add(
-          "markdown"
-        );
-
-        messageText.innerHTML =
-          renderMarkdown(text);
-
+      } else if (type === "ai" && options.markdown !== false) {
+        messageText.classList.add("markdown");
+        messageText.innerHTML = renderMarkdown(text);
       } else {
-
-        messageText.textContent =
-          text;
-
+        messageText.textContent = text;
       }
 
+      content.appendChild(label);
+      content.appendChild(messageText);
 
-      content.appendChild(
-        label
-      );
+      if (type === "ai" && options.actions !== false) {
+        const actions = document.createElement("div");
+        actions.className = "message-actions";
+        actions.innerHTML = `
+          <button class="message-action copy-answer" type="button">Copy</button>
+          <button class="message-action regenerate-answer" type="button">Regenerate</button>
+        `;
+        content.appendChild(actions);
 
-      content.appendChild(
-        messageText
-      );
+        actions.querySelector(".copy-answer").addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(messageText.textContent || "");
+            actions.querySelector(".copy-answer").textContent = "Copied";
+            setTimeout(() => {
+              actions.querySelector(".copy-answer").textContent = "Copy";
+            }, 1200);
+          } catch {
+            actions.querySelector(".copy-answer").textContent = "Copy failed";
+          }
+        });
 
-
-      if (
-        type === "ai" &&
-        options.actions !== false
-      ) {
-
-        addMessageActions(
-          content,
-          messageText
-        );
-
+        actions.querySelector(".regenerate-answer").addEventListener("click", () => {
+          regenerateLastAnswer();
+        });
       }
 
-
-      message.appendChild(
-        avatar
-      );
-
-      message.appendChild(
-        content
-      );
-
-      messages.appendChild(
-        message
-      );
-
+      message.appendChild(avatar);
+      message.appendChild(content);
+      messages.appendChild(message);
 
       scrollToBottom(true);
-
 
       return messageText;
     }
 
+    function enhanceCodeBlocks(root) {
+      root.querySelectorAll("pre").forEach(pre => {
+        if (pre.parentElement.classList.contains("code-wrap")) return;
 
-    /* =========================
-       MESSAGE ACTIONS
-    ========================== */
+        const wrap = document.createElement("div");
+        wrap.className = "code-wrap";
 
-    function addMessageActions(
-      content,
-      messageText
-    ) {
+        const copy = document.createElement("button");
+        copy.type = "button";
+        copy.className = "copy-code";
+        copy.textContent = "Copy";
 
-      if (
-        content.querySelector(
-          ".message-actions"
-        )
-      ) {
+        copy.addEventListener("click", async () => {
+          const code = pre.innerText || "";
+          try {
+            await navigator.clipboard.writeText(code);
+            copy.textContent = "Copied";
+            setTimeout(() => copy.textContent = "Copy", 1200);
+          } catch {
+            copy.textContent = "Failed";
+          }
+        });
+
+        pre.parentNode.insertBefore(wrap, pre);
+        wrap.appendChild(pre);
+        wrap.appendChild(copy);
+      });
+    }
+
+    function updateAIMessage(messageText, text) {
+      messageText.classList.add("markdown");
+      messageText.innerHTML = renderMarkdown(text);
+      enhanceCodeBlocks(messageText);
+      scrollToBottom(false);
+    }
+
+    function makeId() {
+      return "chat_" + Date.now() + "_" +
+        Math.random().toString(36).slice(2, 8);
+    }
+
+    function createConversation() {
+      return {
+        id: makeId(),
+        title: "New conversation",
+        messages: [],
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      };
+    }
+
+    function getActiveConversation() {
+      return conversations.find(
+        chat => chat.id === activeConversationId
+      ) || null;
+    }
+
+    function currentMessages() {
+      const chat = getActiveConversation();
+      return chat ? chat.messages : [];
+    }
+
+    function saveChats() {
+      try {
+        localStorage.setItem(
+          CHATS_KEY,
+          JSON.stringify(conversations)
+        );
+
+        if (activeConversationId) {
+          localStorage.setItem(
+            ACTIVE_CHAT_KEY,
+            activeConversationId
+          );
+        }
+      } catch (error) {
+        console.warn("Could not save FAYNEX chats:", error);
+      }
+    }
+
+    function titleFromMessage(text) {
+      const cleaned = text
+        .replace(/\s+/g, " ")
+        .trim();
+
+      return cleaned
+        ? cleaned.slice(0, 42) +
+          (cleaned.length > 42 ? "…" : "")
+        : "New conversation";
+    }
+
+    function formatChatDate(timestamp) {
+      try {
+        return new Intl.DateTimeFormat(
+          undefined,
+          {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+          }
+        ).format(new Date(timestamp));
+      } catch {
+        return "";
+      }
+    }
+
+    function renderRecentChats() {
+      const recentList =
+        document.getElementById("recentList");
+
+      if (!recentList) return;
+
+      recentList.innerHTML = "";
+
+      const sorted =
+        [...conversations]
+          .sort(
+            (a, b) =>
+              (b.updatedAt || 0) -
+              (a.updatedAt || 0)
+          )
+          .slice(0, 12);
+
+      if (!sorted.length) {
+        const empty =
+          document.createElement("div");
+
+        empty.className =
+          "empty-recent";
+
+        empty.textContent =
+          "No conversations yet";
+
+        recentList.appendChild(empty);
         return;
       }
 
-
-      const actions =
-        document.createElement(
-          "div"
-        );
-
-      actions.className =
-        "message-actions";
-
-
-      actions.innerHTML = `
-
-        <button
-          class="message-action copy-answer"
-          type="button"
-        >
-          Copy
-        </button>
-
-        <button
-          class="message-action regenerate-answer"
-          type="button"
-        >
-          Regenerate
-        </button>
-
-      `;
-
-
-      content.appendChild(
-        actions
-      );
-
-
-      const copyBtn =
-        actions.querySelector(
-          ".copy-answer"
-        );
-
-
-      copyBtn.addEventListener(
-        "click",
-        async () => {
-
-          const text =
-            messageText.textContent ||
-            "";
-
-          try {
-
-            await navigator
-              .clipboard
-              .writeText(text);
-
-            copyBtn.textContent =
-              "Copied";
-
-            setTimeout(() => {
-
-              copyBtn.textContent =
-                "Copy";
-
-            }, 1200);
-
-          } catch {
-
-            copyBtn.textContent =
-              "Failed";
-
-          }
-
-        }
-      );
-
-
-      const regenerateBtn =
-        actions.querySelector(
-          ".regenerate-answer"
-        );
-
-
-      regenerateBtn.addEventListener(
-        "click",
-        () => {
-
-          regenerateLastAnswer();
-
-        }
-      );
-
-    }
-
-
-    /* =========================
-       CODE BLOCK COPY
-    ========================== */
-
-    function enhanceCodeBlocks(
-      root
-    ) {
-
-      if (!root) return;
-
-
-      root
-        .querySelectorAll(
-          "pre"
-        )
-        .forEach(pre => {
-
-          if (
-            pre.parentElement &&
-            pre.parentElement.classList
-              .contains(
-                "code-wrap"
-              )
-          ) {
-            return;
-          }
-
-
-          const wrapper =
-            document.createElement(
-              "div"
-            );
-
-          wrapper.className =
-            "code-wrap";
-
-
-          const copyBtn =
-            document.createElement(
-              "button"
-            );
-
-          copyBtn.type =
-            "button";
-
-          copyBtn.className =
-            "copy-code";
-
-          copyBtn.textContent =
-            "Copy";
-
-
-          copyBtn.addEventListener(
-            "click",
-            async () => {
-
-              const code =
-                pre.innerText ||
-                "";
-
-              try {
-
-                await navigator
-                  .clipboard
-                  .writeText(code);
-
-                copyBtn.textContent =
-                  "Copied";
-
-                setTimeout(() => {
-
-                  copyBtn.textContent =
-                    "Copy";
-
-                }, 1200);
-
-              } catch {
-
-                copyBtn.textContent =
-                  "Failed";
-
-              }
-
-            }
-          );
-
-
-          pre.parentNode.insertBefore(
-            wrapper,
-            pre
-          );
-
-          wrapper.appendChild(
-            pre
-          );
-
-          wrapper.appendChild(
-            copyBtn
-          );
-
-        });
-
-    }
-
-
-    /* =========================
-       UPDATE STREAMING MESSAGE
-    ========================== */
-
-    function updateAIMessage(
-      messageText,
-      text
-    ) {
-
-      messageText.classList.add(
-        "markdown"
-      );
-
-      messageText.innerHTML =
-        renderMarkdown(text);
-
-      enhanceCodeBlocks(
-        messageText
-      );
-
-      scrollToBottom(false);
-
-    }
-
-
-    /* =========================
-       LOCAL MEMORY
-    ========================== */
-
-    function saveConversation() {
-
-      try {
-
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify(
-            conversation
-          )
-        );
-
-      } catch (error) {
-
-        console.warn(
-          "Could not save conversation:",
-          error
-        );
-
-      }
-
-    }
-
-
-    function loadConversation() {
-
-      try {
-
-        const saved =
-          JSON.parse(
-            localStorage.getItem(
-              STORAGE_KEY
-            ) || "[]"
-          );
-
-
-        if (
-          !Array.isArray(saved) ||
-          saved.length === 0
-        ) {
-          return;
-        }
-
-
-        conversation =
-          saved
-            .filter(item =>
-
-              item &&
-
-              (
-                item.role === "user" ||
-                item.role === "assistant"
-              ) &&
-
-              typeof item.content ===
-                "string"
-
-            )
-            .slice(-60);
-
-
-        welcome.style.display =
-          "none";
-
-
-        conversation.forEach(
-          item => {
-
-            addMessage(
-
-              item.role === "user"
-                ? "user"
-                : "ai",
-
-              item.content,
-
-              {
-                actions:
-                  item.role ===
-                  "assistant"
-              }
-
-            );
-
-          }
-        );
-
-      } catch (error) {
-
-        console.warn(
-          "Could not load conversation:",
-          error
-        );
-
-        conversation = [];
-
-      }
-
-    }
-
-
-    /* =========================
-       RECENT TITLES
-    ========================== */
-
-    function saveRecentTitle(
-      text
-    ) {
-
-      try {
+      sorted.forEach(chat => {
+        const row =
+          document.createElement("div");
+
+        row.className =
+          "recent-chat" +
+          (chat.id === activeConversationId
+            ? " active"
+            : "");
 
         const title =
-          text
-            .replace(
-              /\s+/g,
-              " "
-            )
-            .trim()
-            .slice(
-              0,
-              48
-            );
+          document.createElement("button");
 
+        title.type = "button";
+        title.className =
+          "recent-chat-title";
+        title.textContent =
+          chat.title || "New conversation";
+        title.title =
+          chat.title || "New conversation";
 
-        if (!title) return;
-
-
-        const saved =
-          JSON.parse(
-            localStorage.getItem(
-              RECENT_KEY
-            ) || "[]"
-          );
-
-
-        const recent =
-          Array.isArray(saved)
-            ? saved
-            : [];
-
-
-        const next = [
-
-          title,
-
-          ...recent
-
-        ]
-          .filter(
-            (item, index, array) =>
-              array.indexOf(item) ===
-              index
-          )
-          .slice(
-            0,
-            5
-          );
-
-
-        localStorage.setItem(
-          RECENT_KEY,
-          JSON.stringify(next)
+        title.addEventListener(
+          "click",
+          () => {
+            openConversation(chat.id);
+          }
         );
 
+        const actions =
+          document.createElement("div");
 
-        renderRecentTitles(
-          next
+        actions.className =
+          "recent-chat-actions";
+
+        const rename =
+          document.createElement("button");
+
+        rename.type = "button";
+        rename.className =
+          "recent-mini";
+        rename.title =
+          "Rename conversation";
+        rename.textContent =
+          "✎";
+
+        rename.addEventListener(
+          "click",
+          event => {
+            event.stopPropagation();
+            renameConversation(chat.id);
+          }
         );
 
-      } catch (error) {
+        const remove =
+          document.createElement("button");
 
-        console.warn(
-          "Could not save recent title:",
-          error
+        remove.type = "button";
+        remove.className =
+          "recent-mini";
+        remove.title =
+          "Delete conversation";
+        remove.textContent =
+          "×";
+
+        remove.addEventListener(
+          "click",
+          event => {
+            event.stopPropagation();
+            deleteConversation(chat.id);
+          }
         );
 
-      }
+        actions.appendChild(rename);
+        actions.appendChild(remove);
 
+        row.appendChild(title);
+        row.appendChild(actions);
+
+        recentList.appendChild(row);
+      });
     }
 
+    function renderActiveConversation() {
+      const chat =
+        getActiveConversation();
 
-    function renderRecentTitles(
-      titles
-    ) {
+      messages.innerHTML = "";
 
-      const recentContainer =
-        document.querySelector(
-          ".recent"
-        );
-
-
-      if (!recentContainer) {
+      if (
+        !chat ||
+        !chat.messages.length
+      ) {
+        welcome.style.display = "flex";
         return;
       }
 
+      welcome.style.display = "none";
 
-      recentContainer.innerHTML = "";
-
-
-      const heading =
-        document.createElement(
-          "div"
-        );
-
-      heading.className =
-        "section-title";
-
-      heading.textContent =
-        "Recent";
-
-
-      recentContainer.appendChild(
-        heading
-      );
-
-
-      titles.forEach(
-        title => {
-
-          const item =
-            document.createElement(
-              "div"
-            );
-
-          item.className =
-            "recent-item";
-
-          item.textContent =
-            title;
-
-          recentContainer.appendChild(
-            item
-          );
-
-        }
-      );
-
-    }
-
-
-    function loadRecentTitles() {
-
-      try {
-
-        const saved =
-          JSON.parse(
-            localStorage.getItem(
-              RECENT_KEY
-            ) || "[]"
-          );
-
-
-        if (
-          Array.isArray(saved)
-        ) {
-
-          renderRecentTitles(
-            saved
-          );
-
-        }
-
-      } catch {
-
-        // Ignore localStorage errors.
-
-      }
-
-    }
-
-
-    /* =========================
-       STREAM GEMINI
-    ========================== */
-
-    async function streamGeminiResponse(
-      currentMessage,
-      aiMessage
-    ) {
-
-      abortController =
-        new AbortController();
-
-
-      /*
-        IMPORTANT:
-
-        conversation already contains:
-
-        {
-          role: "user",
-          content: currentMessage
-        }
-
-        Worker adds the current message itself.
-
-        Therefore we send only previous
-        conversation history here.
-      */
-
-      const history =
-        conversation
-          .slice(
-            0,
-            -1
-          )
-          .slice(
-            -30
-          )
-          .map(item => ({
-
-            role:
-              item.role,
-
-            content:
-              item.content
-
-          }));
-
-
-      const response =
-        await fetch(
-          API_URL,
+      chat.messages.forEach(item => {
+        addMessage(
+          item.role === "user"
+            ? "user"
+            : "ai",
+          item.content,
           {
-
-            method:
-              "POST",
-
-            headers: {
-
-              "Content-Type":
-                "application/json"
-
-            },
-
-            body:
-              JSON.stringify({
-
-                message:
-                  currentMessage,
-
-                history:
-                  history
-
-              }),
-
-            signal:
-              abortController.signal
-
+            actions:
+              item.role === "assistant"
           }
         );
-
-
-      /* =========================
-         API ERROR
-      ========================== */
-
-      if (
-        !response.ok
-      ) {
-
-        let errorData =
-          null;
-
-
-        try {
-
-          errorData =
-            await response.json();
-
-        } catch {
-
-          // Response may not be JSON.
-
-        }
-
-
-        throw new Error(
-
-          errorData?.details ||
-
-          errorData?.error ||
-
-          `API request failed with status ${response.status}.`
-
-        );
-
-      }
-
-
-      /* =========================
-         STREAM SUPPORT
-      ========================== */
-
-      if (
-        !response.body
-      ) {
-
-        throw new Error(
-          "Streaming is not supported by this browser."
-        );
-
-      }
-
-
-      const reader =
-        response.body.getReader();
-
-
-      const decoder =
-        new TextDecoder(
-          "utf-8"
-        );
-
-
-      let buffer = "";
-
-      let fullText = "";
-
-      let lastRender =
-        0;
-
-
-      /* =========================
-         PROCESS SSE EVENT
-      ========================== */
-
-      function processEvent(
-        eventText
-      ) {
-
-        const lines =
-          eventText.split(
-            /\r?\n/
-          );
-
-
-        const dataLines =
-          lines
-
-            .filter(
-              line =>
-                line.startsWith(
-                  "data:"
-                )
-            )
-
-            .map(
-              line =>
-                line
-                  .slice(5)
-                  .trimStart()
-            );
-
-
-        if (
-          dataLines.length ===
-          0
-        ) {
-          return;
-        }
-
-
-        const dataText =
-          dataLines
-            .join("\n")
-            .trim();
-
-
-        if (
-          !dataText ||
-          dataText ===
-            "[DONE]"
-        ) {
-
-          return;
-
-        }
-
-
-        let payload;
-
-
-        try {
-
-          payload =
-            JSON.parse(
-              dataText
-            );
-
-        } catch {
-
-          /*
-            Sometimes an incomplete SSE
-            JSON fragment may appear.
-          */
-
-          return;
-
-        }
-
-
-        const parts =
-          payload
-            ?.candidates?.[0]
-            ?.content?.parts ||
-          [];
-
-
-        for (
-          const part
-          of parts
-        ) {
-
-          if (
-            typeof part?.text ===
-            "string"
-          ) {
-
-            fullText +=
-              part.text;
-
-
-            const now =
-              performance.now();
-
-
-            /*
-              Avoid re-rendering Markdown
-              too many times per second.
-            */
-
-            if (
-              now -
-              lastRender >
-              45
-            ) {
-
-              updateAIMessage(
-                aiMessage,
-                fullText
-              );
-
-              lastRender =
-                now;
-
-            }
-
-          }
-
-        }
-
-      }
-
-
-      /* =========================
-         READ STREAM
-      ========================== */
-
-      while (true) {
-
-        const {
-          value,
-          done
-        } =
-          await reader.read();
-
-
-        if (done) {
-          break;
-        }
-
-
-        buffer +=
-          decoder.decode(
-            value,
-            {
-              stream:
-                true
-            }
-          );
-
-
-        /*
-          SSE events are separated
-          by a blank line.
-        */
-
-        const events =
-          buffer.split(
-            /\r?\n\r?\n/
-          );
-
-
-        buffer =
-          events.pop() ||
-          "";
-
-
-        for (
-          const eventText
-          of events
-        ) {
-
-          processEvent(
-            eventText
-          );
-
-        }
-
-      }
-
-
-      /*
-        Flush decoder.
-      */
-
-      buffer +=
-        decoder.decode();
-
-
-      if (
-        buffer.trim()
-      ) {
-
-        processEvent(
-          buffer
-        );
-
-      }
-
-
-      if (
-        !fullText.trim()
-      ) {
-
-        throw new Error(
-          "FAYNEX received an empty response from Gemini."
-        );
-
-      }
-
-
-      /*
-        Final render.
-      */
-
-      updateAIMessage(
-        aiMessage,
-        fullText
-      );
-
-
-      return fullText;
-
-    }
-
-
-    /* =========================
-       SEND MESSAGE
-    ========================== */
-
-    async function sendMessage(
-      customText = null
-    ) {
-
-      /*
-        If generation is active,
-        clicking Send acts as Stop.
-      */
-
-      if (
-        isGenerating
-      ) {
-
-        stopGeneration();
-
-        return;
-
-      }
-
-
-      const text =
-        (
-          customText ??
-          input.value
-        ).trim();
-
-
-      if (!text) {
-        return;
-      }
-
-
-      welcome.style.display =
-        "none";
-
-
-      input.value = "";
-
-      input.style.height =
-        "auto";
-
-
-      /* =========================
-         SAVE USER MESSAGE
-      ========================== */
-
-      conversation.push({
-
-        role:
-          "user",
-
-        content:
-          text
-
       });
 
+      scrollToBottom(false);
+    }
 
-      addMessage(
-        "user",
-        text,
-        {
-          markdown:
-            false,
-          actions:
-            false
-        }
-      );
+    function openConversation(id) {
+      if (isGenerating) {
+        abortGeneration();
+      }
 
-
-      /* =========================
-         AI PLACEHOLDER
-      ========================== */
-
-      const aiMessage =
-        addMessage(
-          "ai",
-          "",
-          {
-            typing:
-              true,
-            actions:
-              false
-          }
+      const chat =
+        conversations.find(
+          item => item.id === id
         );
 
+      if (!chat) return;
 
-      saveConversation();
+      activeConversationId = id;
+      saveChats();
+      renderRecentChats();
+      renderActiveConversation();
 
-      saveRecentTitle(
-        text
-      );
+      input.value = "";
+      input.style.height = "auto";
+      input.focus();
 
+      if (window.innerWidth <= 800) {
+        sidebar.classList.remove("open");
+      }
+    }
 
-      setGeneratingState(
-        true
-      );
+    function newConversation() {
+      if (isGenerating) {
+        abortGeneration();
+      }
 
+      const chat =
+        createConversation();
 
-      currentStreamingText =
-        "";
+      conversations.unshift(chat);
+      activeConversationId = chat.id;
 
+      saveChats();
+      renderRecentChats();
+      renderActiveConversation();
 
-      try {
+      input.value = "";
+      input.style.height = "auto";
+      input.focus();
+    }
 
-        const answer =
-          await streamGeminiResponse(
-            text,
-            aiMessage
-          );
+    function renameConversation(id) {
+      const chat =
+        conversations.find(
+          item => item.id === id
+        );
 
+      if (!chat) return;
 
-        currentStreamingText =
-          answer;
+      const next =
+        window.prompt(
+          "Rename conversation:",
+          chat.title || "New conversation"
+        );
 
+      if (
+        next === null
+      ) {
+        return;
+      }
 
-        /* =========================
-           SAVE AI RESPONSE
-        ========================== */
+      const cleaned =
+        next.replace(/\s+/g, " ").trim();
 
-        conversation.push({
+      if (!cleaned) return;
 
-          role:
-            "assistant",
+      chat.title =
+        cleaned.slice(0, 80);
 
-          content:
-            answer
+      chat.updatedAt =
+        Date.now();
 
-        });
+      saveChats();
+      renderRecentChats();
+    }
 
+    function deleteConversation(id) {
+      const chat =
+        conversations.find(
+          item => item.id === id
+        );
 
-        saveConversation();
+      if (!chat) return;
 
+      const confirmed =
+        window.confirm(
+          `Delete "${chat.title}"?`
+        );
 
-        /* =========================
-           ADD ACTION BUTTONS
-        ========================== */
+      if (!confirmed) return;
 
-        const content =
-          aiMessage.parentElement;
+      conversations =
+        conversations.filter(
+          item => item.id !== id
+        );
 
+      if (
+        activeConversationId === id
+      ) {
+        if (conversations.length) {
+          const next =
+            [...conversations]
+              .sort(
+                (a, b) =>
+                  (b.updatedAt || 0) -
+                  (a.updatedAt || 0)
+              )[0];
 
-        if (
-          content &&
-          !content.querySelector(
-            ".message-actions"
-          )
-        ) {
-
-          addMessageActions(
-            content,
-            aiMessage
-          );
-
-        }
-
-
-      } catch (error) {
-
-        /*
-          If user pressed Stop,
-          keep the partial response.
-        */
-
-        if (
-          error?.name ===
-          "AbortError"
-        ) {
-
-          const partial =
-            currentStreamingText.trim();
-
-
-          if (
-            partial
-          ) {
-
-            conversation.push({
-
-              role:
-                "assistant",
-
-              content:
-                partial
-
-            });
-
-
-            saveConversation();
-
-
-            const content =
-              aiMessage.parentElement;
-
-
-            if (
-              content &&
-              !content.querySelector(
-                ".message-actions"
-              )
-            ) {
-
-              addMessageActions(
-                content,
-                aiMessage
-              );
-
-            }
-
-          }
-
-
+          activeConversationId =
+            next.id;
         } else {
+          const fresh =
+            createConversation();
 
-          console.error(
-            "FAYNEX API error:",
-            error
-          );
-
-
-          const errorText =
-
-            "Sorry, I couldn't connect to the FAYNEX AI engine right now.\n\n" +
-
-            "Error: " +
-
-            (
-              error?.message ||
-              "Unknown error."
-            );
-
-
-          aiMessage.classList.remove(
-            "markdown"
-          );
-
-
-          aiMessage.textContent =
-            errorText;
-
-
-          /*
-            Remove user message from
-            local conversation if API failed.
-          */
-
-          conversation =
-            conversation.filter(
-              item =>
-                !(
-                  item.role ===
-                  "user" &&
-                  item.content ===
-                  text
-                )
-            );
-
-
-          saveConversation();
-
+          conversations = [fresh];
+          activeConversationId =
+            fresh.id;
         }
-
-      } finally {
-
-        abortController =
-          null;
-
-        currentStreamingText =
-          "";
-
-        setGeneratingState(
-          false
-        );
-
-        input.focus();
-
       }
 
+      saveChats();
+      renderRecentChats();
+      renderActiveConversation();
     }
 
-
-    /* =========================
-       STOP GENERATION
-    ========================== */
-
-    function stopGeneration() {
-
-      if (
-        abortController
-      ) {
-
-        abortController.abort();
-
-        abortController =
-          null;
-
-      }
-
-
-      setGeneratingState(
-        false
-      );
-
-      input.focus();
-
-    }
-
-
-    /* =========================
-       NEW CONVERSATION
-    ========================== */
-
-    function resetConversation() {
-
-      if (
-        isGenerating
-      ) {
-
-        stopGeneration();
-
-      }
-
-
-      conversation =
-        [];
-
-
-      localStorage.removeItem(
-        STORAGE_KEY
-      );
-
-
-      messages.innerHTML =
-        "";
-
-
-      welcome.style.display =
-        "flex";
-
-
-      input.value =
-        "";
-
-      input.style.height =
-        "auto";
-
-
-      input.focus();
-
-    }
-
-
-    /* =========================
-       REGENERATE
-    ========================== */
-
-    function regenerateLastAnswer() {
-
-      if (
-        isGenerating
-      ) {
-        return;
-      }
-
-
-      if (
-        conversation.length ===
-        0
-      ) {
-        return;
-      }
-
-
-      let lastUserIndex =
-        -1;
-
-
-      for (
-        let i =
-          conversation.length - 1;
-
-        i >= 0;
-
-        i--
-      ) {
+    function loadConversations() {
+      try {
+        const saved =
+          JSON.parse(
+            localStorage.getItem(CHATS_KEY) ||
+            "null"
+          );
 
         if (
-          conversation[i].role ===
-          "user"
+          Array.isArray(saved) &&
+          saved.length
         ) {
-
-          lastUserIndex =
-            i;
-
-          break;
-
+          conversations =
+            saved
+              .filter(
+                chat =>
+                  chat &&
+                  typeof chat.id === "string" &&
+                  Array.isArray(chat.messages)
+              )
+              .map(chat => ({
+                id: chat.id,
+                title:
+                  typeof chat.title === "string"
+                    ? chat.title
+                    : "New conversation",
+                messages:
+                  chat.messages
+                    .filter(
+                      item =>
+                        item &&
+                        (
+                          item.role === "user" ||
+                          item.role === "assistant"
+                        ) &&
+                        typeof item.content === "string"
+                    )
+                    .slice(-100),
+                createdAt:
+                  Number(chat.createdAt) ||
+                  Date.now(),
+                updatedAt:
+                  Number(chat.updatedAt) ||
+                  Date.now()
+              }));
         }
-
+      } catch (error) {
+        console.warn(
+          "Could not load FAYNEX chats:",
+          error
+        );
+        conversations = [];
       }
-
-
-      if (
-        lastUserIndex ===
-        -1
-      ) {
-        return;
-      }
-
-
-      const lastUserMessage =
-        conversation[
-          lastUserIndex
-        ].content;
-
 
       /*
-        Keep everything before
-        the last user message.
-
-        Then send it again.
+        One-time migration from the previous
+        single-conversation LocalStorage system.
       */
+      if (!conversations.length) {
+        try {
+          const old =
+            JSON.parse(
+              localStorage.getItem(
+                OLD_STORAGE_KEY
+              ) || "[]"
+            );
 
-      conversation =
-        conversation.slice(
+          if (
+            Array.isArray(old) &&
+            old.length
+          ) {
+            const migrated =
+              createConversation();
+
+            migrated.title =
+              titleFromMessage(
+                old.find(
+                  item =>
+                    item.role === "user"
+                )?.content || ""
+              );
+
+            migrated.messages =
+              old
+                .filter(
+                  item =>
+                    item &&
+                    (
+                      item.role === "user" ||
+                      item.role === "assistant"
+                    ) &&
+                    typeof item.content === "string"
+                )
+                .slice(-100);
+
+            conversations = [migrated];
+
+            localStorage.removeItem(
+              OLD_STORAGE_KEY
+            );
+          }
+        } catch (error) {
+          console.warn(
+            "Could not migrate old conversation:",
+            error
+          );
+        }
+      }
+
+      if (!conversations.length) {
+        const fresh =
+          createConversation();
+
+        conversations = [fresh];
+      }
+
+      const savedActive =
+        localStorage.getItem(
+          ACTIVE_CHAT_KEY
+        );
+
+      if (
+        savedActive &&
+        conversations.some(
+          chat =>
+            chat.id === savedActive
+        )
+      ) {
+        activeConversationId =
+          savedActive;
+      } else {
+        activeConversationId =
+          [...conversations]
+            .sort(
+              (a, b) =>
+                (b.updatedAt || 0) -
+                (a.updatedAt || 0)
+            )[0].id;
+      }
+
+      saveChats();
+      renderRecentChats();
+      renderActiveConversation();
+    }
+
+    function getSearchResults(query) {
+      const q =
+        query.trim().toLowerCase();
+
+      const sorted =
+        [...conversations]
+          .sort(
+            (a, b) =>
+              (b.updatedAt || 0) -
+              (a.updatedAt || 0)
+          );
+
+      if (!q) {
+        return sorted;
+      }
+
+      return sorted.filter(chat => {
+        const title =
+          (chat.title || "").toLowerCase();
+
+        const content =
+          chat.messages
+            .map(item => item.content || "")
+            .join("\n")
+            .toLowerCase();
+
+        return (
+          title.includes(q) ||
+          content.includes(q)
+        );
+      });
+    }
+
+    function renderSearchResults(query = "") {
+      const container =
+        document.getElementById(
+          "searchResults"
+        );
+
+      if (!container) return;
+
+      const results =
+        getSearchResults(query);
+
+      container.innerHTML = "";
+
+      if (!results.length) {
+        const empty =
+          document.createElement("div");
+
+        empty.className =
+          "search-empty";
+
+        empty.textContent =
+          "No conversations found.";
+
+        container.appendChild(empty);
+        return;
+      }
+
+      results.forEach(chat => {
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+        button.className =
+          "search-result";
+
+        const firstUser =
+          chat.messages.find(
+            item =>
+              item.role === "user"
+          );
+
+        button.innerHTML = `
+          <div class="search-result-title"></div>
+          <div class="search-result-meta"></div>
+        `;
+
+        button.querySelector(
+          ".search-result-title"
+        ).textContent =
+          chat.title || "New conversation";
+
+        button.querySelector(
+          ".search-result-meta"
+        ).textContent =
+          `${formatChatDate(chat.updatedAt)}${
+            firstUser?.content
+              ? " • " +
+                firstUser.content
+                  .replace(/\s+/g, " ")
+                  .slice(0, 90)
+              : ""
+          }`;
+
+        button.addEventListener(
+          "click",
+          () => {
+            openConversation(chat.id);
+            closeSearch();
+          }
+        );
+
+        container.appendChild(button);
+      });
+    }
+
+    function openSearch() {
+      const overlay =
+        document.getElementById(
+          "searchOverlay"
+        );
+
+      const searchInput =
+        document.getElementById(
+          "chatSearchInput"
+        );
+
+      overlay.classList.add("open");
+      searchInput.value = "";
+      renderSearchResults("");
+      setTimeout(
+        () => searchInput.focus(),
+        30
+      );
+    }
+
+    function closeSearch() {
+      document
+        .getElementById("searchOverlay")
+        .classList.remove("open");
+    }
+
+    function abortGeneration() {
+      if (abortController) {
+        abortController.abort();
+        abortController = null;
+      }
+      setGeneratingState(false);
+    }
+
+    async function streamGeminiResponse(text, aiMessage) {
+      abortController = new AbortController();
+
+      const historyForApi = currentMessages()
+        .slice(0, -1)
+        .slice(-30)
+        .map(item => ({
+          role: item.role,
+          content: item.content
+        }));
+
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: text,
+          history: historyForApi
+        }),
+        signal: abortController.signal
+      });
+
+      if (!response.ok) {
+        let errorData = null;
+        try {
+          errorData = await response.json();
+        } catch {}
+
+        throw new Error(
+          errorData?.details ||
+          errorData?.error ||
+          `API request failed with status ${response.status}.`
+        );
+      }
+
+      if (!response.body) {
+        throw new Error("Streaming is not supported by this browser.");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let buffer = "";
+      let fullText = "";
+      let lastRender = 0;
+
+      const processEvent = (eventText) => {
+        const lines = eventText.split(/\r?\n/);
+        const dataLines = lines
+          .filter(line => line.startsWith("data:"))
+          .map(line => line.slice(5).trimStart());
+
+        if (!dataLines.length) return;
+
+        const dataText = dataLines.join("\n").trim();
+        if (!dataText || dataText === "[DONE]") return;
+
+        let payload;
+        try {
+          payload = JSON.parse(dataText);
+        } catch {
+          return;
+        }
+
+        const parts = payload?.candidates?.[0]?.content?.parts || [];
+
+        for (const part of parts) {
+          if (typeof part?.text === "string") {
+            fullText += part.text;
+
+            const now = performance.now();
+            if (now - lastRender > 45) {
+              updateAIMessage(aiMessage, fullText);
+              lastRender = now;
+            }
+          }
+        }
+      };
+
+      while (true) {
+        const { value, done } = await reader.read();
+
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+
+        const events = buffer.split(/\r?\n\r?\n/);
+        buffer = events.pop() || "";
+
+        for (const eventText of events) {
+          processEvent(eventText);
+        }
+      }
+
+      buffer += decoder.decode();
+
+      if (buffer.trim()) {
+        processEvent(buffer);
+      }
+
+      if (!fullText.trim()) {
+        throw new Error("FAYNEX received an empty response from Gemini.");
+      }
+
+      updateAIMessage(aiMessage, fullText);
+
+      return fullText;
+    }
+
+    async function sendMessage(customText = null) {
+      if (isGenerating) {
+        abortGeneration();
+        return;
+      }
+
+      const text = (customText ?? input.value).trim();
+      if (!text) return;
+
+      welcome.style.display = "none";
+      input.value = "";
+      input.style.height = "auto";
+
+      const chat = getActiveConversation();
+      if (!chat) return;
+
+      chat.messages.push({
+        role: "user",
+        content: text
+      });
+
+      if (
+        chat.title === "New conversation" ||
+        !chat.title
+      ) {
+        chat.title = titleFromMessage(text);
+      }
+
+      chat.updatedAt = Date.now();
+
+      addMessage("user", text, { markdown: false });
+
+      const aiMessage = addMessage("ai", "", {
+        typing: true,
+        actions: false
+      });
+
+      saveChats();
+      renderRecentChats();
+      setGeneratingState(true);
+
+      try {
+        const answer = await streamGeminiResponse(text, aiMessage);
+
+        chat.messages.push({
+          role: "assistant",
+          content: answer
+        });
+
+        chat.updatedAt = Date.now();
+        saveChats();
+        renderRecentChats();
+
+        // Add actions after streaming is complete.
+        const content = aiMessage.parentElement;
+        if (content && !content.querySelector(".message-actions")) {
+          const actions = document.createElement("div");
+          actions.className = "message-actions";
+          actions.innerHTML = `
+            <button class="message-action copy-answer" type="button">Copy</button>
+            <button class="message-action speak-answer" type="button">Speak</button>
+            <button class="message-action regenerate-answer" type="button">Regenerate</button>
+          `;
+          content.appendChild(actions);
+
+          actions.querySelector(".copy-answer").addEventListener("click", async () => {
+            try {
+              await navigator.clipboard.writeText(answer);
+              actions.querySelector(".copy-answer").textContent = "Copied";
+              setTimeout(() => {
+                actions.querySelector(".copy-answer").textContent = "Copy";
+              }, 1200);
+            } catch {}
+          });
+
+          actions.querySelector(".speak-answer").addEventListener("click", event => {
+            speakText(answer, event.currentTarget);
+          });
+
+          actions.querySelector(".regenerate-answer").addEventListener("click", () => {
+            stopSpeech();
+            regenerateLastAnswer();
+          });
+        }
+
+      } catch (error) {
+        if (error?.name === "AbortError") {
+          // Keep the partial streamed answer.
+          const partial = aiMessage.textContent?.trim() || "";
+          if (partial) {
+            chat.messages.push({
+              role: "assistant",
+              content: partial
+            });
+            chat.updatedAt = Date.now();
+            saveChats();
+            renderRecentChats();
+          }
+        } else {
+          console.error("FAYNEX API error:", error);
+
+          const errorText =
+            "Sorry, I couldn't connect to the FAYNEX AI engine right now.\n\n" +
+            "Error: " +
+            (error?.message || "Unknown error.");
+
+          aiMessage.classList.remove("markdown");
+          aiMessage.textContent = errorText;
+
+          /*
+            The failed assistant placeholder was never
+            added to chat.messages, so the conversation
+            remains clean.
+          */
+          saveChats();
+        }
+      } finally {
+        abortController = null;
+        setGeneratingState(false);
+        input.focus();
+      }
+    }
+
+    function regenerateLastAnswer() {
+      if (
+        isGenerating ||
+        !getActiveConversation()
+      ) return;
+
+      const chat =
+        getActiveConversation();
+
+      let lastUserIndex = -1;
+
+      for (
+        let i = chat.messages.length - 1;
+        i >= 0;
+        i--
+      ) {
+        if (
+          chat.messages[i].role === "user"
+        ) {
+          lastUserIndex = i;
+          break;
+        }
+      }
+
+      if (lastUserIndex === -1) return;
+
+      const lastUserMessage =
+        chat.messages[lastUserIndex].content;
+
+      chat.messages =
+        chat.messages.slice(
           0,
           lastUserIndex
         );
 
+      chat.updatedAt = Date.now();
 
-      saveConversation();
+      saveChats();
 
+      renderActiveConversation();
 
-      messages.innerHTML =
-        "";
-
-
-      welcome.style.display =
-        "none";
-
-
-      conversation.forEach(
-        item => {
-
-          addMessage(
-
-            item.role ===
-              "user"
-              ? "user"
-              : "ai",
-
-            item.content,
-
-            {
-              actions:
-                item.role ===
-                "assistant"
-            }
-
-          );
-
-        }
-      );
-
-
-      sendMessage(
-        lastUserMessage
-      );
-
+      sendMessage(lastUserMessage);
     }
 
+    input.addEventListener("input", () => {
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 150) + "px";
+    });
 
-    /* =========================
-       TEXTAREA AUTO HEIGHT
-    ========================== */
-
-    input.addEventListener(
-      "input",
-      () => {
-
-        input.style.height =
-          "auto";
-
-
-        input.style.height =
-          Math.min(
-            input.scrollHeight,
-            150
-          ) + "px";
-
-      }
-    );
-
-
-    /* =========================
-       ENTER TO SEND
-    ========================== */
-
-    input.addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          event.key ===
-            "Enter" &&
-          !event.shiftKey
-        ) {
-
-          event.preventDefault();
-
-          sendMessage();
-
-        }
-
-      }
-    );
-
-
-    /* =========================
-       SEND BUTTON
-    ========================== */
-
-    sendBtn.addEventListener(
-      "click",
-      () => {
-
+    input.addEventListener("keydown", event => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
         sendMessage();
-
       }
-    );
+    });
 
+    sendBtn.addEventListener("click", () => {
+      sendMessage();
+    });
 
-    /* =========================
-       SUGGESTIONS
-    ========================== */
-
-    document
-      .querySelectorAll(
-        ".suggestion"
-      )
-      .forEach(
-        button => {
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              input.value =
-                button.dataset
-                  .prompt ||
-                "";
-
-              input.dispatchEvent(
-                new Event(
-                  "input"
-                )
-              );
-
-              input.focus();
-
-            }
-          );
-
-        }
-      );
-
-
-    /* =========================
-       NEW CHAT
-    ========================== */
+    document.querySelectorAll(".suggestion").forEach(button => {
+      button.addEventListener("click", () => {
+        input.value = button.dataset.prompt || "";
+        input.dispatchEvent(new Event("input"));
+        input.focus();
+      });
+    });
 
     newChatBtn.addEventListener(
       "click",
-      resetConversation
+      newConversation
     );
-
-
-    /* =========================
-       MOBILE MENU
-    ========================== */
-
-    menuBtn.addEventListener(
-      "click",
-      () => {
-
-        sidebar.classList.toggle(
-          "open"
-        );
-
-      }
-    );
-
 
     document
-      .querySelectorAll(
-        ".nav-item"
-      )
-      .forEach(
-        item => {
+      .getElementById("searchChatsBtn")
+      .addEventListener(
+        "click",
+        openSearch
+      );
 
-          item.addEventListener(
-            "click",
-            () => {
+    document
+      .querySelector(".top-actions .icon-btn")
+      .addEventListener(
+        "click",
+        openSearch
+      );
 
-              if (
-                window.innerWidth <=
-                800
-              ) {
+    document
+      .getElementById("chatSearchInput")
+      .addEventListener(
+        "input",
+        event =>
+          renderSearchResults(
+            event.target.value
+          )
+      );
 
-                sidebar.classList.remove(
-                  "open"
-                );
+    document
+      .getElementById("closeSearchBtn")
+      .addEventListener(
+        "click",
+        closeSearch
+      );
 
-              }
-
-            }
-          );
-
+    document
+      .getElementById("searchOverlay")
+      .addEventListener(
+        "click",
+        event => {
+          if (
+            event.target.id ===
+            "searchOverlay"
+          ) {
+            closeSearch();
+          }
         }
       );
 
+    document.addEventListener(
+      "keydown",
+      event => {
+        if (
+          event.key === "Escape"
+        ) {
+          closeSearch();
+        }
 
-    /* =========================
-       ATTACH BUTTON
-    ========================== */
-
-    attachBtn.addEventListener(
-      "click",
-      () => {
-
-        alert(
-          "File upload will be added in the next FAYNEX update."
-        );
-
+        if (
+          (event.ctrlKey || event.metaKey) &&
+          event.key.toLowerCase() === "k"
+        ) {
+          event.preventDefault();
+          openSearch();
+        }
       }
     );
 
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
 
-    /* =========================
-       VOICE INPUT
-    ========================== */
-
-    let recognition =
-      null;
-
-
-    if (
-      "SpeechRecognition"
-      in window ||
-      "webkitSpeechRecognition"
-      in window
-    ) {
-
-      const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
-
-
-      recognition =
-        new SpeechRecognition();
-
-
-      recognition.lang =
-        "en-US";
-
-      recognition.continuous =
-        false;
-
-      recognition.interimResults =
-        true;
-
-
-      recognition.onstart =
-        () => {
-
-          voiceBtn.textContent =
-            "●";
-
-          voiceBtn.style.color =
-            "#f87171";
-
-        };
-
-
-      recognition.onresult =
-        event => {
-
-          let transcript =
-            "";
-
-
-          for (
-            let i =
-              event.resultIndex;
-
-            i <
-              event.results.length;
-
-            i++
-          ) {
-
-            transcript +=
-              event.results[i][0]
-                .transcript;
-
-          }
-
-
-          input.value =
-            transcript;
-
-
-          input.dispatchEvent(
-            new Event(
-              "input"
-            )
-          );
-
-        };
-
-
-      recognition.onend =
-        () => {
-
-          voiceBtn.textContent =
-            "◉";
-
-          voiceBtn.style.color =
-            "";
-
-        };
-
-
-      recognition.onerror =
-        () => {
-
-          voiceBtn.textContent =
-            "◉";
-
-          voiceBtn.style.color =
-            "";
-
-        };
-
-
-      voiceBtn.addEventListener(
-        "click",
-        () => {
-
-          try {
-
-            recognition.start();
-
-          } catch {
-
-            // Recognition already running.
-
-          }
-
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", () => {
+        if (window.innerWidth <= 800) {
+          sidebar.classList.remove("open");
         }
-      );
-
-    } else {
-
-      voiceBtn.addEventListener(
-        "click",
-        () => {
-
-          alert(
-            "Voice input is not supported by this browser."
-          );
-
-        }
-      );
-
-    }
-
-
-    /* =========================
-       API HEALTH CHECK
-    ========================== */
+      });
+    });
 
     async function checkFaynexAPI() {
-
       try {
+        const response = await fetch(API_URL);
 
-        const response =
-          await fetch(
-            API_URL
-          );
-
-
-        if (
-          !response.ok
-        ) {
-
-          throw new Error(
-            "API offline"
-          );
-
+        if (!response.ok) {
+          throw new Error("API offline");
         }
 
+        const data = await response.json();
 
-        const data =
-          await response.json();
-
-
-        if (
-          data?.ok
-        ) {
-
-          statusText.textContent =
-            "FAYNEX systems online";
-
-
-          modelState.textContent =
-            "Gemini streaming ready";
-
-        } else {
-
-          throw new Error(
-            "Invalid API status"
-          );
-
+        if (data?.ok) {
+          document.querySelectorAll(".status-line").forEach(line => {
+            const statusText = line.querySelector("span:last-child");
+            if (statusText) {
+              statusText.textContent = "FAYNEX systems online";
+            }
+          });
         }
-
       } catch (error) {
+        console.warn("FAYNEX API health check failed:", error);
 
-        console.warn(
-          "FAYNEX API health check failed:",
-          error
-        );
-
-
-        statusText.textContent =
-          "FAYNEX API offline";
-
-
-        modelState.textContent =
-          "API connection unavailable";
-
+        document.querySelectorAll(".status-line").forEach(line => {
+          const statusText = line.querySelector("span:last-child");
+          if (statusText) {
+            statusText.textContent = "FAYNEX API offline";
+          }
+        });
       }
-
     }
 
-
-    /* =========================
-       INITIALIZE
-    ========================== */
-
-    loadRecentTitles();
-
-    loadConversation();
-
+    setupVoiceInput();
+    loadConversations();
     checkFaynexAPI();
-
-    input.focus();
-
   </script>
+
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-panel">
+      <div class="search-head">
+        <span style="color:#8b5cf6;">⌕</span>
+        <input
+          class="search-input"
+          id="chatSearchInput"
+          type="search"
+          placeholder="Search conversations..."
+          autocomplete="off"
+        />
+        <button class="search-close" id="closeSearchBtn" type="button">×</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
 
 </body>
 </html>
