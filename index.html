@@ -1,6087 +1,3171 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FAYNEX AI</title>
+<meta content="FAYNEX AI — Next-Generation Intelligence" name="description"/>
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<meta
-  name="description"
-  content="FAYNEX AI — Next-Generation Intelligence"
-/>
+    :root {
+      --bg: #06070b;
+      --panel: #0b0d13;
+      --panel-2: #10131b;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f5f7fb;
+      --muted: #858b9a;
+      --accent: #8b5cf6;
+      --accent-2: #6366f1;
+      --danger: #ef4444;
+    }
 
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 50% -10%,
+          rgba(99, 102, 241, 0.18),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 0% 100%,
+          rgba(139, 92, 246, 0.08),
+          transparent 30%
+        ),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      overflow: hidden;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    /* =========================
+       APP
+    ========================= */
+
+    .app {
+      height: 100vh;
+      display: flex;
+      position: relative;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+      width: 270px;
+      height: 100vh;
+      background: rgba(8, 10, 15, 0.92);
+      border-right: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      padding: 22px 16px;
+      z-index: 20;
+      transition: transform 0.3s ease;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 8px 25px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow:
+        0 0 25px rgba(99, 102, 241, 0.35);
+    }
+
+    .brand-name {
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 2px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .new-chat {
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 12px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(139, 92, 246, 0.95),
+          rgba(99, 102, 241, 0.95)
+        );
+      font-weight: 650;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
+      transition: 0.2s ease;
+    }
+
+    .new-chat:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 35px rgba(99, 102, 241, 0.3);
+    }
+
+    .sidebar-section {
+      margin-top: 28px;
+    }
+
+    .section-title {
+      color: #686e7c;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 0 10px 10px;
+    }
+
+    .nav-item {
+      width: 100%;
+      padding: 11px 12px;
+      background: transparent;
+      color: #a9aebb;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-align: left;
+      margin-bottom: 3px;
+      transition: 0.2s ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.045);
+      color: white;
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    .recent {
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .recent-item {
+      color: #777e8e;
+      font-size: 12px;
+      padding: 9px 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: 8px;
+    }
+
+    .recent-item:hover {
+      background: rgba(255, 255, 255, 0.035);
+      color: #bfc4cf;
+    }
+
+    .recent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      max-height: 42vh;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .recent-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .recent-list::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+    }
+
+    .recent-chat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .recent-chat.active {
+      background: rgba(139, 92, 246, 0.10);
+    }
+
+    .recent-chat-title {
+      flex: 1;
+      min-width: 0;
+      color: #8f96a5;
+      font-size: 12px;
+      padding: 9px 8px 9px 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: transparent;
+      text-align: left;
+      border-radius: 8px;
+    }
+
+    .recent-chat.active .recent-chat-title {
+      color: #ddd6fe;
+    }
+
+    .recent-chat-title:hover {
+      color: white;
+      background: rgba(255,255,255,0.035);
+    }
+
+    .recent-chat-actions {
+      display: flex;
+      gap: 1px;
+      opacity: 0;
+      transition: opacity .15s ease;
+    }
+
+    .recent-chat:hover .recent-chat-actions,
+    .recent-chat.active .recent-chat-actions {
+      opacity: 1;
+    }
+
+    .recent-mini {
+      width: 25px;
+      height: 25px;
+      border-radius: 7px;
+      background: transparent;
+      color: #686f7e;
+      font-size: 12px;
+    }
+
+    .recent-mini:hover {
+      color: white;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .empty-recent {
+      color: #555c6b;
+      font-size: 11px;
+      padding: 8px 11px;
+    }
+
+
+    .memory-overlay{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.62);backdrop-filter:blur(10px)}
+    .memory-overlay.open{display:flex}
+    .memory-panel{width:min(680px,100%);max-height:min(760px,88vh);overflow:hidden;border:1px solid var(--border2);border-radius:20px;background:#0d1017;box-shadow:0 35px 100px rgba(0,0,0,.58)}
+    .memory-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:18px 20px;border-bottom:1px solid var(--border)}
+    .memory-title-wrap h2{font-size:17px}.memory-title-wrap p{margin-top:4px;color:var(--muted);font-size:10px;line-height:1.5}.memory-close{width:35px;height:35px;border-radius:9px;background:rgba(255,255,255,.05);color:#9da3b0;font-size:18px}.memory-toolbar{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid var(--border)}.memory-count{color:#747b89;font-size:10px}.clear-memory-btn{padding:7px 10px;border-radius:8px;background:rgba(239,68,68,.07);color:#e58a8a;font-size:10px;border:1px solid rgba(239,68,68,.13)}
+    .memory-list{max-height:52vh;overflow-y:auto;padding:10px}.memory-item{display:flex;align-items:flex-start;gap:11px;padding:12px;border-radius:12px;border:1px solid transparent}.memory-item:hover{background:rgba(255,255,255,.035);border-color:var(--border)}.memory-bullet{width:28px;height:28px;flex-shrink:0;display:grid;place-items:center;border-radius:9px;background:rgba(139,92,246,.10);color:#b9a3ff}.memory-body{flex:1;min-width:0}.memory-text{color:#d7dbe4;font-size:12px;line-height:1.6;word-break:break-word}.memory-meta{margin-top:4px;color:#5f6674;font-size:9px}.memory-delete{width:28px;height:28px;flex-shrink:0;border-radius:7px;background:transparent;color:#656c79}.memory-empty{padding:42px 20px;text-align:center;color:#666d7c;font-size:12px;line-height:1.7}.memory-empty strong{display:block;margin-bottom:7px;color:#aeb4c1}.memory-footer{padding:12px 20px 15px;border-top:1px solid var(--border);color:#555c6a;font-size:9px;line-height:1.6}
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 90px 20px 20px;
+      background: rgba(0,0,0,0.58);
+      backdrop-filter: blur(8px);
+    }
+
+    .search-overlay.open {
+      display: flex;
+    }
+
+    .search-panel {
+      width: min(620px, 100%);
+      max-height: min(70vh, 620px);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      background: #0d1017;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.55);
+    }
+
+    .search-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      font-size: 14px;
+    }
+
+    .search-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.05);
+      color: #9da3b0;
+    }
+
+    .search-results {
+      overflow-y: auto;
+      max-height: 52vh;
+      padding: 8px;
+    }
+
+    .search-result {
+      width: 100%;
+      padding: 12px;
+      text-align: left;
+      border-radius: 11px;
+      background: transparent;
+      color: #d8dbe3;
+    }
+
+    .search-result:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .search-result-title {
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .search-result-meta {
+      margin-top: 4px;
+      color: #686f7d;
+      font-size: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-empty {
+      color: #646b79;
+      font-size: 12px;
+      padding: 20px 12px;
+      text-align: center;
+    }
+
+
+    .sidebar-bottom {
+      margin-top: auto;
+    }
+
+    .status-card {
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.025);
+      border-radius: 12px;
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #aeb4c1;
+      font-size: 11px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      flex: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 70px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(6, 7, 11, 0.65);
+      backdrop-filter: blur(18px);
+    }
+
+    .model-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .model-orb {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.9);
+    }
+
+    .model-name {
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .model-state {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 7px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: transparent;
+      color: #8e95a4;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: white;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    /* =========================
+       CHAT
+    ========================= */
+
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    .chat-area::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-area::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+    }
+
+    .welcome {
+      min-height: calc(100vh - 220px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .welcome-orb {
+      width: 76px;
+      height: 76px;
+      border-radius: 24px;
+      background:
+        radial-gradient(
+          circle at 30% 25%,
+          #c4b5fd,
+          transparent 20%
+        ),
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #4f46e5
+        );
+      display: grid;
+      place-items: center;
+      font-size: 27px;
+      font-weight: 850;
+      box-shadow:
+        0 0 55px rgba(99, 102, 241, 0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    .welcome h1 {
+      margin-top: 26px;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+    }
+
+    .gradient-text {
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff,
+          #a78bfa,
+          #818cf8
+        );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .welcome p {
+      max-width: 580px;
+      margin-top: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .suggestions {
+      width: min(760px, 100%);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .suggestion {
+      text-align: left;
+      padding: 15px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.025);
+      color: #b6bbc7;
+      border-radius: 13px;
+      transition: 0.2s ease;
+    }
+
+    .suggestion:hover {
+      border-color: rgba(139, 92, 246, 0.35);
+      background: rgba(139, 92, 246, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .suggestion strong {
+      display: block;
+      color: #e8eaf0;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .suggestion span {
+      font-size: 11px;
+      color: #727988;
+    }
+
+    /* =========================
+       MESSAGES
+    ========================= */
+
+    .messages {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding: 35px 20px 150px;
+    }
+
+    .message {
+      display: flex;
+      gap: 13px;
+      margin-bottom: 28px;
+      animation: messageIn 0.25s ease;
+    }
+
+    @keyframes messageIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .avatar {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .avatar.user {
+      background: #20242f;
+      color: #d5d9e2;
+    }
+
+    .avatar.ai {
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #4f46e5
+        );
+      color: white;
+    }
+
+    .message-content {
+      min-width: 0;
+      padding-top: 4px;
+    }
+
+    .message-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #9ca2af;
+      margin-bottom: 7px;
+    }
+
+    .message-text {
+      color: #d9dce4;
+      font-size: 14px;
+      line-height: 1.75;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* =========================
+       COMPOSER
+    ========================= */
+
+    .composer-wrap {
+      position: absolute;
+      left: 270px;
+      right: 0;
+      bottom: 0;
+      padding: 18px 24px 22px;
+      background:
+        linear-gradient(
+          to top,
+          rgba(6, 7, 11, 1) 55%,
+          rgba(6, 7, 11, 0)
+        );
+    }
+
+    .composer {
+      width: min(850px, 100%);
+      margin: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(13, 15, 22, 0.92);
+      backdrop-filter: blur(20px);
+      border-radius: 18px;
+      padding: 11px;
+      box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .composer textarea {
+      width: 100%;
+      resize: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      padding: 8px 10px;
+      min-height: 44px;
+      max-height: 150px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .composer textarea::placeholder {
+      color: #626978;
+    }
+
+    .composer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 3px 2px;
+    }
+
+    .composer-tools {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .attachment-list {
+      display: none;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 8px 10px 2px;
+    }
+
+    .attachment-list.has-file {
+      display: flex;
+    }
+
+    .attachment-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+      padding: 7px 9px;
+      border: 1px solid rgba(139, 92, 246, 0.28);
+      border-radius: 10px;
+      background: rgba(139, 92, 246, 0.08);
+      color: #cfd3df;
+      font-size: 11px;
+    }
+
+    .attachment-chip-name {
+      max-width: 260px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .attachment-chip-remove {
+      width: 20px;
+      height: 20px;
+      border: 0;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.06);
+      color: #9aa1b1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .attachment-chip-remove:hover {
+      color: white;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .file-input-hidden {
+      display: none;
+    }
+
+    .message-attachment {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 8px;
+      padding: 6px 9px;
+      border-radius: 9px;
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      color: #b9bfcc;
+      font-size: 11px;
+    }
+
+    .tool-btn {
+      width: 35px;
+      height: 35px;
+      border-radius: 9px;
+      background: transparent;
+      color: #7e8594;
+      display: grid;
+      place-items: center;
+      transition: 0.2s ease;
+    }
+
+    .tool-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .send-btn {
+      width: 39px;
+      height: 39px;
+      border-radius: 11px;
+      background:
+        linear-gradient(
+          135deg,
+          #8b5cf6,
+          #6366f1
+        );
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      transition: 0.2s ease;
+      box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .send-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 7px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .disclaimer {
+      text-align: center;
+      color: #505664;
+      font-size: 9px;
+      margin-top: 9px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        transform: translateX(-100%);
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .mobile-menu {
+        display: grid;
+      }
+
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .composer-wrap {
+        left: 0;
+        padding: 12px 12px 15px;
+      }
+
+      .welcome {
+        min-height: calc(100vh - 190px);
+      }
+
+      .suggestions {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome h1 {
+        font-size: 34px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .model-state {
+        display: none;
+      }
+
+      .top-actions .icon-btn:nth-child(2) {
+        display: none;
+      }
+
+      .welcome {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .welcome-orb {
+        width: 65px;
+        height: 65px;
+        border-radius: 20px;
+      }
+
+      .welcome p {
+        font-size: 13px;
+      }
+
+      .messages {
+        padding-left: 13px;
+        padding-right: 13px;
+      }
+    }
+  
+    /* =========================
+       MARKDOWN / CODE
+    ========================== */
+
+    .message-text.markdown {
+      white-space: normal;
+    }
+
+    .message-text.markdown p {
+      margin: 0 0 12px;
+    }
+
+    .message-text.markdown p:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-text.markdown h1,
+    .message-text.markdown h2,
+    .message-text.markdown h3 {
+      color: #f4f5f8;
+      margin: 18px 0 9px;
+      line-height: 1.3;
+    }
+
+    .message-text.markdown h1 { font-size: 22px; }
+    .message-text.markdown h2 { font-size: 19px; }
+    .message-text.markdown h3 { font-size: 16px; }
+
+    .message-text.markdown ul,
+    .message-text.markdown ol {
+      margin: 8px 0 12px 22px;
+    }
+
+    .message-text.markdown li {
+      margin: 4px 0;
+    }
+
+    .message-text.markdown blockquote {
+      margin: 12px 0;
+      padding: 8px 14px;
+      border-left: 3px solid #8b5cf6;
+      color: #aeb4c2;
+      background: rgba(139, 92, 246, 0.06);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .message-text.markdown a {
+      color: #a78bfa;
+    }
+
+    .message-text.markdown code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.07);
+      color: #ddd6fe;
+      font-size: 0.92em;
+    }
+
+    .code-wrap {
+      position: relative;
+      margin: 12px 0;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #090b10;
+    }
+
+    .code-wrap pre {
+      margin: 0;
+      padding: 15px;
+      overflow-x: auto;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .code-wrap pre code {
+      padding: 0;
+      background: transparent;
+      color: #e5e7eb;
+      white-space: pre;
+    }
+
+    .copy-code {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 9px;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.07);
+      color: #aeb4c2;
+      font-size: 10px;
+    }
+
+    .copy-code:hover {
+      color: white;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .message-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .message-action {
+      padding: 5px 8px;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.04);
+      color: #747b8a;
+      font-size: 10px;
+    }
+
+    .message-action:hover {
+      color: white;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .typing {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      min-height: 20px;
+    }
+
+    .typing span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      animation: typing 1s infinite ease-in-out;
+    }
+
+    .typing span:nth-child(2) { animation-delay: .15s; }
+    .typing span:nth-child(3) { animation-delay: .30s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: .35; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    .voice-btn.listening {
+      background: rgba(239, 68, 68, 0.14);
+      color: #fca5a5;
+      box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.18) inset;
+      animation: voicePulse 1.2s infinite ease-in-out;
+    }
+
+    .voice-btn.unsupported {
+      opacity: 0.45;
+    }
+
+    @keyframes voicePulse {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.18) inset, 0 0 0 rgba(239, 68, 68, 0); }
+      50% { box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.18) inset, 0 0 18px rgba(239, 68, 68, 0.22); }
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 105px;
+      transform: translate(-50%, 12px);
+      z-index: 300;
+      max-width: min(460px, calc(100vw - 32px));
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      background: rgba(15, 18, 27, 0.96);
+      color: #e6e8ef;
+      font-size: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      backdrop-filter: blur(14px);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .message-action.speaking {
+      color: #c4b5fd;
+      background: rgba(139,92,246,0.10);
+    }
+
+    @media (max-width: 800px) {
+      .toast {
+        bottom: 125px;
+      }
+    }
+
+    .stop-btn {
+      background: rgba(239, 68, 68, 0.12) !important;
+      color: #fca5a5 !important;
+    }
+
+  </style>
 <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-:root{
-  --bg:#06070b;
-  --panel:#0b0d13;
-  --panel2:#10131b;
-  --border:rgba(255,255,255,.08);
-  --border2:rgba(255,255,255,.12);
-  --text:#f5f7fb;
-  --muted:#858b9a;
-  --muted2:#656b79;
-  --accent:#8b5cf6;
-  --accent2:#6366f1;
-  --green:#22c55e;
-  --danger:#ef4444;
-}
-
-html,
-body{
-  width:100%;
-  height:100%;
-}
-
-body{
-  min-height:100vh;
-  overflow:hidden;
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      rgba(99,102,241,.18),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 0% 100%,
-      rgba(139,92,246,.08),
-      transparent 30%
-    ),
-    var(--bg);
-  color:var(--text);
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-}
-
-button,
-textarea,
-input{
-  font:inherit;
-}
-
-button{
-  border:0;
-  cursor:pointer;
-}
-
-.app{
-  width:100%;
-  height:100vh;
-  display:flex;
-}
-
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
-.sidebar{
-  width:270px;
-  height:100vh;
-  flex-shrink:0;
-  background:rgba(8,10,15,.94);
-  border-right:1px solid var(--border);
-  backdrop-filter:blur(20px);
-  display:flex;
-  flex-direction:column;
-  padding:22px 16px;
-  z-index:50;
-  transition:transform .3s ease;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:4px 8px 25px;
-}
-
-.brand-logo{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(
-    135deg,
-    var(--accent),
-    var(--accent2)
-  );
-  font-size:18px;
-  font-weight:800;
-  box-shadow:0 0 25px rgba(99,102,241,.35);
-}
-
-.brand-name{
-  font-size:19px;
-  font-weight:750;
-  letter-spacing:.5px;
-}
-
-.brand-subtitle{
-  margin-top:2px;
-  color:var(--muted);
-  font-size:10px;
-  letter-spacing:1.2px;
-  text-transform:uppercase;
-}
-
-.new-chat{
-  width:100%;
-  padding:13px 15px;
-  border-radius:12px;
-  color:#fff;
-  background:linear-gradient(
-    135deg,
-    rgba(139,92,246,.95),
-    rgba(99,102,241,.95)
-  );
-  font-weight:650;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  box-shadow:0 8px 30px rgba(99,102,241,.15);
-  transition:.2s ease;
-}
-
-.new-chat:hover{
-  transform:translateY(-1px);
-  box-shadow:0 10px 35px rgba(99,102,241,.3);
-}
-
-.sidebar-section{
-  margin-top:28px;
-}
-
-.section-title{
-  color:#686e7c;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:1.4px;
-  text-transform:uppercase;
-  padding:0 10px 10px;
-}
-
-.nav-item{
-  width:100%;
-  padding:11px 12px;
-  background:transparent;
-  color:#a9aebb;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  gap:11px;
-  text-align:left;
-  margin-bottom:3px;
-  transition:.2s ease;
-}
-
-.nav-item:hover{
-  background:rgba(255,255,255,.045);
-  color:#fff;
-}
-
-.nav-item.active{
-  background:rgba(139,92,246,.10);
-  color:#ddd6fe;
-}
-
-.nav-icon{
-  width:20px;
-  text-align:center;
-}
-
-.recent-list{
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-  max-height:38vh;
-  overflow-y:auto;
-}
-
-.recent-list::-webkit-scrollbar{
-  width:4px;
-}
-
-.recent-list::-webkit-scrollbar-thumb{
-  background:rgba(255,255,255,.08);
-  border-radius:20px;
-}
-
-.recent-chat{
-  display:flex;
-  align-items:center;
-  gap:4px;
-  min-width:0;
-}
-
-.recent-chat.active{
-  background:rgba(139,92,246,.10);
-  border-radius:8px;
-}
-
-.recent-chat-title{
-  flex:1;
-  min-width:0;
-  color:#8f96a5;
-  font-size:12px;
-  padding:9px 8px 9px 11px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  background:transparent;
-  text-align:left;
-  border-radius:8px;
-}
-
-.recent-chat.active .recent-chat-title{
-  color:#ddd6fe;
-}
-
-.recent-chat-title:hover{
-  color:#fff;
-  background:rgba(255,255,255,.035);
-}
-
-.recent-chat-actions{
-  display:flex;
-  opacity:0;
-  transition:.15s ease;
-}
-
-.recent-chat:hover .recent-chat-actions,
-.recent-chat.active .recent-chat-actions{
-  opacity:1;
-}
-
-.recent-mini{
-  width:25px;
-  height:25px;
-  border-radius:7px;
-  background:transparent;
-  color:#686f7e;
-  font-size:12px;
-}
-
-.recent-mini:hover{
-  color:#fff;
-  background:rgba(255,255,255,.07);
-}
-
-.empty-recent{
-  color:#555c6b;
-  font-size:11px;
-  padding:8px 11px;
-}
-
-.sidebar-bottom{
-  margin-top:auto;
-}
-
-.status-card{
-  padding:12px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.025);
-  border-radius:12px;
-}
-
-.status-line{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#aeb4c1;
-  font-size:11px;
-}
-
-.status-dot{
-  width:7px;
-  height:7px;
-  background:var(--green);
-  border-radius:50%;
-  box-shadow:0 0 10px rgba(34,197,94,.8);
-}
-
-/* =====================================================
-   MAIN
-===================================================== */
-
-.main{
-  flex:1;
-  height:100vh;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-}
-
-.topbar{
-  height:70px;
-  flex-shrink:0;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 26px;
-  background:rgba(6,7,11,.65);
-  backdrop-filter:blur(18px);
-}
-
-.model-info{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.model-orb{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:var(--accent);
-  box-shadow:0 0 14px rgba(139,92,246,.9);
-}
-
-.model-name{
-  font-size:13px;
-  font-weight:650;
-}
-
-.model-state{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.top-actions{
-  display:flex;
-  gap:7px;
-}
-
-.icon-btn{
-  width:38px;
-  height:38px;
-  border-radius:10px;
-  background:transparent;
-  color:#8e95a4;
-  display:grid;
-  place-items:center;
-  font-size:16px;
-  transition:.2s ease;
-}
-
-.icon-btn:hover{
-  background:rgba(255,255,255,.06);
-  color:#fff;
-}
-
-.mobile-menu{
-  display:none;
-}
-
-/* =====================================================
-   CHAT
-===================================================== */
-
-.chat-area{
-  flex:1;
-  overflow-y:auto;
-  scroll-behavior:smooth;
-}
-
-.chat-area::-webkit-scrollbar{
-  width:6px;
-}
-
-.chat-area::-webkit-scrollbar-thumb{
-  background:rgba(255,255,255,.08);
-  border-radius:20px;
-}
-
-.chat-container{
-  width:min(900px,calc(100% - 40px));
-  margin:0 auto;
-  padding:45px 0 180px;
-}
-
-.welcome{
-  min-height:calc(100vh - 250px);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.welcome-logo{
-  width:74px;
-  height:74px;
-  border-radius:23px;
-  display:grid;
-  place-items:center;
-  font-size:30px;
-  font-weight:900;
-  background:linear-gradient(
-    135deg,
-    var(--accent),
-    var(--accent2)
-  );
-  box-shadow:
-    0 0 45px rgba(99,102,241,.28),
-    inset 0 1px 0 rgba(255,255,255,.2);
-  margin-bottom:25px;
-}
-
-.welcome h1{
-  font-size:clamp(30px,5vw,52px);
-  line-height:1.05;
-  letter-spacing:-1.8px;
-}
-
-.welcome p{
-  max-width:590px;
-  margin-top:14px;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.7;
-}
-
-.suggestions{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:9px;
-  margin-top:28px;
-}
-
-.suggestion{
-  padding:10px 14px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:rgba(255,255,255,.025);
-  color:#aeb4c1;
-  font-size:12px;
-  transition:.2s ease;
-}
-
-.suggestion:hover{
-  color:#fff;
-  border-color:rgba(139,92,246,.35);
-  background:rgba(139,92,246,.08);
-}
-
-/* =====================================================
-   MESSAGES
-===================================================== */
-
-.message{
-  display:flex;
-  gap:14px;
-  margin:25px 0;
-}
-
-.message.user{
-  justify-content:flex-end;
-}
-
-.avatar{
-  width:34px;
-  height:34px;
-  flex-shrink:0;
-  border-radius:11px;
-  display:grid;
-  place-items:center;
-  font-size:12px;
-  font-weight:800;
-}
-
-.message.ai .avatar{
-  background:linear-gradient(
-    135deg,
-    var(--accent),
-    var(--accent2)
-  );
-}
-
-.message.user .avatar{
-  background:#171a23;
-  color:#c5cad4;
-}
-
-.message-content-wrap{
-  max-width:min(760px,85%);
-}
-
-.message.user .message-content-wrap{
-  order:-1;
-}
-
-.message-text{
-  color:#dfe3ea;
-  font-size:14px;
-  line-height:1.75;
-}
-
-.message.user .message-text{
-  padding:12px 15px;
-  border-radius:16px 16px 5px 16px;
-  background:#151822;
-  border:1px solid var(--border);
-  white-space:pre-wrap;
-}
-
-.message.ai .message-text{
-  padding-top:2px;
-}
-
-.message-text h1,
-.message-text h2,
-.message-text h3{
-  margin:20px 0 9px;
-  color:#fff;
-}
-
-.message-text h1{
-  font-size:24px;
-}
-
-.message-text h2{
-  font-size:20px;
-}
-
-.message-text h3{
-  font-size:17px;
-}
-
-.message-text p{
-  margin:9px 0;
-}
-
-.message-text ul,
-.message-text ol{
-  margin:10px 0 10px 22px;
-}
-
-.message-text li{
-  margin:5px 0;
-}
-
-.message-text blockquote{
-  margin:12px 0;
-  padding:10px 14px;
-  border-left:3px solid var(--accent);
-  background:rgba(139,92,246,.06);
-  color:#aeb4c1;
-}
-
-.message-text table{
-  width:100%;
-  border-collapse:collapse;
-  margin:16px 0;
-  overflow:hidden;
-  border-radius:10px;
-  border:1px solid var(--border);
-}
-
-.message-text th,
-.message-text td{
-  padding:9px 11px;
-  border:1px solid var(--border);
-  text-align:left;
-}
-
-.message-text th{
-  background:rgba(255,255,255,.05);
-  color:#fff;
-}
-
-.message-text code{
-  padding:2px 5px;
-  border-radius:5px;
-  background:#141720;
-  color:#c4b5fd;
-  font-size:12px;
-}
-
-.code-wrap{
-  margin:15px 0;
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-  background:#080a0f;
-}
-
-.code-head{
-  height:35px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 10px;
-  border-bottom:1px solid var(--border);
-  color:#717887;
-  font-size:10px;
-}
-
-.copy-code{
-  padding:5px 8px;
-  border-radius:6px;
-  background:rgba(255,255,255,.05);
-  color:#8e95a4;
-  font-size:10px;
-}
-
-.copy-code:hover{
-  color:#fff;
-  background:rgba(255,255,255,.08);
-}
-
-.code-wrap pre{
-  margin:0;
-  padding:15px;
-  overflow-x:auto;
-}
-
-.code-wrap pre code{
-  padding:0;
-  background:transparent;
-  color:#d8dbe3;
-  font-size:12px;
-  line-height:1.65;
-}
-
-.message-actions{
-  display:flex;
-  gap:6px;
-  margin-top:8px;
-}
-
-.message-action{
-  padding:5px 8px;
-  border-radius:7px;
-  background:transparent;
-  color:#656c7a;
-  font-size:10px;
-}
-
-.message-action:hover{
-  background:rgba(255,255,255,.05);
-  color:#c7cbd3;
-}
-
-.typing{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  padding:10px 0;
-}
-
-.typing span{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#777e8e;
-  animation:typing 1.2s infinite;
-}
-
-.typing span:nth-child(2){
-  animation-delay:.15s;
-}
-
-.typing span:nth-child(3){
-  animation-delay:.3s;
-}
-
-@keyframes typing{
-  0%,60%,100%{
-    transform:translateY(0);
-    opacity:.4;
-  }
-  30%{
-    transform:translateY(-4px);
-    opacity:1;
-  }
-}
-
-/* =====================================================
-   ATTACHMENTS
-===================================================== */
-
-.message-attachment{
-  margin-top:8px;
-  padding:8px 10px;
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  border-radius:9px;
-  background:rgba(139,92,246,.07);
-  border:1px solid rgba(139,92,246,.16);
-  color:#aaa3c7;
-  font-size:10px;
-}
-
-.attachment-preview{
-  display:none;
-  padding:9px 11px 0;
-}
-
-.attachment-preview.show{
-  display:block;
-}
-
-.attachment-chip{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  max-width:100%;
-  padding:8px 10px;
-  border:1px solid rgba(139,92,246,.22);
-  border-radius:10px;
-  background:rgba(139,92,246,.07);
-}
-
-.attachment-icon{
-  width:28px;
-  height:28px;
-  flex-shrink:0;
-  display:grid;
-  place-items:center;
-  border-radius:8px;
-  background:rgba(139,92,246,.14);
-}
-
-.attachment-info{
-  min-width:0;
-  flex:1;
-}
-
-.attachment-name{
-  color:#ddd6fe;
-  font-size:11px;
-  font-weight:650;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.attachment-type{
-  color:#686f7d;
-  font-size:9px;
-  margin-top:2px;
-}
-
-.remove-attachment{
-  width:27px;
-  height:27px;
-  border-radius:7px;
-  background:transparent;
-  color:#777e8e;
-}
-
-.remove-attachment:hover{
-  color:#fff;
-  background:rgba(255,255,255,.06);
-}
-
-/* =====================================================
-   COMPOSER
-===================================================== */
-
-.composer-area{
-  position:fixed;
-  left:270px;
-  right:0;
-  bottom:0;
-  z-index:30;
-  padding:20px 25px 25px;
-  pointer-events:none;
-  background:linear-gradient(
-    to top,
-    rgba(6,7,11,1) 20%,
-    rgba(6,7,11,.85) 65%,
-    transparent
-  );
-}
-
-.composer{
-  width:min(900px,100%);
-  margin:0 auto;
-  pointer-events:auto;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:17px;
-  background:rgba(12,15,22,.96);
-  box-shadow:
-    0 20px 70px rgba(0,0,0,.45),
-    0 0 0 1px rgba(255,255,255,.02);
-  overflow:hidden;
-}
-
-.composer-main{
-  display:flex;
-  align-items:flex-end;
-  gap:9px;
-  padding:10px;
-}
-
-.attach-btn,
-.voice-btn,
-.send-btn{
-  width:38px;
-  height:38px;
-  flex-shrink:0;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-}
-
-.attach-btn{
-  background:transparent;
-  border:1px solid rgba(255,255,255,.12);
-  color:#d8dbe3;
-  font-size:20px;
-}
-
-.attach-btn:hover{
-  background:rgba(255,255,255,.05);
-  border-color:rgba(139,92,246,.35);
-}
-
-.voice-btn{
-  background:transparent;
-  color:#8e95a4;
-  font-size:16px;
-}
-
-.voice-btn:hover{
-  background:rgba(255,255,255,.05);
-  color:#fff;
-}
-
-.voice-btn.active{
-  color:#a78bfa;
-  background:rgba(139,92,246,.12);
-}
-
-.send-btn{
-  background:linear-gradient(
-    135deg,
-    var(--accent),
-    var(--accent2)
-  );
-  color:#fff;
-  font-size:20px;
-  box-shadow:0 5px 20px rgba(99,102,241,.22);
-}
-
-.send-btn:hover{
-  transform:translateY(-1px);
-}
-
-#messageInput{
-  flex:1;
-  min-width:0;
-  max-height:150px;
-  min-height:38px;
-  resize:none;
-  outline:none;
-  border:0;
-  background:transparent;
-  color:#f3f4f7;
-  font-size:14px;
-  line-height:1.5;
-  padding:8px 3px;
-}
-
-#messageInput::placeholder{
-  color:#666d7c;
-}
-
-#fileInput{
-  display:none;
-}
-
-.composer-hint{
-  padding:0 11px 9px 58px;
-  color:#4f5664;
-  font-size:9px;
-}
-
-/* =====================================================
-   MEMORY PANEL
-===================================================== */
-
-.memory-overlay{
-  position:fixed;
-  inset:0;
-  z-index:120;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:rgba(0,0,0,.62);
-  backdrop-filter:blur(10px);
-}
-
-.memory-overlay.open{
-  display:flex;
-}
-
-.memory-panel{
-  width:min(620px,100%);
-  max-height:78vh;
-  display:flex;
-  flex-direction:column;
-  border:1px solid var(--border2);
-  border-radius:20px;
-  background:#0c0f16;
-  box-shadow:0 30px 100px rgba(0,0,0,.6);
-  overflow:hidden;
-}
-
-.memory-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  padding:18px 20px;
-  border-bottom:1px solid var(--border);
-}
-
-.memory-title-wrap{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.memory-title-icon{
-  width:38px;
-  height:38px;
-  border-radius:11px;
-  display:grid;
-  place-items:center;
-  background:rgba(139,92,246,.12);
-  color:#c4b5fd;
-}
-
-.memory-title{
-  font-size:15px;
-  font-weight:700;
-}
-
-.memory-subtitle{
-  margin-top:3px;
-  color:#6f7685;
-  font-size:10px;
-}
-
-.memory-close{
-  width:34px;
-  height:34px;
-  border-radius:9px;
-  background:rgba(255,255,255,.05);
-  color:#969daa;
-  font-size:18px;
-}
-
-.memory-close:hover{
-  background:rgba(255,255,255,.09);
-  color:#fff;
-}
-
-.memory-body{
-  overflow-y:auto;
-  padding:18px 20px 20px;
-}
-
-.memory-body::-webkit-scrollbar{
-  width:5px;
-}
-
-.memory-body::-webkit-scrollbar-thumb{
-  background:rgba(255,255,255,.08);
-  border-radius:20px;
-}
-
-.memory-info{
-  padding:13px;
-  border-radius:12px;
-  background:rgba(139,92,246,.06);
-  border:1px solid rgba(139,92,246,.12);
-  color:#9b93b7;
-  font-size:11px;
-  line-height:1.6;
-  margin-bottom:16px;
-}
-
-.memory-list{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.memory-item{
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
-  padding:12px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:rgba(255,255,255,.025);
-}
-
-.memory-item-content{
-  flex:1;
-  min-width:0;
-}
-
-.memory-item-text{
-  color:#d8dbe3;
-  font-size:12px;
-  line-height:1.6;
-  word-break:break-word;
-}
-
-.memory-item-date{
-  margin-top:4px;
-  color:#5f6674;
-  font-size:9px;
-}
-
-.memory-delete{
-  width:28px;
-  height:28px;
-  flex-shrink:0;
-  border-radius:8px;
-  background:transparent;
-  color:#696f7c;
-}
-
-.memory-delete:hover{
-  color:#f87171;
-  background:rgba(239,68,68,.08);
-}
-
-.memory-empty{
-  padding:28px 10px;
-  text-align:center;
-  color:#626977;
-  font-size:12px;
-}
-
-.memory-add{
-  display:flex;
-  gap:8px;
-  margin-top:16px;
-}
-
-.memory-add input{
-  flex:1;
-  min-width:0;
-  height:40px;
-  border:1px solid var(--border2);
-  outline:none;
-  border-radius:10px;
-  background:#090b11;
-  color:#fff;
-  padding:0 12px;
-  font-size:12px;
-}
-
-.memory-add input:focus{
-  border-color:rgba(139,92,246,.45);
-}
-
-.memory-add button{
-  padding:0 14px;
-  border-radius:10px;
-  background:linear-gradient(
-    135deg,
-    var(--accent),
-    var(--accent2)
-  );
-  color:#fff;
-  font-size:11px;
-  font-weight:650;
-}
-
-.memory-actions{
-  display:flex;
-  justify-content:flex-end;
-  margin-top:14px;
-}
-
-.clear-memory{
-  padding:8px 11px;
-  border-radius:8px;
-  background:rgba(239,68,68,.07);
-  color:#ef8585;
-  font-size:10px;
-}
-
-.clear-memory:hover{
-  background:rgba(239,68,68,.13);
-}
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-.search-overlay{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:none;
-  align-items:flex-start;
-  justify-content:center;
-  padding:90px 20px 20px;
-  background:rgba(0,0,0,.58);
-  backdrop-filter:blur(8px);
-}
-
-.search-overlay.open{
-  display:flex;
-}
-
-.search-panel{
-  width:min(620px,100%);
-  max-height:70vh;
-  overflow:hidden;
-  border:1px solid var(--border2);
-  border-radius:18px;
-  background:#0d1017;
-  box-shadow:0 30px 90px rgba(0,0,0,.55);
-}
-
-.search-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:14px;
-  border-bottom:1px solid var(--border);
-}
-
-.search-input{
-  flex:1;
-  min-width:0;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:#fff;
-  font-size:14px;
-}
-
-.search-close{
-  width:34px;
-  height:34px;
-  border-radius:9px;
-  background:rgba(255,255,255,.05);
-  color:#9da3b0;
-}
-
-.search-results{
-  overflow-y:auto;
-  max-height:52vh;
-  padding:8px;
-}
-
-.search-result{
-  width:100%;
-  padding:12px;
-  text-align:left;
-  border-radius:11px;
-  background:transparent;
-  color:#d8dbe3;
-}
-
-.search-result:hover{
-  background:rgba(255,255,255,.05);
-}
-
-.search-result-title{
-  font-size:13px;
-  font-weight:650;
-}
-
-.search-result-meta{
-  margin-top:4px;
-  color:#686f7d;
-  font-size:10px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.search-empty{
-  color:#646b79;
-  font-size:12px;
-  padding:20px 12px;
-  text-align:center;
-}
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:105px;
-  z-index:200;
-  transform:translate(-50%,15px);
-  opacity:0;
-  pointer-events:none;
-  padding:10px 14px;
-  border:1px solid var(--border2);
-  border-radius:10px;
-  background:#11141c;
-  color:#d8dbe3;
-  font-size:11px;
-  box-shadow:0 15px 40px rgba(0,0,0,.4);
-  transition:.2s ease;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:800px){
-
-  .sidebar{
-    position:fixed;
-    left:0;
-    top:0;
-    transform:translateX(-100%);
-    box-shadow:20px 0 60px rgba(0,0,0,.4);
-  }
-
-  .sidebar.open{
-    transform:translateX(0);
-  }
-
-  .mobile-menu{
-    display:grid;
-  }
-
-  .topbar{
-    padding:0 14px;
-  }
-
-  .composer-area{
-    left:0;
-    padding:12px 10px 14px;
-  }
-
-  .chat-container{
-    width:calc(100% - 24px);
-    padding-top:25px;
-  }
-
-  .message-content-wrap{
-    max-width:88%;
-  }
-
-  .welcome{
-    min-height:calc(100vh - 230px);
-  }
-
-  .welcome h1{
-    font-size:34px;
-  }
-
-  .welcome p{
-    font-size:13px;
-  }
-
-  .suggestions{
-    gap:7px;
-  }
-
-  .suggestion{
-    font-size:11px;
-  }
-
-  .composer-hint{
-    display:none;
-  }
-
-  .memory-panel{
-    max-height:86vh;
-  }
-
-  .memory-add{
-    flex-direction:column;
-  }
-
-  .memory-add button{
-    height:40px;
-  }
-}
-</style>
 </head>
-
 <body>
-
 <div class="app">
-
-  <!-- =================================================
-       SIDEBAR
-  ================================================== -->
-
-  <aside class="sidebar" id="sidebar">
-
-    <div class="brand">
-
-      <div class="brand-logo">
-        F
-      </div>
-
-      <div>
-
-        <div class="brand-name">
-          FAYNEX
-        </div>
-
-        <div class="brand-subtitle">
-          Next-Generation Intelligence
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <button
-      class="new-chat"
-      id="newChatBtn"
-      type="button"
-    >
-      <span>＋</span>
-      <span>New conversation</span>
-    </button>
-
-
-    <div class="sidebar-section">
-
-      <div class="section-title">
-        Workspace
-      </div>
-
-
-      <button
-        class="nav-item active"
-        id="homeBtn"
-        type="button"
-      >
-        <span class="nav-icon">⌂</span>
-        <span>Home</span>
-      </button>
-
-
-      <button
-        class="nav-item"
-        type="button"
-      >
-        <span class="nav-icon">✦</span>
-        <span>Explore</span>
-      </button>
-
-
-      <button
-        class="nav-item"
-        id="searchChatsBtn"
-        type="button"
-      >
-        <span class="nav-icon">⌕</span>
-        <span>Search chats</span>
-      </button>
-
-
-      <button
-        class="nav-item"
-        id="memoryBtn"
-        type="button"
-      >
-        <span class="nav-icon">🧠</span>
-        <span>Memory</span>
-      </button>
-
-    </div>
-
-
-    <div class="sidebar-section">
-
-      <div class="section-title">
-        Recent
-      </div>
-
-      <div
-        class="recent-list"
-        id="recentList"
-      ></div>
-
-    </div>
-
-
-    <div class="sidebar-bottom">
-
-      <div class="status-card">
-
-        <div class="status-line">
-
-          <span class="status-dot"></span>
-
-          <span>
-            FAYNEX systems online
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </aside>
-
-
-  <!-- =================================================
-       MAIN
-  ================================================== -->
-
-  <main class="main">
-
-    <header class="topbar">
-
-      <div class="model-info">
-
-        <button
-          class="icon-btn mobile-menu"
-          id="menuBtn"
-          type="button"
-          title="Menu"
-        >
-          ☰
-        </button>
-
-        <span class="model-orb"></span>
-
-        <div>
-
-          <div class="model-name">
-            FAYNEX AI
-          </div>
-
-          <div class="model-state">
-            Gemini Intelligence
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="top-actions">
-
-        <button
-          class="icon-btn"
-          id="topSearchBtn"
-          type="button"
-          title="Search"
-        >
-          ⌕
-        </button>
-
-        <button
-          class="icon-btn"
-          id="topMemoryBtn"
-          type="button"
-          title="Memory"
-        >
-          🧠
-        </button>
-
-      </div>
-
-    </header>
-
-
-    <section
-      class="chat-area"
-      id="chatArea"
-    >
-
-      <div
-        class="chat-container"
-        id="chatContainer"
-      ></div>
-
-    </section>
-
-  </main>
-
+<!-- =========================
+         SIDEBAR
+    ========================== -->
+<aside class="sidebar" id="sidebar">
+<div class="brand">
+<div class="brand-logo">F</div>
+<div>
+<div class="brand-name">FAYNEX</div>
+<div class="brand-subtitle">Next-Generation Intelligence</div>
 </div>
-
-
-<!-- =====================================================
-     COMPOSER
-===================================================== -->
-
-<div class="composer-area">
-
-  <div class="composer">
-
-    <div
-      class="attachment-preview"
-      id="attachmentPreview"
-    ></div>
-
-
-    <div class="composer-main">
-
-      <button
-        class="attach-btn"
-        id="attachBtn"
-        type="button"
-        title="Attach file"
-      >
-        ＋
-      </button>
-
-
-      <input
-        type="file"
-        id="fileInput"
-        accept="
-          image/jpeg,
-          image/png,
-          image/webp,
-          image/gif,
-          application/pdf,
-          .txt,
-          .md,
-          .csv,
-          .json,
-          .html,
-          .css,
-          .js,
-          .jsx,
-          .ts,
-          .tsx
-        "
-      >
-
-
-      <textarea
-        id="messageInput"
-        rows="1"
-        placeholder="Ask FAYNEX anything..."
-      ></textarea>
-
-
-      <button
-        class="voice-btn"
-        id="voiceBtn"
-        type="button"
-        title="Voice input"
-      >
-        ◉
-      </button>
-
-
-      <button
-        class="send-btn"
-        id="sendBtn"
-        type="button"
-        title="Send"
-      >
-        ↑
-      </button>
-
-    </div>
-
-
-    <div class="composer-hint">
-      Enter to send • Shift + Enter for new line • Attach image, PDF or code files
-    </div>
-
-  </div>
-
 </div>
-
-
-<!-- =====================================================
-     SEARCH
-===================================================== -->
-
-<div
-  class="search-overlay"
-  id="searchOverlay"
->
-
-  <div class="search-panel">
-
-    <div class="search-head">
-
-      <span>⌕</span>
-
-      <input
-        class="search-input"
-        id="chatSearchInput"
-        placeholder="Search conversations..."
-        autocomplete="off"
-      >
-
-      <button
-        class="search-close"
-        id="closeSearchBtn"
-        type="button"
-      >
-        ×
-      </button>
-
-    </div>
-
-
-    <div
-      class="search-results"
-      id="searchResults"
-    ></div>
-
-  </div>
-
+<button class="new-chat" id="newChatBtn">
+<span>＋</span>
+<span>New conversation</span>
+</button>
+<div class="sidebar-section">
+<div class="section-title">Workspace</div>
+<button class="nav-item">
+<span class="nav-icon">⌂</span>
+<span>Home</span>
+</button>
+<button class="nav-item">
+<span class="nav-icon">◉</span>
+<span>Explore</span>
+</button>
+<button class="nav-item" id="searchChatsBtn">
+<span class="nav-icon">⌕</span>
+<span>Search chats</span>
+</button>
 </div>
-
-
-<!-- =====================================================
-     MEMORY PANEL
-===================================================== -->
-
-<div
-  class="memory-overlay"
-  id="memoryOverlay"
->
-
-  <div class="memory-panel">
-
-    <div class="memory-head">
-
-      <div class="memory-title-wrap">
-
-        <div class="memory-title-icon">
-          🧠
-        </div>
-
-        <div>
-
-          <div class="memory-title">
-            FAYNEX Memory
-          </div>
-
-          <div class="memory-subtitle">
-            Your saved information
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <button
-        class="memory-close"
-        id="closeMemoryBtn"
-        type="button"
-      >
-        ×
-      </button>
-
-    </div>
-
-
-    <div class="memory-body">
-
-      <div class="memory-info">
-        FAYNEX can use these memories in future conversations
-        on this browser. Say
-        <strong>“Remember that…”</strong>
-        to save something, or add a memory manually below.
-      </div>
-
-
-      <div
-        class="memory-list"
-        id="memoryList"
-      ></div>
-
-
-      <div class="memory-add">
-
-        <input
-          id="memoryInput"
-          type="text"
-          maxlength="300"
-          placeholder="Add something for FAYNEX to remember..."
-        >
-
-        <button
-          id="addMemoryBtn"
-          type="button"
-        >
-          Add memory
-        </button>
-
-      </div>
-
-
-      <div class="memory-actions">
-
-        <button
-          class="clear-memory"
-          id="clearMemoryBtn"
-          type="button"
-        >
-          Clear all memories
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
+<div class="sidebar-section recent">
+<div class="section-title">Recent</div>
+<div class="recent-list" id="recentList"></div>
 </div>
-
-
-<div
-  class="toast"
-  id="toast"
-></div>
-
-
-<script>
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    /* =================================================
-       CONFIG
-    ================================================= */
-
-    const API_URL =
-      "https://faynex-ai-api.mf16348011.workers.dev";
-
-
-    const MAX_FILE_SIZE =
-      12 * 1024 * 1024;
-
-
-    const BINARY_TYPES =
-      new Set([
-        "application/pdf",
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-        "image/gif"
-      ]);
-
-
-    const TEXT_EXTENSIONS =
-      new Set([
-        "txt",
-        "md",
-        "csv",
-        "json",
-        "html",
-        "css",
-        "js",
-        "jsx",
-        "ts",
-        "tsx"
-      ]);
-
-
-    /* =================================================
-       ELEMENTS
-    ================================================= */
-
-    const sidebar =
-      document.getElementById("sidebar");
-
-    const menuBtn =
-      document.getElementById("menuBtn");
-
-    const newChatBtn =
-      document.getElementById("newChatBtn");
-
-    const homeBtn =
-      document.getElementById("homeBtn");
-
-    const searchChatsBtn =
-      document.getElementById("searchChatsBtn");
-
-    const topSearchBtn =
-      document.getElementById("topSearchBtn");
-
-    const memoryBtn =
-      document.getElementById("memoryBtn");
-
-    const topMemoryBtn =
-      document.getElementById("topMemoryBtn");
-
-    const chatArea =
-      document.getElementById("chatArea");
-
-    const chatContainer =
-      document.getElementById("chatContainer");
-
-    const input =
-      document.getElementById("messageInput");
-
-    const sendBtn =
-      document.getElementById("sendBtn");
-
-    const attachBtn =
-      document.getElementById("attachBtn");
-
-    const fileInput =
-      document.getElementById("fileInput");
-
-    const voiceBtn =
-      document.getElementById("voiceBtn");
-
-    const attachmentPreview =
-      document.getElementById("attachmentPreview");
-
-    const recentList =
-      document.getElementById("recentList");
-
-    const searchOverlay =
-      document.getElementById("searchOverlay");
-
-    const chatSearchInput =
-      document.getElementById("chatSearchInput");
-
-    const searchResults =
-      document.getElementById("searchResults");
-
-    const closeSearchBtn =
-      document.getElementById("closeSearchBtn");
-
-    const memoryOverlay =
-      document.getElementById("memoryOverlay");
-
-    const memoryList =
-      document.getElementById("memoryList");
-
-    const memoryInput =
-      document.getElementById("memoryInput");
-
-    const addMemoryBtn =
-      document.getElementById("addMemoryBtn");
-
-    const clearMemoryBtn =
-      document.getElementById("clearMemoryBtn");
-
-    const closeMemoryBtn =
-      document.getElementById("closeMemoryBtn");
-
-    const toast =
-      document.getElementById("toast");
-
-
-    /* =================================================
-       STATE
-    ================================================= */
-
-    let conversations = [];
-
-    let activeConversationId = null;
-
-    let pendingAttachment = null;
-
-    let abortController = null;
-
-    let isGenerating = false;
-
-    let recognition = null;
-
-    let isListening = false;
-
-
-    /* =================================================
-       MEMORY SYSTEM
-    ================================================= */
-
-    const MEMORY_STORAGE_KEY =
-      "faynex_long_term_memory_v1";
-
-
-    let memories = [];
-
-
-    function loadMemories(){
-
-      try{
-
-        const saved =
-          localStorage.getItem(
-            MEMORY_STORAGE_KEY
-          );
-
-
-        const parsed =
-          saved
-            ? JSON.parse(saved)
-            : [];
-
-
-        if(Array.isArray(parsed)){
-
-          memories =
-            parsed.filter(
-              item =>
-                item &&
-                typeof item.text ===
-                  "string"
-            );
-
-        }else{
-
-          memories = [];
-
-        }
-
-      }catch(error){
-
-        console.warn(
-          "Memory load failed:",
-          error
-        );
-
-        memories = [];
-
-      }
-
-    }
-
-
-    function saveMemories(){
-
-      try{
-
-        localStorage.setItem(
-          MEMORY_STORAGE_KEY,
-          JSON.stringify(
-            memories
-          )
-        );
-
-      }catch(error){
-
-        console.warn(
-          "Memory save failed:",
-          error
-        );
-
-        showToast(
-          "Could not save memory."
-        );
-
-      }
-
-    }
-
-
-    function generateMemoryId(){
-
-      return (
-        "mem_" +
-        Date.now().toString(36) +
-        "_" +
-        Math.random()
-          .toString(36)
-          .slice(2,9)
-      );
-
-    }
-
-
-    function addMemory(
-      text,
-      source = "manual"
-    ){
-
-      const clean =
-        String(text || "")
-          .replace(/\s+/g," ")
-          .trim();
-
-
-      if(!clean){
-
-        return false;
-
-      }
-
-
-      if(clean.length > 300){
-
-        showToast(
-          "Memory is too long. Keep it under 300 characters."
-        );
-
-        return false;
-
-      }
-
-
-      const duplicate =
-        memories.some(
-          memory =>
-            memory.text.toLowerCase() ===
-            clean.toLowerCase()
-        );
-
-
-      if(duplicate){
-
-        showToast(
-          "FAYNEX already remembers this."
-        );
-
-        return false;
-
-      }
-
-
-      memories.unshift({
-
-        id:
-          generateMemoryId(),
-
-        text:
-          clean,
-
-        source:
-          source,
-
-        createdAt:
-          Date.now()
-
-      });
-
-
-      /*
-        Keep local memory compact.
-        This version stores up to 100 memories.
-      */
-
-      memories =
-        memories.slice(
-          0,
-          100
-        );
-
-
-      saveMemories();
-
-      renderMemoryList();
-
-      return true;
-
-    }
-
-
-    function deleteMemory(
-      id
-    ){
-
-      memories =
-        memories.filter(
-          memory =>
-            memory.id !== id
-        );
-
-
-      saveMemories();
-
-      renderMemoryList();
-
-    }
-
-
-    function clearAllMemories(){
-
-      if(!memories.length){
-
-        showToast(
-          "There are no saved memories."
-        );
-
-        return;
-
-      }
-
-
-      const confirmed =
-        confirm(
-          "Delete all FAYNEX memories?"
-        );
-
-
-      if(!confirmed){
-
-        return;
-
-      }
-
-
-      memories = [];
-
-      saveMemories();
-
-      renderMemoryList();
-
-      showToast(
-        "All memories cleared."
-      );
-
-    }
-
-
-    function renderMemoryList(){
-
-      memoryList.innerHTML =
-        "";
-
-
-      if(!memories.length){
-
-        memoryList.innerHTML = `
-
-          <div class="memory-empty">
-
-            FAYNEX doesn't remember anything yet.
-
-            <br><br>
-
-            Try:
-            <strong>
-              “Remember that I prefer dark UI.”
-            </strong>
-
+<div class="sidebar-bottom">
+<div class="status-card">
+<div class="status-line">
+<span class="status-dot"></span>
+<span>FAYNEX systems online</span>
+</div>
+</div>
+<button class="nav-item" id="sidebarSettingsBtn" style="margin-top: 8px;">
+<span class="nav-icon">⚙</span>
+<span>Settings</span>
+</button>
+</div>
+</aside>
+<!-- =========================
+         MAIN
+    ========================== -->
+<main class="main">
+<header class="topbar">
+<div class="model-info">
+<button aria-label="Open menu" class="icon-btn mobile-menu" id="menuBtn">
+            ☰
+          </button>
+<span class="model-orb"></span>
+<div>
+<div class="model-name">FAYNEX AI</div>
+<div class="model-state">Ready for your command</div>
+</div>
+</div>
+<div class="top-actions">
+<button class="icon-btn" title="Search">
+            ⌕
+          </button>
+<button class="icon-btn" id="settingsBtn" title="Memory & Settings">
+            ⚙
+          </button>
+<button class="icon-btn" title="More">
+            ⋯
+          </button>
+</div>
+</header>
+<!-- =========================
+           CHAT AREA
+      ========================== -->
+<section class="chat-area" id="chatArea">
+<div class="welcome" id="welcome">
+<div class="welcome-orb">
+            F
           </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      memories.forEach(
-        memory => {
-
-          const item =
-            document.createElement(
-              "div"
-            );
-
-
-          item.className =
-            "memory-item";
-
-
-          const content =
-            document.createElement(
-              "div"
-            );
-
-
-          content.className =
-            "memory-item-content";
-
-
-          const text =
-            document.createElement(
-              "div"
-            );
-
-
-          text.className =
-            "memory-item-text";
-
-          text.textContent =
-            memory.text;
-
-
-          const date =
-            document.createElement(
-              "div"
-            );
-
-
-          date.className =
-            "memory-item-date";
-
-
-          date.textContent =
-            new Date(
-              memory.createdAt
-            ).toLocaleString();
-
-
-          content.appendChild(
-            text
-          );
-
-          content.appendChild(
-            date
-          );
-
-
-          const deleteButton =
-            document.createElement(
-              "button"
-            );
-
-
-          deleteButton.type =
-            "button";
-
-          deleteButton.className =
-            "memory-delete";
-
-          deleteButton.textContent =
-            "×";
-
-          deleteButton.title =
-            "Delete memory";
-
-
-          deleteButton.addEventListener(
-            "click",
-            () =>
-              deleteMemory(
-                memory.id
-              )
-          );
-
-
-          item.appendChild(
-            content
-          );
-
-          item.appendChild(
-            deleteButton
-          );
-
-
-          memoryList.appendChild(
-            item
-          );
-
-        }
-      );
-
-    }
-
-
-    function openMemory(){
-
-      renderMemoryList();
-
-      memoryOverlay.classList.add(
-        "open"
-      );
-
-      setTimeout(
-        () =>
-          memoryInput.focus(),
-        50
-      );
-
-    }
-
-
-    function closeMemory(){
-
-      memoryOverlay.classList.remove(
-        "open"
-      );
-
-    }
-
-
-    function getMemoryPrompt(){
-
-      if(!memories.length){
-
-        return "";
-
-      }
-
-
-      const memoryLines =
-        memories
-          .slice(0,50)
-          .map(
-            (memory,index) =>
-              `${index + 1}. ${memory.text}`
-          )
-          .join("\n");
-
-
-      return `
-
-IMPORTANT USER MEMORY
-
-The following information was explicitly saved by the user for future conversations.
-
-Use it only when it is relevant to the user's current request.
-Do not mention the memory system unless the user asks about it.
-Do not invent additional memories.
-If a memory conflicts with the user's current message, follow the current message.
-
-Saved memories:
-${memoryLines}
-
-END USER MEMORY
-
-`;
-
-    }
-
-
-    /*
-      Detect explicit memory commands.
-
-      Examples:
-      "Remember that my name is Fahim."
-      "Please remember I prefer dark UI."
-      "Don't forget that I use JavaScript."
-    */
-
-    function detectMemoryCommand(
-      text
-    ){
-
-      const clean =
-        String(text || "")
-          .trim();
-
-
-      if(!clean){
-
-        return null;
-
-      }
-
-
-      const patterns = [
-
-        /^remember(?:\s+that)?\s+(.+)$/i,
-
-        /^please\s+remember(?:\s+that)?\s+(.+)$/i,
-
-        /^don't\s+forget(?:\s+that)?\s+(.+)$/i,
-
-        /^do\s+not\s+forget(?:\s+that)?\s+(.+)$/i
-
-      ];
-
-
-      for(
-        const pattern of patterns
-      ){
-
-        const match =
-          clean.match(
-            pattern
-          );
-
-
-        if(match){
-
-          const memory =
-            match[1]
-              .trim()
-              .replace(
-                /[.!?]+$/,
-                ""
-              );
-
-
-          if(memory){
-
-            return memory;
-
-          }
-
-        }
-
-      }
-
-
-      return null;
-
-    }
-
-
-    function processMemoryCommand(
-      text
-    ){
-
-      const memory =
-        detectMemoryCommand(
-          text
-        );
-
-
-      if(!memory){
-
-        return false;
-
-      }
-
-
-      const saved =
-        addMemory(
-          memory,
-          "explicit-user-command"
-        );
-
-
-      if(saved){
-
-        showToast(
-          "🧠 FAYNEX remembered that."
-        );
-
-      }
-
-
-      return true;
-
-    }
-
-
-    /* =================================================
-       GENERAL UTILITIES
-    ================================================= */
-
-    function showToast(
-      message
-    ){
-
-      toast.textContent =
-        String(message || "");
-
-      toast.classList.add(
-        "show"
-      );
-
-
-      clearTimeout(
-        showToast.timer
-      );
-
-
-      showToast.timer =
-        setTimeout(
-          () =>
-            toast.classList.remove(
-              "show"
-            ),
-          3000
-        );
-
-    }
-
-
-    function escapeHtml(
-      value
-    ){
-
-      return String(
-        value || ""
-      )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
-
-
-    function renderMarkdown(
-      text
-    ){
-
-      const source =
-        String(
-          text || ""
-        );
-
-
-      let html = "";
-
-
-      if(
-        window.marked &&
-        typeof window.marked.parse ===
-          "function"
-      ){
-
-        try{
-
-          html =
-            window.marked.parse(
-              source,
-              {
-                gfm:true,
-                breaks:true
-              }
-            );
-
-        }catch(error){
-
-          console.warn(
-            "Markdown render error:",
-            error
-          );
-
-          html =
-            escapeHtml(
-              source
-            ).replace(
-              /\n/g,
-              "<br>"
-            );
-
-        }
-
-      }else{
-
-        html =
-          escapeHtml(
-            source
-          ).replace(
-            /\n/g,
-            "<br>"
-          );
-
-      }
-
-
-      if(
-        window.DOMPurify &&
-        typeof window.DOMPurify.sanitize ===
-          "function"
-      ){
-
-        return window.DOMPurify.sanitize(
-          html,
-          {
-            USE_PROFILES:{
-              html:true
-            }
-          }
-        );
-
-      }
-
-
-      return html;
-
-    }
-
-
-    function formatDate(
-      timestamp
-    ){
-
-      return new Date(
-        timestamp
-      ).toLocaleDateString(
-        undefined,
-        {
-          month:"short",
-          day:"numeric"
-        }
-      );
-
-    }
-
-
-    function generateId(){
-
-      return (
-        Date.now().toString(36) +
-        Math.random()
-          .toString(36)
-          .slice(2)
-      );
-
-    }
-
-
-    /* =================================================
-       CHAT STORAGE
-    ================================================= */
-
-    function saveChats(){
-
-      try{
-
-        localStorage.setItem(
-          "faynex_conversations",
-          JSON.stringify(
-            conversations
-          )
-        );
-
-      }catch(error){
-
-        console.warn(
-          "Could not save conversations:",
-          error
-        );
-
-      }
-
-    }
-
-
-    function loadConversations(){
-
-      try{
-
-        const saved =
-          localStorage.getItem(
-            "faynex_conversations"
-          );
-
-
-        if(saved){
-
-          const parsed =
-            JSON.parse(
-              saved
-            );
-
-
-          if(
-            Array.isArray(
-              parsed
-            )
-          ){
-
-            conversations =
-              parsed;
-
-          }
-
-        }
-
-      }catch(error){
-
-        console.warn(
-          "Conversation load failed:",
-          error
-        );
-
-        conversations = [];
-
-      }
-
-
-      if(
-        !conversations.length
-      ){
-
-        createConversation();
-
-      }else{
-
-        activeConversationId =
-          conversations[0].id;
-
-      }
-
-
-      renderRecentChats();
-
-      renderActiveConversation();
-
-    }
-
-
-    function createConversation(){
-
-      const conversation = {
-
-        id:
-          generateId(),
-
-        title:
-          "New conversation",
-
-        createdAt:
-          Date.now(),
-
-        updatedAt:
-          Date.now(),
-
-        messages:
-          []
-
-      };
-
-
-      conversations.unshift(
-        conversation
-      );
-
-
-      activeConversationId =
-        conversation.id;
-
-
-      saveChats();
-
-      renderRecentChats();
-
-      renderActiveConversation();
-
-
-      return conversation;
-
-    }
-
-
-    function getActiveConversation(){
-
-      return conversations.find(
-        item =>
-          item.id ===
-          activeConversationId
-      ) || null;
-
-    }
-
-
-    function titleFromMessage(
-      text
-    ){
-
-      const clean =
-        String(
-          text || ""
-        )
-          .replace(
-            /\s+/g,
-            " "
-          )
-          .trim();
-
-
-      if(!clean){
-
-        return "New conversation";
-
-      }
-
-
-      return clean.length > 38
-        ? clean.slice(0,38) + "..."
-        : clean;
-
-    }
-
-
-    function newConversation(){
-
-      if(isGenerating){
-
-        showToast(
-          "Please wait until the current response finishes."
-        );
-
-        return;
-
-      }
-
-
-      createConversation();
-
-      input.value =
-        "";
-
-      input.style.height =
-        "auto";
-
-      clearPendingAttachment();
-
-      input.focus();
-
-
-      if(
-        window.innerWidth <= 800
-      ){
-
-        sidebar.classList.remove(
-          "open"
-        );
-
-      }
-
-    }
-
-
-    function openConversation(
-      id
-    ){
-
-      if(isGenerating){
-
-        showToast(
-          "Please wait until the current response finishes."
-        );
-
-        return;
-
-      }
-
-
-      activeConversationId =
-        id;
-
-
-      saveChats();
-
-      renderRecentChats();
-
-      renderActiveConversation();
-
-
-      if(
-        window.innerWidth <= 800
-      ){
-
-        sidebar.classList.remove(
-          "open"
-        );
-
-      }
-
-    }
-
-
-    function renameConversation(
-      id
-    ){
-
-      const chat =
-        conversations.find(
-          item =>
-            item.id === id
-        );
-
-
-      if(!chat) return;
-
-
-      const newTitle =
-        prompt(
-          "Rename conversation:",
-          chat.title
-        );
-
-
-      if(
-        newTitle === null
-      ){
-
-        return;
-
-      }
-
-
-      const clean =
-        newTitle.trim();
-
-
-      if(!clean) return;
-
-
-      chat.title =
-        clean.slice(
-          0,
-          80
-        );
-
-
-      chat.updatedAt =
-        Date.now();
-
-
-      saveChats();
-
-      renderRecentChats();
-
-    }
-
-
-    function deleteConversation(
-      id
-    ){
-
-      const index =
-        conversations.findIndex(
-          item =>
-            item.id === id
-        );
-
-
-      if(index === -1) return;
-
-
-      conversations.splice(
-        index,
-        1
-      );
-
-
-      if(
-        activeConversationId === id
-      ){
-
-        if(
-          conversations.length
-        ){
-
-          activeConversationId =
-            conversations[0].id;
-
-        }else{
-
-          createConversation();
-
-          return;
-
-        }
-
-      }
-
-
-      saveChats();
-
-      renderRecentChats();
-
-      renderActiveConversation();
-
-    }
-
-
-    function renderRecentChats(){
-
-      recentList.innerHTML =
-        "";
-
-
-      const sorted =
-        [...conversations]
-          .sort(
-            (a,b) =>
-              b.updatedAt -
-              a.updatedAt
-          )
-          .slice(
-            0,
-            25
-          );
-
-
-      if(!sorted.length){
-
-        recentList.innerHTML =
-          '<div class="empty-recent">No conversations yet.</div>';
-
-        return;
-
-      }
-
-
-      sorted.forEach(
-        chat => {
-
-          const row =
-            document.createElement(
-              "div"
-            );
-
-
-          row.className =
-            "recent-chat" +
-            (
-              chat.id ===
-              activeConversationId
-                ? " active"
-                : ""
-            );
-
-
-          const titleBtn =
-            document.createElement(
-              "button"
-            );
-
-
-          titleBtn.type =
-            "button";
-
-          titleBtn.className =
-            "recent-chat-title";
-
-          titleBtn.textContent =
-            chat.title ||
-            "New conversation";
-
-
-          titleBtn.addEventListener(
-            "click",
-            () =>
-              openConversation(
-                chat.id
-              )
-          );
-
-
-          const actions =
-            document.createElement(
-              "div"
-            );
-
-
-          actions.className =
-            "recent-chat-actions";
-
-
-          const renameBtn =
-            document.createElement(
-              "button"
-            );
-
-
-          renameBtn.type =
-            "button";
-
-          renameBtn.className =
-            "recent-mini";
-
-          renameBtn.textContent =
-            "✎";
-
-
-          renameBtn.addEventListener(
-            "click",
-            event => {
-
-              event.stopPropagation();
-
-              renameConversation(
-                chat.id
-              );
-
-            }
-          );
-
-
-          const deleteBtn =
-            document.createElement(
-              "button"
-            );
-
-
-          deleteBtn.type =
-            "button";
-
-          deleteBtn.className =
-            "recent-mini";
-
-          deleteBtn.textContent =
-            "×";
-
-
-          deleteBtn.addEventListener(
-            "click",
-            event => {
-
-              event.stopPropagation();
-
-              deleteConversation(
-                chat.id
-              );
-
-            }
-          );
-
-
-          actions.appendChild(
-            renameBtn
-          );
-
-          actions.appendChild(
-            deleteBtn
-          );
-
-
-          row.appendChild(
-            titleBtn
-          );
-
-          row.appendChild(
-            actions
-          );
-
-
-          recentList.appendChild(
-            row
-          );
-
-        }
-      );
-
-    }
-
-
-    /* =================================================
-       RENDER CHAT
-    ================================================= */
-
-    function renderActiveConversation(){
-
-      chatContainer.innerHTML =
-        "";
-
-
-      const chat =
-        getActiveConversation();
-
-
-      if(!chat){
-
-        createConversation();
-
-        return;
-
-      }
-
-
-      if(
-        !chat.messages.length
-      ){
-
-        renderWelcome();
-
-        return;
-
-      }
-
-
-      chat.messages.forEach(
-        message => {
-
-          addMessage(
-            message.role ===
-              "assistant"
-              ? "ai"
-              : "user",
-            message.content,
-            {
-              markdown:
-                message.role ===
-                "assistant"
-            }
-          );
-
-
-          if(
-            message.role ===
-              "user" &&
-            message.attachment
-          ){
-
-            const rows =
-              chatContainer.querySelectorAll(
-                ".message"
-              );
-
-
-            const last =
-              rows[
-                rows.length - 1
-              ];
-
-
-            if(last){
-
-              const wrap =
-                last.querySelector(
-                  ".message-content-wrap"
-                );
-
-
-              if(wrap){
-
-                const chip =
-                  renderMessageAttachment(
-                    message.attachment
-                  );
-
-
-                if(chip){
-
-                  wrap.appendChild(
-                    chip
-                  );
-
-                }
-
-              }
-
-            }
-
-          }
-
-        }
-      );
-
-
-      scrollToBottom();
-
-    }
-
-
-    function renderWelcome(){
-
-      const welcome =
-        document.createElement(
-          "div"
-        );
-
-
-      welcome.className =
-        "welcome";
-
-
-      welcome.innerHTML = `
-
-        <div class="welcome-logo">
-          F
-        </div>
-
-        <h1>
-          How can I help you?
-        </h1>
-
-        <p>
-          FAYNEX AI is your next-generation
-          intelligent assistant for research,
-          coding, writing, files, images and more.
-        </p>
-
-        <div class="suggestions">
-
-          <button
-            class="suggestion"
-            data-prompt="Explain artificial intelligence in simple terms."
-          >
-            Explain AI
-          </button>
-
-          <button
-            class="suggestion"
-            data-prompt="Create a modern responsive website using HTML, CSS and JavaScript."
-          >
-            Build a website
-          </button>
-
-          <button
-            class="suggestion"
-            data-prompt="Help me write a professional project proposal."
-          >
-            Write a proposal
-          </button>
-
-          <button
-            class="suggestion"
-            data-prompt="Give me 10 creative ideas for a motion graphics project."
-          >
-            Creative ideas
-          </button>
-
-        </div>
-
-      `;
-
-
-      chatContainer.appendChild(
-        welcome
-      );
-
-
-      welcome
-        .querySelectorAll(
-          ".suggestion"
-        )
-        .forEach(
-          button => {
-
-            button.addEventListener(
-              "click",
-              () => {
-
-                input.value =
-                  button.dataset.prompt ||
-                  "";
-
-                input.dispatchEvent(
-                  new Event(
-                    "input"
-                  )
-                );
-
-                input.focus();
-
-              }
-            );
-
-          }
-        );
-
-    }
-
-
-    function addMessage(
-      type,
-      text,
-      options = {}
-    ){
-
-      const row =
-        document.createElement(
-          "div"
-        );
-
-
-      row.className =
-        "message " +
-        type;
-
-
-      const avatar =
-        document.createElement(
-          "div"
-        );
-
-
-      avatar.className =
-        "avatar";
-
-
-      avatar.textContent =
-        type === "ai"
-          ? "F"
-          : "You";
-
-
-      const wrap =
-        document.createElement(
-          "div"
-        );
-
-
-      wrap.className =
-        "message-content-wrap";
-
-
-      if(type === "user"){
-
-        wrap.classList.add(
-          "user-message-wrap"
-        );
-
-      }
-
-
-      const messageText =
-        document.createElement(
-          "div"
-        );
-
-
-      messageText.className =
-        "message-text";
-
-
-      if(options.typing){
-
-        messageText.innerHTML = `
-
-          <div class="typing">
-
-            <span></span>
-            <span></span>
-            <span></span>
-
-          </div>
-
-        `;
-
-      }else if(
-        options.markdown !== false &&
-        type === "ai"
-      ){
-
-        messageText.innerHTML =
-          renderMarkdown(
-            text
-          );
-
-
-        enhanceCodeBlocks(
-          messageText
-        );
-
-      }else{
-
-        messageText.textContent =
-          text || "";
-
-      }
-
-
-      wrap.appendChild(
-        messageText
-      );
-
-
-      row.appendChild(
-        avatar
-      );
-
-      row.appendChild(
-        wrap
-      );
-
-
-      chatContainer.appendChild(
-        row
-      );
-
-
-      scrollToBottom();
-
-
-      return messageText;
-
-    }
-
-
-    function enhanceCodeBlocks(
-      container
-    ){
-
-      container
-        .querySelectorAll(
-          "pre"
-        )
-        .forEach(
-          pre => {
-
-            if(
-              pre.parentElement.classList.contains(
-                "code-wrap"
-              )
-            ){
-
-              return;
-
-            }
-
-
-            const code =
-              pre.querySelector(
-                "code"
-              );
-
-
-            if(!code) return;
-
-
-            const wrapper =
-              document.createElement(
-                "div"
-              );
-
-
-            wrapper.className =
-              "code-wrap";
-
-
-            const header =
-              document.createElement(
-                "div"
-              );
-
-
-            header.className =
-              "code-head";
-
-
-            const language =
-              (
-                code.className.match(
-                  /language-([\w-]+)/
-                ) || []
-              )[1] ||
-              "code";
-
-
-            header.innerHTML = `
-
-              <span>
-                ${escapeHtml(
-                  language
-                )}
-              </span>
-
-              <button
-                class="copy-code"
-                type="button"
-              >
-                Copy
+<h1>
+            Meet
+            <span class="gradient-text">
+              FAYNEX
+            </span>
+</h1>
+<p>
+            A next-generation AI assistant built to help you
+            think, create, learn, code and explore.
+          </p>
+<div class="suggestions">
+<button class="suggestion" data-prompt="Give me some creative ideas for a modern design project.">
+<strong>✦ Create something</strong>
+<span>Generate creative ideas and concepts</span>
+</button>
+<button class="suggestion" data-prompt="Explain artificial intelligence in a simple way.">
+<strong>◈ Learn something</strong>
+<span>Understand complex topics easily</span>
+</button>
+<button class="suggestion" data-prompt="Help me write clean and modern HTML and CSS.">
+<strong>⌘ Build with code</strong>
+<span>Develop websites and applications</span>
+</button>
+<button class="suggestion" data-prompt="Give me five useful ideas I can explore today.">
+<strong>✧ Explore</strong>
+<span>Discover new possibilities</span>
+</button>
+</div>
+</div>
+<div class="messages" id="messages"></div>
+</section>
+<!-- =========================
+           COMPOSER
+      ========================== -->
+<div class="composer-wrap">
+<div class="composer">
+<div class="attachment-list" id="attachmentList"></div>
+<textarea id="promptInput" placeholder="Ask FAYNEX anything..." rows="1"></textarea>
+<input class="file-input-hidden" id="fileInput" type="file" accept="image/*,.pdf,.txt,.md,.csv,.json,.html,.css,.js,.jsx,.ts,.tsx" />
+<div class="composer-bottom">
+<div class="composer-tools">
+<button class="tool-btn" id="attachBtn" title="Attach image or PDF" type="button">
+                ＋
               </button>
+<button aria-label="Voice input" class="tool-btn voice-btn" id="voiceBtn" title="Voice input" type="button">
+                ◉
+              </button>
+</div>
+<button class="send-btn" id="sendBtn" title="Send">
+              ↑
+            </button>
+</div>
+</div>
+<div class="disclaimer">
+          FAYNEX AI can make mistakes. Verify important information.
+        </div>
+</div>
+</main>
+</div>
+<div class="memory-overlay" id="memoryOverlay">
+<div class="memory-panel">
+<div class="memory-head"><div class="memory-title-wrap"><h2>🧠 FAYNEX Memory</h2><p>Persistent memory is securely handled by FAYNEX through Cloudflare KV for this browser.</p></div><button class="memory-close" id="closeMemoryBtn" type="button">×</button></div>
+<div class="memory-toolbar"><span class="memory-count" id="memoryCount">0 memories</span><button class="clear-memory-btn" id="clearMemoryBtn" type="button">Clear all</button></div>
+<div class="memory-list" id="memoryList"></div>
+<div class="memory-footer">FAYNEX persistent memory is handled by the Cloudflare KV backend when you explicitly use a remember command. Do not store passwords, API keys, or other sensitive secrets. The memory list shown here is the legacy browser-side list; backend KV memory is the source of truth.</div>
+</div></div>
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<div class="search-overlay" id="searchOverlay">
+<div class="search-panel">
+<div class="search-head">
+<span style="color:#8b5cf6;">⌕</span>
+<input autocomplete="off" class="search-input" id="chatSearchInput" placeholder="Search conversations..." type="search"/>
+<button class="search-close" id="closeSearchBtn" type="button">×</button>
+</div>
+<div class="search-results" id="searchResults"></div>
+</div>
+</div>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+      try {
 
-            `;
+            const API_URL = "https://faynex-ai-api.mf16348011.workers.dev";
+            const CHATS_KEY = "faynex_chats_v2";
+            const ACTIVE_CHAT_KEY = "faynex_active_chat_v2";
+            const OLD_STORAGE_KEY = "faynex_current_conversation_v1";
+            const MEMORY_KEY = "faynex_memory_v1";
+            const MEMORY_LIMIT = 100;
 
+            /* =========================
+               FAYNEX ANONYMOUS USER ID
+               This ID connects this browser to its
+               own Cloudflare KV memory record.
+            ========================== */
 
-            const copyBtn =
-              header.querySelector(
-                ".copy-code"
-              );
+            const FAYNEX_USER_ID_KEY = "faynex_anonymous_user_id_v1";
 
+            function getFaynexUserId() {
+              let userId = localStorage.getItem(FAYNEX_USER_ID_KEY);
 
-            copyBtn.addEventListener(
-              "click",
-              async () => {
-
-                try{
-
-                  await navigator.clipboard.writeText(
-                    code.textContent ||
-                    ""
-                  );
-
-
-                  copyBtn.textContent =
-                    "Copied";
-
-
-                  setTimeout(
-                    () => {
-
-                      copyBtn.textContent =
-                        "Copy";
-
-                    },
-                    1200
-                  );
-
-                }catch{
-
-                  showToast(
-                    "Could not copy code."
-                  );
-
+              if (!userId) {
+                if (window.crypto && typeof crypto.randomUUID === "function") {
+                  userId = crypto.randomUUID().replace(/-/g, "");
+                } else {
+                  userId =
+                    "faynex_" +
+                    Date.now().toString(36) +
+                    "_" +
+                    Math.random().toString(36).slice(2, 14);
                 }
 
-              }
-            );
-
-
-            const parent =
-              pre.parentNode;
-
-
-            parent.insertBefore(
-              wrapper,
-              pre
-            );
-
-
-            wrapper.appendChild(
-              header
-            );
-
-            wrapper.appendChild(
-              pre
-            );
-
-          }
-        );
-
-    }
-
-
-    function scrollToBottom(){
-
-      requestAnimationFrame(
-        () => {
-
-          chatArea.scrollTop =
-            chatArea.scrollHeight;
-
-        }
-      );
-
-    }
-
-
-    /* =================================================
-       FILE FUNCTIONS
-    ================================================= */
-
-    function getExtension(
-      name
-    ){
-
-      const parts =
-        String(
-          name || ""
-        )
-          .toLowerCase()
-          .split(".");
-
-
-      return parts.length > 1
-        ? parts.pop()
-        : "";
-
-    }
-
-
-    function readFileAsBase64(
-      file
-    ){
-
-      return new Promise(
-        (
-          resolve,
-          reject
-        ) => {
-
-          const reader =
-            new FileReader();
-
-
-          reader.onload =
-            () => {
-
-              const result =
-                String(
-                  reader.result ||
-                  ""
-                );
-
-
-              const comma =
-                result.indexOf(
-                  ","
-                );
-
-
-              if(
-                comma === -1
-              ){
-
-                reject(
-                  new Error(
-                    "Could not encode file."
-                  )
-                );
-
-                return;
-
+                localStorage.setItem(FAYNEX_USER_ID_KEY, userId);
               }
 
-
-              resolve(
-                result.slice(
-                  comma + 1
-                )
-              );
-
-            };
-
-
-          reader.onerror =
-            () =>
-              reject(
-                new Error(
-                  "Could not read file."
-                )
-              );
-
-
-          reader.readAsDataURL(
-            file
-          );
-
-        }
-      );
-
-    }
-
-
-    function readFileAsText(
-      file
-    ){
-
-      return new Promise(
-        (
-          resolve,
-          reject
-        ) => {
-
-          const reader =
-            new FileReader();
-
-
-          reader.onload =
-            () =>
-              resolve(
-                String(
-                  reader.result ||
-                  ""
-                )
-              );
-
-
-          reader.onerror =
-            () =>
-              reject(
-                new Error(
-                  "Could not read text file."
-                )
-              );
-
-
-          reader.readAsText(
-            file
-          );
-
-        }
-      );
-
-    }
-
-
-    function getStoredAttachmentMeta(
-      attachment
-    ){
-
-      if(!attachment){
-
-        return null;
-
-      }
-
-
-      return {
-
-        name:
-          attachment.name ||
-          "Attachment",
-
-        mimeType:
-          attachment.mimeType ||
-          "",
-
-        size:
-          attachment.size ||
-          0,
-
-        kind:
-          attachment.kind ||
-          "file"
-
-      };
-
-    }
-
-
-    function renderMessageAttachment(
-      attachment
-    ){
-
-      if(!attachment){
-
-        return null;
-
-      }
-
-
-      const chip =
-        document.createElement(
-          "div"
-        );
-
-
-      chip.className =
-        "message-attachment";
-
-
-      let icon =
-        "📎";
-
-
-      if(
-        attachment.kind ===
-        "image"
-      ){
-
-        icon =
-          "🖼️";
-
-      }else if(
-        attachment.kind ===
-        "pdf"
-      ){
-
-        icon =
-          "📄";
-
-      }else if(
-        attachment.kind ===
-        "text"
-      ){
-
-        icon =
-          "💻";
-
-      }
-
-
-      chip.textContent =
-        icon +
-        " " +
-        (
-          attachment.name ||
-          "Attachment"
-        );
-
-
-      return chip;
-
-    }
-
-
-    function renderPendingAttachment(){
-
-      attachmentPreview.innerHTML =
-        "";
-
-
-      if(!pendingAttachment){
-
-        attachmentPreview.classList.remove(
-          "show"
-        );
-
-        return;
-
-      }
-
-
-      attachmentPreview.classList.add(
-        "show"
-      );
-
-
-      const chip =
-        document.createElement(
-          "div"
-        );
-
-
-      chip.className =
-        "attachment-chip";
-
-
-      let icon =
-        "📎";
-
-
-      if(
-        pendingAttachment.kind ===
-        "image"
-      ){
-
-        icon =
-          "🖼️";
-
-      }else if(
-        pendingAttachment.kind ===
-        "pdf"
-      ){
-
-        icon =
-          "📄";
-
-      }else if(
-        pendingAttachment.kind ===
-        "text"
-      ){
-
-        icon =
-          "💻";
-
-      }
-
-
-      chip.innerHTML = `
-
-        <div class="attachment-icon">
-          ${icon}
-        </div>
-
-        <div class="attachment-info">
-
-          <div class="attachment-name">
-            ${escapeHtml(
-              pendingAttachment.name
-            )}
-          </div>
-
-          <div class="attachment-type">
-            ${escapeHtml(
-              pendingAttachment.typeLabel ||
-              pendingAttachment.mimeType ||
-              "File"
-            )}
-          </div>
-
-        </div>
-
-        <button
-          class="remove-attachment"
-          type="button"
-        >
-          ×
-        </button>
-
-      `;
-
-
-      chip
-        .querySelector(
-          ".remove-attachment"
-        )
-        .addEventListener(
-          "click",
-          clearPendingAttachment
-        );
-
-
-      attachmentPreview.appendChild(
-        chip
-      );
-
-    }
-
-
-    function clearPendingAttachment(){
-
-      pendingAttachment =
-        null;
-
-      renderPendingAttachment();
-
-      fileInput.value =
-        "";
-
-    }
-
-
-    async function handleFileSelection(
-      file
-    ){
-
-      if(!file) return;
-
-
-      if(
-        file.size >
-        MAX_FILE_SIZE
-      ){
-
-        showToast(
-          "File is too large. Maximum size is 12 MB."
-        );
-
-        fileInput.value =
-          "";
-
-        return;
-
-      }
-
-
-      try{
-
-        const extension =
-          getExtension(
-            file.name
-          );
-
-
-        if(
-          BINARY_TYPES.has(
-            file.type
-          )
-        ){
-
-          const data =
-            await readFileAsBase64(
-              file
-            );
-
-
-          pendingAttachment = {
-
-            name:
-              file.name,
-
-            mimeType:
-              file.type,
-
-            size:
-              file.size,
-
-            data,
-
-            kind:
-              file.type ===
-              "application/pdf"
-                ? "pdf"
-                : "image",
-
-            typeLabel:
-              file.type ===
-              "application/pdf"
-                ? "PDF document"
-                : "Image"
-
-          };
-
-
-          renderPendingAttachment();
-
-          showToast(
-            "File attached successfully."
-          );
-
-          return;
-
-        }
-
-
-        if(
-          TEXT_EXTENSIONS.has(
-            extension
-          )
-        ){
-
-          const text =
-            await readFileAsText(
-              file
-            );
-
-
-          if(
-            !text.trim()
-          ){
-
-            showToast(
-              "This file appears to be empty."
-            );
-
-            return;
-
-          }
-
-
-          pendingAttachment = {
-
-            name:
-              file.name,
-
-            mimeType:
-              file.type ||
-              "text/plain",
-
-            size:
-              file.size,
-
-            text,
-
-            kind:
-              "text",
-
-            typeLabel:
-              extension.toUpperCase() +
-              " text file"
-
-          };
-
-
-          renderPendingAttachment();
-
-          showToast(
-            "Text/code file attached."
-          );
-
-          return;
-
-        }
-
-
-        showToast(
-          "This file type is not supported."
-        );
-
-
-      }catch(error){
-
-        console.error(
-          "File attachment error:",
-          error
-        );
-
-
-        showToast(
-          error?.message ||
-          "Could not attach file."
-        );
-
-      }finally{
-
-        fileInput.value =
-          "";
-
-      }
-
-    }
-
-
-    /* =================================================
-       SEND MESSAGE
-    ================================================= */
-
-    async function sendMessage(
-      forcedText = null
-    ){
-
-      if(isGenerating){
-
-        return;
-
-      }
-
-
-      const typedText =
-        forcedText !== null
-          ? String(
-              forcedText
-            )
-          : input.value.trim();
-
-
-      const attachment =
-        pendingAttachment;
-
-
-      if(
-        !typedText &&
-        !attachment
-      ){
-
-        return;
-
-      }
-
-
-      /*
-        If the user explicitly asks FAYNEX
-        to remember something, save it locally.
-      */
-
-      const memoryCommand =
-        processMemoryCommand(
-          typedText
-        );
-
-
-      let apiText =
-        typedText;
-
-
-      if(
-        attachment &&
-        attachment.kind ===
-        "text"
-      ){
-
-        apiText =
-          (
-            typedText ||
-            "Please analyze this file."
-          ) +
-          "\n\n" +
-          "===== ATTACHED FILE =====\n" +
-          "Filename: " +
-          attachment.name +
-          "\n" +
-          "=========================\n\n" +
-          attachment.text +
-          "\n\n" +
-          "===== END ATTACHED FILE =====";
-
-      }
-
-
-      /*
-        If this was only a memory command,
-        still let the AI acknowledge it.
-      */
-
-      if(
-        memoryCommand &&
-        !attachment
-      ){
-
-        apiText =
-          typedText;
-
-      }
-
-
-      let chat =
-        getActiveConversation();
-
-
-      if(!chat){
-
-        chat =
-          createConversation();
-
-      }
-
-
-      if(
-        chat.messages.length ===
-        0
-      ){
-
-        chat.title =
-          titleFromMessage(
-            typedText ||
-            attachment?.name ||
-            "Memory"
-
-          );
-
-      }
-
-
-      chat.messages.push({
-
-        role:
-          "user",
-
-        content:
-          typedText ||
-          (
-            attachment
-              ? "Please analyze this file."
-              : ""
-          ),
-
-        attachment:
-          getStoredAttachmentMeta(
-            attachment
-          )
-
-      });
-
-
-      chat.updatedAt =
-        Date.now();
-
-
-      saveChats();
-
-      renderRecentChats();
-
-
-      const attachmentForRequest =
-        attachment;
-
-
-      clearPendingAttachment();
-
-      input.value =
-        "";
-
-      input.style.height =
-        "auto";
-
-
-      const userMessage =
-        addMessage(
-          "user",
-          typedText ||
-          (
-            attachment
-              ? "Please analyze this file."
-              : ""
-          ),
-          {
-            markdown:false
-          }
-        );
-
-
-      if(attachment){
-
-        const wrap =
-          userMessage.parentElement;
-
-
-        if(wrap){
-
-          const chip =
-            renderMessageAttachment(
-              getStoredAttachmentMeta(
-                attachment
-              )
-            );
-
-
-          if(chip){
-
-            wrap.appendChild(
-              chip
-            );
-
-          }
-
-        }
-
-      }
-
-
-      /*
-        If this was only a memory command,
-        show the acknowledgement directly
-        and don't waste a Gemini request.
-      */
-
-      if(
-        memoryCommand &&
-        !attachment
-      ){
-
-        const aiMessage =
-          addMessage(
-            "ai",
-            "🧠 Got it. I’ll remember that for future conversations.",
-            {
-              markdown:true
+              return userId;
             }
-          );
 
+            const FAYNEX_USER_ID = getFaynexUserId();
 
-        chat.messages.push({
-
-          role:
-            "assistant",
-
-          content:
-            "🧠 Got it. I’ll remember that for future conversations."
-
-        });
-
-
-        chat.updatedAt =
-          Date.now();
-
-
-        saveChats();
-
-        renderRecentChats();
-
-
-        input.focus();
-
-        return;
-
-      }
-
-
-      const aiMessage =
-        addMessage(
-          "ai",
-          "",
-          {
-            typing:true
-          }
-        );
-
-
-      setGeneratingState(
-        true
-      );
-
-
-      try{
-
-        const answer =
-          await streamGeminiResponse(
-            apiText,
-            aiMessage,
-            attachmentForRequest
-          );
-
-
-        chat.messages.push({
-
-          role:
-            "assistant",
-
-          content:
-            answer
-
-        });
-
-
-        chat.updatedAt =
-          Date.now();
-
-
-        saveChats();
-
-        renderRecentChats();
-
-
-        addMessageActions(
-          aiMessage,
-          answer
-        );
-
-
-      }catch(error){
-
-        console.error(
-          "FAYNEX API error:",
-          error
-        );
-
-
-        if(
-          error?.name ===
-          "AbortError"
-        ){
-
-          const partial =
-            aiMessage.textContent?.trim() ||
-            "";
-
-
-          if(partial){
-
-            chat.messages.push({
-
-              role:
-                "assistant",
-
-              content:
-                partial
-
+            window.addEventListener("error", event => {
+              console.error("FAYNEX frontend error:", event.error || event.message);
+              const text = String(event?.message || "");
+              if (text) {
+                const toastEl = document.getElementById("toast");
+                if (toastEl) {
+                  toastEl.textContent = "FAYNEX frontend error. Please refresh the page.";
+                  toastEl.classList.add("show");
+                  setTimeout(() => toastEl.classList.remove("show"), 3500);
+                }
+              }
             });
 
-
-            chat.updatedAt =
-              Date.now();
-
-
-            saveChats();
-
-          }
-
-        }else{
-
-          aiMessage.classList.remove(
-            "markdown"
-          );
-
-
-          aiMessage.textContent =
-            "Sorry, I couldn't connect to the FAYNEX AI engine right now.\n\n" +
-            "Error: " +
-            (
-              error?.message ||
-              "Unknown error."
-            );
-
-        }
-
-      }finally{
-
-        abortController =
-          null;
-
-        setGeneratingState(
-          false
-        );
-
-        input.focus();
-
-      }
-
-    }
-
-
-    /* =================================================
-       STREAM GEMINI
-    ================================================= */
-
-    async function streamGeminiResponse(
-      message,
-      aiMessage,
-      attachment
-    ){
-
-      abortController =
-        new AbortController();
-
-
-      const chat =
-        getActiveConversation();
-
-
-      const history =
-        chat
-          ? chat.messages
-              .slice(
-                0,
-                -1
-              )
-              .slice(
-                -30
-              )
-              .map(
-                item => ({
-
-                  role:
-                    item.role,
-
-                  content:
-                    item.content
-
-                })
-              )
-          : [];
-
-
-      /*
-        Add long-term memory to the
-        request context.
-      */
-
-      const memoryContext =
-        getMemoryPrompt();
-
-
-      const finalMessage =
-        memoryContext +
-        "\n\n" +
-        message;
-
-
-      const requestBody = {
-
-        message:
-          finalMessage,
-
-        history:
-          history
-
-      };
-
-
-      if(
-        attachment &&
-        (
-          attachment.kind ===
-          "image" ||
-          attachment.kind ===
-          "pdf"
-        )
-      ){
-
-        requestBody.attachments = [{
-
-          name:
-            attachment.name,
-
-          mimeType:
-            attachment.mimeType,
-
-          data:
-            attachment.data
-
-        }];
-
-      }
-
-
-      const response =
-        await fetch(
-          API_URL,
-          {
-
-            method:
-              "POST",
-
-            headers:{
-              "Content-Type":
-                "application/json"
-            },
-
-            body:
-              JSON.stringify(
-                requestBody
-              ),
-
-            signal:
-              abortController.signal
-
-          }
-        );
-
-
-      if(!response.ok){
-
-        let errorMessage =
-          "API request failed.";
-
-
-        try{
-
-          const data =
-            await response.json();
-
-
-          errorMessage =
-            data?.details ||
-            data?.error ||
-            errorMessage;
-
-        }catch{
-
-          try{
-
-            errorMessage =
-              await response.text();
-
-          }catch{}
-
-        }
-
-
-        throw new Error(
-          errorMessage
-        );
-
-      }
-
-
-      if(!response.body){
-
-        throw new Error(
-          "Streaming response is not available."
-        );
-
-      }
-
-
-      const reader =
-        response.body.getReader();
-
-
-      const decoder =
-        new TextDecoder();
-
-
-      let buffer =
-        "";
-
-      let fullText =
-        "";
-
-
-      aiMessage.innerHTML =
-        "";
-
-
-      function processSSELine(
-        line
-      ){
-
-        if(
-          !line.startsWith(
-            "data:"
-          )
-        ){
-
-          return;
-
-        }
-
-
-        const data =
-          line
-            .slice(
-              5
-            )
-            .trim();
-
-
-        if(
-          !data ||
-          data ===
-            "[DONE]"
-        ){
-
-          return;
-
-        }
-
-
-        try{
-
-          const json =
-            JSON.parse(
-              data
-            );
-
-
-          const text =
-            json
-              ?.candidates?.[0]
-              ?.content?.parts
-              ?.map(
-                part =>
-                  part.text ||
-                  ""
-              )
-              .join("") ||
-            "";
-
-
-          if(text){
-
-            fullText +=
-              text;
-
-
-            aiMessage.innerHTML =
-              renderMarkdown(
-                fullText
-              );
-
-
-            enhanceCodeBlocks(
-              aiMessage
-            );
-
-
-            scrollToBottom();
-
-          }
-
-        }catch{
-
-          /*
-            Ignore incomplete SSE chunks.
-          */
-
-        }
-
-      }
-
-
-      while(true){
-
-        const {
-          value,
-          done
-        } =
-          await reader.read();
-
-
-        if(done){
-
-          break;
-
-        }
-
-
-        buffer +=
-          decoder.decode(
-            value,
-            {
-              stream:true
+            let conversations = [];
+            let activeConversationId = null;
+
+            const input = document.getElementById("promptInput");
+            const sendBtn = document.getElementById("sendBtn");
+            const messages = document.getElementById("messages");
+            const welcome = document.getElementById("welcome");
+            const chatArea = document.getElementById("chatArea");
+            const newChatBtn = document.getElementById("newChatBtn");
+            const menuBtn = document.getElementById("menuBtn");
+            const sidebar = document.getElementById("sidebar");
+            const attachBtn = document.getElementById("attachBtn");
+            const fileInput = document.getElementById("fileInput");
+            const attachmentList = document.getElementById("attachmentList");
+            const settingsBtn = document.getElementById("settingsBtn");
+            const sidebarSettingsBtn = document.getElementById("sidebarSettingsBtn");
+            const memoryOverlay = document.getElementById("memoryOverlay");
+            const closeMemoryBtn = document.getElementById("closeMemoryBtn");
+            const clearMemoryBtn = document.getElementById("clearMemoryBtn");
+            const memoryList = document.getElementById("memoryList");
+            const memoryCount = document.getElementById("memoryCount");
+
+            const MAX_CLIENT_FILE_BYTES = 12 * 1024 * 1024;
+            const BINARY_ATTACHMENT_TYPES = new Set([
+              "application/pdf",
+              "image/jpeg",
+              "image/png",
+              "image/webp",
+              "image/gif"
+            ]);
+
+            let pendingAttachment = null;
+
+            let isGenerating = false;
+            let abortController = null;
+
+            /* =========================
+               VOICE SYSTEM
+            ========================== */
+
+            /* =========================
+               LONG-TERM MEMORY
+            ========================= */
+
+            let memories = [];
+
+            function makeMemoryId() {
+              return "mem_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
             }
-          );
 
-
-        const lines =
-          buffer.split(
-            "\n"
-          );
-
-
-        buffer =
-          lines.pop() ||
-          "";
-
-
-        for(
-          const line of lines
-        ){
-
-          processSSELine(
-            line
-          );
-
-        }
-
-      }
-
-
-      if(
-        buffer.trim()
-      ){
-
-        processSSELine(
-          buffer
-        );
-
-      }
-
-
-      if(
-        !fullText.trim()
-      ){
-
-        fullText =
-          "I received an empty response from the AI engine.";
-
-        aiMessage.textContent =
-          fullText;
-
-      }
-
-
-      return fullText;
-
-    }
-
-
-    /* =================================================
-       MESSAGE ACTIONS
-    ================================================= */
-
-    function addMessageActions(
-      aiMessage,
-      answer
-    ){
-
-      const wrap =
-        aiMessage.parentElement;
-
-
-      if(!wrap){
-
-        return;
-
-      }
-
-
-      if(
-        wrap.querySelector(
-          ".message-actions"
-        )
-      ){
-
-        return;
-
-      }
-
-
-      const actions =
-        document.createElement(
-          "div"
-        );
-
-
-      actions.className =
-        "message-actions";
-
-
-      actions.innerHTML = `
-
-        <button
-          class="message-action copy-answer"
-          type="button"
-        >
-          Copy
-        </button>
-
-        <button
-          class="message-action speak-answer"
-          type="button"
-        >
-          Speak
-        </button>
-
-        <button
-          class="message-action regenerate-answer"
-          type="button"
-        >
-          Regenerate
-        </button>
-
-      `;
-
-
-      wrap.appendChild(
-        actions
-      );
-
-
-      const copyBtn =
-        actions.querySelector(
-          ".copy-answer"
-        );
-
-
-      copyBtn.addEventListener(
-        "click",
-        async () => {
-
-          try{
-
-            await navigator.clipboard.writeText(
-              answer
-            );
-
-
-            copyBtn.textContent =
-              "Copied";
-
-
-            setTimeout(
-              () =>
-                copyBtn.textContent =
-                  "Copy",
-              1200
-            );
-
-          }catch{
-
-            showToast(
-              "Could not copy answer."
-            );
-
-          }
-
-        }
-      );
-
-
-      const speakBtn =
-        actions.querySelector(
-          ".speak-answer"
-        );
-
-
-      speakBtn.addEventListener(
-        "click",
-        () =>
-          speakText(
-            answer,
-            speakBtn
-          )
-      );
-
-
-      const regenerateBtn =
-        actions.querySelector(
-          ".regenerate-answer"
-        );
-
-
-      regenerateBtn.addEventListener(
-        "click",
-        () =>
-          regenerateLastAnswer()
-      );
-
-    }
-
-
-    /* =================================================
-       GENERATION
-    ================================================= */
-
-    function setGeneratingState(
-      state
-    ){
-
-      isGenerating =
-        state;
-
-
-      attachBtn.disabled =
-        state;
-
-
-      if(state){
-
-        sendBtn.textContent =
-          "■";
-
-        sendBtn.title =
-          "Stop";
-
-        sendBtn.disabled =
-          false;
-
-      }else{
-
-        sendBtn.textContent =
-          "↑";
-
-        sendBtn.title =
-          "Send";
-
-        sendBtn.disabled =
-          false;
-
-      }
-
-    }
-
-
-    function abortGeneration(){
-
-      if(
-        abortController
-      ){
-
-        abortController.abort();
-
-      }
-
-
-      setGeneratingState(
-        false
-      );
-
-    }
-
-
-    /* =================================================
-       REGENERATE
-    ================================================= */
-
-    function regenerateLastAnswer(){
-
-      if(isGenerating){
-
-        return;
-
-      }
-
-
-      const chat =
-        getActiveConversation();
-
-
-      if(!chat){
-
-        return;
-
-      }
-
-
-      let userIndex =
-        -1;
-
-
-      for(
-        let i =
-          chat.messages.length - 1;
-        i >= 0;
-        i--
-      ){
-
-        if(
-          chat.messages[i].role ===
-          "user"
-        ){
-
-          userIndex =
-            i;
-
-          break;
-
-        }
-
-      }
-
-
-      if(
-        userIndex === -1
-      ){
-
-        return;
-
-      }
-
-
-      const message =
-        chat.messages[
-          userIndex
-        ];
-
-
-      const content =
-        message.content;
-
-
-      chat.messages =
-        chat.messages.slice(
-          0,
-          userIndex
-        );
-
-
-      chat.updatedAt =
-        Date.now();
-
-
-      saveChats();
-
-      renderActiveConversation();
-
-
-      input.value =
-        content;
-
-
-      sendMessage();
-
-    }
-
-
-    /* =================================================
-       SEARCH
-    ================================================= */
-
-    function openSearch(){
-
-      searchOverlay.classList.add(
-        "open"
-      );
-
-
-      chatSearchInput.value =
-        "";
-
-
-      renderSearchResults(
-        ""
-      );
-
-
-      setTimeout(
-        () =>
-          chatSearchInput.focus(),
-        50
-      );
-
-    }
-
-
-    function closeSearch(){
-
-      searchOverlay.classList.remove(
-        "open"
-      );
-
-    }
-
-
-    function renderSearchResults(
-      query
-    ){
-
-      const q =
-        String(
-          query || ""
-        )
-          .trim()
-          .toLowerCase();
-
-
-      searchResults.innerHTML =
-        "";
-
-
-      const matches =
-        conversations
-          .filter(
-            chat => {
-
-              if(!q){
-
-                return true;
-
+            function loadMemories() {
+              try {
+                const saved = JSON.parse(localStorage.getItem(MEMORY_KEY) || "[]");
+                memories = Array.isArray(saved) ? saved.filter(item => item && typeof item.id === "string" && typeof item.text === "string" && item.text.trim()).slice(0, MEMORY_LIMIT) : [];
+              } catch (error) {
+                console.warn("Could not load FAYNEX memories:", error);
+                memories = [];
+              }
+              renderMemoryList();
+            }
+
+            function saveMemories() {
+              try {
+                localStorage.setItem(MEMORY_KEY, JSON.stringify(memories.slice(0, MEMORY_LIMIT)));
+              } catch (error) {
+                console.warn("Could not save FAYNEX memories:", error);
+                showToast("Memory could not be saved in this browser.", 3200);
+              }
+            }
+
+            function normalizeMemoryText(text) {
+              return String(text || "").trim().replace(/\s+/g, " ").slice(0, 500);
+            }
+
+            function addMemory(text, source = "User") {
+              const cleaned = normalizeMemoryText(text);
+              if (!cleaned) return false;
+              if (memories.some(item => item.text.toLowerCase() === cleaned.toLowerCase())) {
+                showToast("FAYNEX already remembers that.");
+                return false;
+              }
+              memories.unshift({ id: makeMemoryId(), text: cleaned, source, createdAt: Date.now() });
+              memories = memories.slice(0, MEMORY_LIMIT);
+              saveMemories();
+              renderMemoryList();
+              return true;
+            }
+
+            function deleteMemory(id) {
+              memories = memories.filter(item => item.id !== id);
+              saveMemories();
+              renderMemoryList();
+            }
+
+            function clearAllMemories() {
+              if (!memories.length) {
+                showToast("There are no saved memories.");
+                return;
+              }
+              if (!window.confirm("Delete all FAYNEX memories from this browser?")) return;
+              memories = [];
+              saveMemories();
+              renderMemoryList();
+              showToast("All memories cleared.");
+            }
+
+            function renderMemoryList() {
+              if (!memoryList || !memoryCount) return;
+              const count = memories.length;
+              memoryCount.textContent = `${count} ${count === 1 ? "memory" : "memories"}`;
+              memoryList.innerHTML = "";
+              if (!count) {
+                const empty = document.createElement("div");
+                empty.className = "memory-empty";
+                empty.innerHTML = `<strong>No memories yet</strong>Tell FAYNEX something like:<br>“Remember that I prefer concise answers.”`;
+                memoryList.appendChild(empty);
+                return;
+              }
+              memories.forEach(memory => {
+                const row = document.createElement("div");
+                row.className = "memory-item";
+                const bullet = document.createElement("div");
+                bullet.className = "memory-bullet";
+                bullet.textContent = "✦";
+                const body = document.createElement("div");
+                body.className = "memory-body";
+                const text = document.createElement("div");
+                text.className = "memory-text";
+                text.textContent = memory.text;
+                const meta = document.createElement("div");
+                meta.className = "memory-meta";
+                meta.textContent = `${memory.source || "User"} • ${formatChatDate(memory.createdAt)}`;
+                const remove = document.createElement("button");
+                remove.type = "button";
+                remove.className = "memory-delete";
+                remove.title = "Delete memory";
+                remove.textContent = "×";
+                remove.addEventListener("click", () => deleteMemory(memory.id));
+                body.appendChild(text);
+                body.appendChild(meta);
+                row.appendChild(bullet);
+                row.appendChild(body);
+                row.appendChild(remove);
+                memoryList.appendChild(row);
+              });
+            }
+
+            function openMemorySettings() {
+              renderMemoryList();
+              memoryOverlay?.classList.add("open");
+            }
+
+            function closeMemorySettings() {
+              memoryOverlay?.classList.remove("open");
+            }
+
+            function buildMemoryContext() {
+              /*
+                Persistent memory is now handled by the Cloudflare Worker + KV.
+                Do not inject old browser-only memories into the prompt.
+              */
+              return "";
+            }
+
+            const voiceBtn = document.getElementById("voiceBtn");
+            const toast = document.getElementById("toast");
+            const SpeechRecognition =
+              window.SpeechRecognition ||
+              window.webkitSpeechRecognition ||
+              null;
+
+            let recognition = null;
+            let isListening = false;
+            let speechUtterance = null;
+            let activeSpeakButton = null;
+
+            function showToast(message, duration = 2600) {
+              if (!toast) return;
+
+              toast.textContent = message;
+              toast.classList.add("show");
+
+              clearTimeout(showToast.timer);
+              showToast.timer = setTimeout(() => {
+                toast.classList.remove("show");
+              }, duration);
+            }
+
+            function cleanTextForSpeech(markdown) {
+              const temp = document.createElement("div");
+              temp.innerHTML = renderMarkdown(markdown || "");
+              return (temp.textContent || temp.innerText || "")
+                .replace(/\s+/g, " ")
+                .trim();
+            }
+
+            function stopSpeech() {
+              if ("speechSynthesis" in window) {
+                window.speechSynthesis.cancel();
               }
 
+              speechUtterance = null;
 
-              return (
-                chat.title
-                  .toLowerCase()
-                  .includes(q) ||
-
-                chat.messages.some(
-                  message =>
-                    String(
-                      message.content ||
-                      ""
-                    )
-                      .toLowerCase()
-                      .includes(q)
-                )
-              );
-
+              if (activeSpeakButton) {
+                activeSpeakButton.classList.remove("speaking");
+                activeSpeakButton.textContent = "Speak";
+                activeSpeakButton = null;
+              }
             }
-          )
-          .sort(
-            (a,b) =>
-              b.updatedAt -
-              a.updatedAt
-          )
-          .slice(
-            0,
-            30
-          );
 
+            function speakText(text, button = null) {
+              if (!("speechSynthesis" in window)) {
+                showToast("Voice output is not supported in this browser.");
+                return;
+              }
 
-      if(
-        !matches.length
-      ){
+              const clean = cleanTextForSpeech(text);
 
-        searchResults.innerHTML =
-          '<div class="search-empty">No conversations found.</div>';
+              if (!clean) {
+                showToast("There is no readable text to speak.");
+                return;
+              }
 
-        return;
+              if (activeSpeakButton === button) {
+                stopSpeech();
+                return;
+              }
 
-      }
+              stopSpeech();
 
+              speechUtterance = new SpeechSynthesisUtterance(clean);
+              speechUtterance.lang = "en-US";
+              speechUtterance.rate = 1;
+              speechUtterance.pitch = 1;
+              speechUtterance.volume = 1;
 
-      matches.forEach(
-        chat => {
+              if (button) {
+                activeSpeakButton = button;
+                button.classList.add("speaking");
+                button.textContent = "Stop";
+              }
 
-          const button =
-            document.createElement(
-              "button"
-            );
+              speechUtterance.onend = stopSpeech;
+              speechUtterance.onerror = () => {
+                stopSpeech();
+                showToast("Voice output could not be started.");
+              };
 
+              window.speechSynthesis.speak(speechUtterance);
+            }
 
-          button.type =
-            "button";
+            function setupVoiceInput() {
+              if (!voiceBtn) return;
 
-          button.className =
-            "search-result";
+              if (!SpeechRecognition) {
+                voiceBtn.classList.add("unsupported");
+                voiceBtn.title = "Voice input is not supported in this browser";
+                return;
+              }
 
+              recognition = new SpeechRecognition();
+              recognition.lang = "en-US";
+              recognition.continuous = false;
+              recognition.interimResults = true;
+              recognition.maxAlternatives = 1;
 
-          const preview =
-            chat.messages
-              .find(
-                message =>
-                  message.role ===
-                  "user"
-              )
-              ?.content ||
-            "";
+              recognition.onstart = () => {
+                isListening = true;
+                voiceBtn.classList.add("listening");
+                voiceBtn.textContent = "●";
+                voiceBtn.title = "Listening... click to stop";
+                showToast("Listening… speak now.", 1800);
+              };
 
+              recognition.onresult = event => {
+                let finalText = "";
+                let interimText = "";
 
-          button.innerHTML = `
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                  const transcript =
+                    event.results[i][0]?.transcript || "";
 
-            <div class="search-result-title">
-              ${escapeHtml(
-                chat.title
-              )}
-            </div>
+                  if (event.results[i].isFinal) {
+                    finalText += transcript;
+                  } else {
+                    interimText += transcript;
+                  }
+                }
 
-            <div class="search-result-meta">
-              ${escapeHtml(
-                preview.slice(
+                const current =
+                  (finalText || interimText).trim();
+
+                if (current) {
+                  input.value = current;
+                  input.dispatchEvent(new Event("input"));
+                }
+              };
+
+              recognition.onerror = event => {
+                const messages = {
+                  "not-allowed": "Microphone permission was blocked. Allow microphone access and try again.",
+                  "audio-capture": "No microphone was detected.",
+                  "no-speech": "No speech detected. Try again.",
+                  "network": "Voice recognition needs a network connection in this browser."
+                };
+
+                if (event.error !== "aborted") {
+                  showToast(
+                    messages[event.error] ||
+                    "Voice recognition could not start."
+                  );
+                }
+              };
+
+              recognition.onend = () => {
+                isListening = false;
+                voiceBtn.classList.remove("listening");
+                voiceBtn.textContent = "◉";
+                voiceBtn.title = "Voice input";
+                input.focus();
+              };
+
+              voiceBtn.addEventListener("click", () => {
+                if (isListening) {
+                  recognition.stop();
+                  return;
+                }
+
+                try {
+                  recognition.start();
+                } catch (error) {
+                  console.warn("Voice recognition start failed:", error);
+                }
+              });
+            }
+
+            /* =========================
+               MARKDOWN ENGINE
+               Keep the app usable even if the CDN is temporarily unavailable.
+            ========================== */
+
+            const HAS_MARKED =
+              typeof window.marked !== "undefined" &&
+              typeof window.marked.parse === "function";
+
+            if (HAS_MARKED && typeof window.marked.setOptions === "function") {
+              window.marked.setOptions({
+                gfm: true,
+                breaks: true
+              });
+            }
+
+            function escapeHtml(text) {
+              const div = document.createElement("div");
+              div.textContent = text;
+              return div.innerHTML;
+            }
+
+            function renderMarkdown(text) {
+              const source = String(text || "");
+
+              let rawHtml;
+
+              if (
+                typeof window.marked !== "undefined" &&
+                typeof window.marked.parse === "function"
+              ) {
+                rawHtml = window.marked.parse(source);
+              } else {
+                // Safe plain-text fallback. The chat remains functional even
+                // when the Markdown CDN cannot be reached.
+                rawHtml = escapeHtml(source)
+                  .replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>")
+                  .replace(/\n/g, "<br>");
+              }
+
+              if (
+                typeof window.DOMPurify !== "undefined" &&
+                typeof window.DOMPurify.sanitize === "function"
+              ) {
+                return window.DOMPurify.sanitize(rawHtml, {
+                  USE_PROFILES: { html: true }
+                });
+              }
+
+              return rawHtml;
+            }
+
+            function scrollToBottom(smooth = false) {
+              chatArea.scrollTo({
+                top: chatArea.scrollHeight,
+                behavior: smooth ? "smooth" : "auto"
+              });
+            }
+
+            function setGeneratingState(generating) {
+              isGenerating = generating;
+              sendBtn.disabled = false;
+              sendBtn.style.opacity = "1";
+              sendBtn.style.cursor = "pointer";
+
+              if (generating) {
+                sendBtn.classList.add("stop-btn");
+                sendBtn.title = "Stop generating";
+                sendBtn.textContent = "■";
+              } else {
+                sendBtn.classList.remove("stop-btn");
+                sendBtn.title = "Send";
+                sendBtn.textContent = "↑";
+              }
+            }
+
+            function addMessage(type, text, options = {}) {
+              const message = document.createElement("div");
+              message.className = "message";
+
+              const avatar = document.createElement("div");
+              avatar.className = "avatar " + (type === "user" ? "user" : "ai");
+              avatar.textContent = type === "user" ? "YOU" : "F";
+
+              const content = document.createElement("div");
+              content.className = "message-content";
+
+              const label = document.createElement("div");
+              label.className = "message-label";
+              label.textContent = type === "user" ? "You" : "FAYNEX";
+
+              const messageText = document.createElement("div");
+              messageText.className = "message-text";
+
+              if (options.typing) {
+                messageText.innerHTML = `
+                  <div class="typing" aria-label="FAYNEX is thinking">
+                    <span></span><span></span><span></span>
+                  </div>
+                `;
+              } else if (type === "ai" && options.markdown !== false) {
+                messageText.classList.add("markdown");
+                messageText.innerHTML = renderMarkdown(text);
+              } else {
+                messageText.textContent = text;
+              }
+
+              content.appendChild(label);
+              content.appendChild(messageText);
+
+              if (type === "ai" && options.actions !== false) {
+                const actions = document.createElement("div");
+                actions.className = "message-actions";
+                actions.innerHTML = `
+                  <button class="message-action copy-answer" type="button">Copy</button>
+                  <button class="message-action regenerate-answer" type="button">Regenerate</button>
+                `;
+                content.appendChild(actions);
+
+                actions.querySelector(".copy-answer").addEventListener("click", async () => {
+                  try {
+                    await navigator.clipboard.writeText(messageText.textContent || "");
+                    actions.querySelector(".copy-answer").textContent = "Copied";
+                    setTimeout(() => {
+                      actions.querySelector(".copy-answer").textContent = "Copy";
+                    }, 1200);
+                  } catch {
+                    actions.querySelector(".copy-answer").textContent = "Copy failed";
+                  }
+                });
+
+                actions.querySelector(".regenerate-answer").addEventListener("click", () => {
+                  regenerateLastAnswer();
+                });
+              }
+
+              message.appendChild(avatar);
+              message.appendChild(content);
+              messages.appendChild(message);
+
+              scrollToBottom(true);
+
+              return messageText;
+            }
+
+            function enhanceCodeBlocks(root) {
+              root.querySelectorAll("pre").forEach(pre => {
+                if (pre.parentElement.classList.contains("code-wrap")) return;
+
+                const wrap = document.createElement("div");
+                wrap.className = "code-wrap";
+
+                const copy = document.createElement("button");
+                copy.type = "button";
+                copy.className = "copy-code";
+                copy.textContent = "Copy";
+
+                copy.addEventListener("click", async () => {
+                  const code = pre.innerText || "";
+                  try {
+                    await navigator.clipboard.writeText(code);
+                    copy.textContent = "Copied";
+                    setTimeout(() => copy.textContent = "Copy", 1200);
+                  } catch {
+                    copy.textContent = "Failed";
+                  }
+                });
+
+                pre.parentNode.insertBefore(wrap, pre);
+                wrap.appendChild(pre);
+                wrap.appendChild(copy);
+              });
+            }
+
+            function updateAIMessage(messageText, text) {
+              messageText.classList.add("markdown");
+              messageText.innerHTML = renderMarkdown(text);
+              enhanceCodeBlocks(messageText);
+              scrollToBottom(false);
+            }
+
+            function makeId() {
+              return "chat_" + Date.now() + "_" +
+                Math.random().toString(36).slice(2, 8);
+            }
+
+            function createConversation() {
+              return {
+                id: makeId(),
+                title: "New conversation",
+                messages: [],
+                createdAt: Date.now(),
+                updatedAt: Date.now()
+              };
+            }
+
+            function getActiveConversation() {
+              return conversations.find(
+                chat => chat.id === activeConversationId
+              ) || null;
+            }
+
+            function currentMessages() {
+              const chat = getActiveConversation();
+              return chat ? chat.messages : [];
+            }
+
+            function saveChats() {
+              try {
+                localStorage.setItem(
+                  CHATS_KEY,
+                  JSON.stringify(conversations)
+                );
+
+                if (activeConversationId) {
+                  localStorage.setItem(
+                    ACTIVE_CHAT_KEY,
+                    activeConversationId
+                  );
+                }
+              } catch (error) {
+                console.warn("Could not save FAYNEX chats:", error);
+              }
+            }
+
+            function titleFromMessage(text) {
+              const cleaned = text
+                .replace(/\s+/g, " ")
+                .trim();
+
+              return cleaned
+                ? cleaned.slice(0, 42) +
+                  (cleaned.length > 42 ? "…" : "")
+                : "New conversation";
+            }
+
+            function formatChatDate(timestamp) {
+              try {
+                return new Intl.DateTimeFormat(
+                  undefined,
+                  {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric"
+                  }
+                ).format(new Date(timestamp));
+              } catch {
+                return "";
+              }
+            }
+
+            function renderRecentChats() {
+              const recentList =
+                document.getElementById("recentList");
+
+              if (!recentList) return;
+
+              recentList.innerHTML = "";
+
+              const sorted =
+                [...conversations]
+                  .sort(
+                    (a, b) =>
+                      (b.updatedAt || 0) -
+                      (a.updatedAt || 0)
+                  )
+                  .slice(0, 12);
+
+              if (!sorted.length) {
+                const empty =
+                  document.createElement("div");
+
+                empty.className =
+                  "empty-recent";
+
+                empty.textContent =
+                  "No conversations yet";
+
+                recentList.appendChild(empty);
+                return;
+              }
+
+              sorted.forEach(chat => {
+                const row =
+                  document.createElement("div");
+
+                row.className =
+                  "recent-chat" +
+                  (chat.id === activeConversationId
+                    ? " active"
+                    : "");
+
+                const title =
+                  document.createElement("button");
+
+                title.type = "button";
+                title.className =
+                  "recent-chat-title";
+                title.textContent =
+                  chat.title || "New conversation";
+                title.title =
+                  chat.title || "New conversation";
+
+                title.addEventListener(
+                  "click",
+                  () => {
+                    openConversation(chat.id);
+                  }
+                );
+
+                const actions =
+                  document.createElement("div");
+
+                actions.className =
+                  "recent-chat-actions";
+
+                const rename =
+                  document.createElement("button");
+
+                rename.type = "button";
+                rename.className =
+                  "recent-mini";
+                rename.title =
+                  "Rename conversation";
+                rename.textContent =
+                  "✎";
+
+                rename.addEventListener(
+                  "click",
+                  event => {
+                    event.stopPropagation();
+                    renameConversation(chat.id);
+                  }
+                );
+
+                const remove =
+                  document.createElement("button");
+
+                remove.type = "button";
+                remove.className =
+                  "recent-mini";
+                remove.title =
+                  "Delete conversation";
+                remove.textContent =
+                  "×";
+
+                remove.addEventListener(
+                  "click",
+                  event => {
+                    event.stopPropagation();
+                    deleteConversation(chat.id);
+                  }
+                );
+
+                actions.appendChild(rename);
+                actions.appendChild(remove);
+
+                row.appendChild(title);
+                row.appendChild(actions);
+
+                recentList.appendChild(row);
+              });
+            }
+
+            function renderActiveConversation() {
+              const chat =
+                getActiveConversation();
+
+              messages.innerHTML = "";
+
+              if (
+                !chat ||
+                !chat.messages.length
+              ) {
+                welcome.style.display = "flex";
+                return;
+              }
+
+              welcome.style.display = "none";
+
+              chat.messages.forEach(item => {
+                const messageText = addMessage(
+                  item.role === "user"
+                    ? "user"
+                    : "ai",
+                  item.content,
+                  {
+                    actions:
+                      item.role === "assistant"
+                  }
+                );
+                if (item.role === "user" && item.attachment) {
+                  const metaChip = renderMessageAttachment(item.attachment);
+                  if (metaChip) messageText.parentElement?.appendChild(metaChip);
+                }
+              });
+
+              scrollToBottom(false);
+            }
+
+            function openConversation(id) {
+              if (isGenerating) {
+                abortGeneration();
+              }
+
+              const chat =
+                conversations.find(
+                  item => item.id === id
+                );
+
+              if (!chat) return;
+
+              activeConversationId = id;
+              saveChats();
+              renderRecentChats();
+              renderActiveConversation();
+
+              input.value = "";
+              input.style.height = "auto";
+              input.focus();
+
+              if (window.innerWidth <= 800) {
+                sidebar.classList.remove("open");
+              }
+            }
+
+            function newConversation() {
+              if (isGenerating) {
+                abortGeneration();
+              }
+
+              const chat =
+                createConversation();
+
+              conversations.unshift(chat);
+              activeConversationId = chat.id;
+
+              saveChats();
+              renderRecentChats();
+              renderActiveConversation();
+
+              input.value = "";
+              input.style.height = "auto";
+              input.focus();
+            }
+
+            function renameConversation(id) {
+              const chat =
+                conversations.find(
+                  item => item.id === id
+                );
+
+              if (!chat) return;
+
+              const next =
+                window.prompt(
+                  "Rename conversation:",
+                  chat.title || "New conversation"
+                );
+
+              if (
+                next === null
+              ) {
+                return;
+              }
+
+              const cleaned =
+                next.replace(/\s+/g, " ").trim();
+
+              if (!cleaned) return;
+
+              chat.title =
+                cleaned.slice(0, 80);
+
+              chat.updatedAt =
+                Date.now();
+
+              saveChats();
+              renderRecentChats();
+            }
+
+            function deleteConversation(id) {
+              const chat =
+                conversations.find(
+                  item => item.id === id
+                );
+
+              if (!chat) return;
+
+              const confirmed =
+                window.confirm(
+                  `Delete "${chat.title}"?`
+                );
+
+              if (!confirmed) return;
+
+              conversations =
+                conversations.filter(
+                  item => item.id !== id
+                );
+
+              if (
+                activeConversationId === id
+              ) {
+                if (conversations.length) {
+                  const next =
+                    [...conversations]
+                      .sort(
+                        (a, b) =>
+                          (b.updatedAt || 0) -
+                          (a.updatedAt || 0)
+                      )[0];
+
+                  activeConversationId =
+                    next.id;
+                } else {
+                  const fresh =
+                    createConversation();
+
+                  conversations = [fresh];
+                  activeConversationId =
+                    fresh.id;
+                }
+              }
+
+              saveChats();
+              renderRecentChats();
+              renderActiveConversation();
+            }
+
+            function loadConversations() {
+              try {
+                const saved =
+                  JSON.parse(
+                    localStorage.getItem(CHATS_KEY) ||
+                    "null"
+                  );
+
+                if (
+                  Array.isArray(saved) &&
+                  saved.length
+                ) {
+                  conversations =
+                    saved
+                      .filter(
+                        chat =>
+                          chat &&
+                          typeof chat.id === "string" &&
+                          Array.isArray(chat.messages)
+                      )
+                      .map(chat => ({
+                        id: chat.id,
+                        title:
+                          typeof chat.title === "string"
+                            ? chat.title
+                            : "New conversation",
+                        messages:
+                          chat.messages
+                            .filter(
+                              item =>
+                                item &&
+                                (
+                                  item.role === "user" ||
+                                  item.role === "assistant"
+                                ) &&
+                                typeof item.content === "string"
+                            )
+                            .map(item => ({
+                              role: item.role,
+                              content: item.content,
+                              attachment: item.attachment && typeof item.attachment === "object"
+                                ? {
+                                    name: String(item.attachment.name || "Attachment"),
+                                    mimeType: String(item.attachment.mimeType || ""),
+                                    kind: String(item.attachment.kind || "file")
+                                  }
+                                : null
+                            }))
+                            .slice(-100),
+                        createdAt:
+                          Number(chat.createdAt) ||
+                          Date.now(),
+                        updatedAt:
+                          Number(chat.updatedAt) ||
+                          Date.now()
+                      }));
+                }
+              } catch (error) {
+                console.warn(
+                  "Could not load FAYNEX chats:",
+                  error
+                );
+                conversations = [];
+              }
+
+              /*
+                One-time migration from the previous
+                single-conversation LocalStorage system.
+              */
+              if (!conversations.length) {
+                try {
+                  const old =
+                    JSON.parse(
+                      localStorage.getItem(
+                        OLD_STORAGE_KEY
+                      ) || "[]"
+                    );
+
+                  if (
+                    Array.isArray(old) &&
+                    old.length
+                  ) {
+                    const migrated =
+                      createConversation();
+
+                    migrated.title =
+                      titleFromMessage(
+                        old.find(
+                          item =>
+                            item.role === "user"
+                        )?.content || ""
+                      );
+
+                    migrated.messages =
+                      old
+                        .filter(
+                          item =>
+                            item &&
+                            (
+                              item.role === "user" ||
+                              item.role === "assistant"
+                            ) &&
+                            typeof item.content === "string"
+                        )
+                        .slice(-100);
+
+                    conversations = [migrated];
+
+                    localStorage.removeItem(
+                      OLD_STORAGE_KEY
+                    );
+                  }
+                } catch (error) {
+                  console.warn(
+                    "Could not migrate old conversation:",
+                    error
+                  );
+                }
+              }
+
+              if (!conversations.length) {
+                const fresh =
+                  createConversation();
+
+                conversations = [fresh];
+              }
+
+              const savedActive =
+                localStorage.getItem(
+                  ACTIVE_CHAT_KEY
+                );
+
+              if (
+                savedActive &&
+                conversations.some(
+                  chat =>
+                    chat.id === savedActive
+                )
+              ) {
+                activeConversationId =
+                  savedActive;
+              } else {
+                activeConversationId =
+                  [...conversations]
+                    .sort(
+                      (a, b) =>
+                        (b.updatedAt || 0) -
+                        (a.updatedAt || 0)
+                    )[0].id;
+              }
+
+              saveChats();
+              renderRecentChats();
+              renderActiveConversation();
+            }
+
+            function getSearchResults(query) {
+              const q =
+                query.trim().toLowerCase();
+
+              const sorted =
+                [...conversations]
+                  .sort(
+                    (a, b) =>
+                      (b.updatedAt || 0) -
+                      (a.updatedAt || 0)
+                  );
+
+              if (!q) {
+                return sorted;
+              }
+
+              return sorted.filter(chat => {
+                const title =
+                  (chat.title || "").toLowerCase();
+
+                const content =
+                  chat.messages
+                    .map(item => item.content || "")
+                    .join("\n")
+                    .toLowerCase();
+
+                return (
+                  title.includes(q) ||
+                  content.includes(q)
+                );
+              });
+            }
+
+            function renderSearchResults(query = "") {
+              const container =
+                document.getElementById(
+                  "searchResults"
+                );
+
+              if (!container) return;
+
+              const results =
+                getSearchResults(query);
+
+              container.innerHTML = "";
+
+              if (!results.length) {
+                const empty =
+                  document.createElement("div");
+
+                empty.className =
+                  "search-empty";
+
+                empty.textContent =
+                  "No conversations found.";
+
+                container.appendChild(empty);
+                return;
+              }
+
+              results.forEach(chat => {
+                const button =
+                  document.createElement("button");
+
+                button.type = "button";
+                button.className =
+                  "search-result";
+
+                const firstUser =
+                  chat.messages.find(
+                    item =>
+                      item.role === "user"
+                  );
+
+                button.innerHTML = `
+                  <div class="search-result-title"></div>
+                  <div class="search-result-meta"></div>
+                `;
+
+                button.querySelector(
+                  ".search-result-title"
+                ).textContent =
+                  chat.title || "New conversation";
+
+                button.querySelector(
+                  ".search-result-meta"
+                ).textContent =
+                  `${formatChatDate(chat.updatedAt)}${
+                    firstUser?.content
+                      ? " • " +
+                        firstUser.content
+                          .replace(/\s+/g, " ")
+                          .slice(0, 90)
+                      : ""
+                  }`;
+
+                button.addEventListener(
+                  "click",
+                  () => {
+                    openConversation(chat.id);
+                    closeSearch();
+                  }
+                );
+
+                container.appendChild(button);
+              });
+            }
+
+            function openSearch() {
+              const overlay =
+                document.getElementById(
+                  "searchOverlay"
+                );
+
+              const searchInput =
+                document.getElementById(
+                  "chatSearchInput"
+                );
+
+              overlay.classList.add("open");
+              searchInput.value = "";
+              renderSearchResults("");
+              setTimeout(
+                () => searchInput.focus(),
+                30
+              );
+            }
+
+            function closeSearch() {
+              document
+                .getElementById("searchOverlay")
+                .classList.remove("open");
+            }
+
+            function clearAttachment() {
+              pendingAttachment = null;
+              if (attachmentList) {
+                attachmentList.innerHTML = "";
+                attachmentList.classList.remove("has-file");
+              }
+              if (fileInput) fileInput.value = "";
+            }
+
+            function renderAttachmentChip() {
+              if (!attachmentList) return;
+
+              attachmentList.innerHTML = "";
+
+              if (!pendingAttachment) {
+                attachmentList.classList.remove("has-file");
+                return;
+              }
+
+              const chip = document.createElement("div");
+              chip.className = "attachment-chip";
+
+              const icon = document.createElement("span");
+              icon.textContent = pendingAttachment.mimeType === "application/pdf" ? "PDF" : "IMG";
+
+              const name = document.createElement("span");
+              name.className = "attachment-chip-name";
+              name.textContent = pendingAttachment.name;
+              name.title = pendingAttachment.name;
+
+              const remove = document.createElement("button");
+              remove.type = "button";
+              remove.className = "attachment-chip-remove";
+              remove.textContent = "×";
+              remove.title = "Remove attachment";
+              remove.addEventListener("click", clearAttachment);
+
+              chip.appendChild(icon);
+              chip.appendChild(name);
+              chip.appendChild(remove);
+              attachmentList.appendChild(chip);
+              attachmentList.classList.add("has-file");
+            }
+
+            function readFileAsBase64(file) {
+              return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                  const result = String(reader.result || "");
+                  const comma = result.indexOf(",");
+                  resolve(comma >= 0 ? result.slice(comma + 1) : result);
+                };
+                reader.onerror = () => reject(new Error("Could not read the file."));
+                reader.readAsDataURL(file);
+              });
+            }
+
+            function readFileAsText(file) {
+              return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(String(reader.result || ""));
+                reader.onerror = () => reject(new Error("Could not read the text file."));
+                reader.readAsText(file);
+              });
+            }
+
+            function isSupportedTextFile(file) {
+              const allowedExtensions = [
+                ".txt", ".md", ".markdown", ".csv", ".json", ".html",
+                ".css", ".js", ".jsx", ".ts", ".tsx"
+              ];
+              const lower = file.name.toLowerCase();
+              return (file.type || "").startsWith("text/") ||
+                allowedExtensions.some(ext => lower.endsWith(ext));
+            }
+
+            async function handleFileSelection(file) {
+              if (!file) return;
+
+              if (file.size > MAX_CLIENT_FILE_BYTES) {
+                showToast("File is too large. Please keep it under 12 MB.", 3500);
+                return;
+              }
+
+              try {
+                if (BINARY_ATTACHMENT_TYPES.has(file.type)) {
+                  const data = await readFileAsBase64(file);
+                  pendingAttachment = {
+                    name: file.name,
+                    mimeType: file.type,
+                    data,
+                    kind: file.type === "application/pdf" ? "pdf" : "image"
+                  };
+                } else if (isSupportedTextFile(file)) {
+                  const text = await readFileAsText(file);
+                  if (!text.trim()) {
+                    showToast("That file is empty.");
+                    return;
+                  }
+                  if (text.length > 1000000) {
+                    showToast("Text files are limited to 1 MB of text.", 3500);
+                    return;
+                  }
+                  pendingAttachment = {
+                    name: file.name,
+                    mimeType: "text/plain",
+                    text,
+                    kind: "text"
+                  };
+                } else {
+                  showToast("This file type is not supported yet.", 3500);
+                  return;
+                }
+
+                renderAttachmentChip();
+                showToast(`${file.name} attached.`);
+              } catch (error) {
+                console.error("FAYNEX attachment error:", error);
+                showToast(error?.message || "Could not attach that file.", 3500);
+              }
+            }
+
+            function getAttachmentPromptText(attachment) {
+              if (!attachment) return "";
+              if (attachment.kind === "text") {
+                return `\n\nAttached file: ${attachment.name}\n\n--- FILE CONTENT START ---\n${attachment.text}\n--- FILE CONTENT END ---`;
+              }
+              return "";
+            }
+
+            function getStoredAttachmentMeta(attachment) {
+              if (!attachment) return null;
+              return {
+                name: attachment.name,
+                mimeType: attachment.mimeType,
+                kind: attachment.kind || "file"
+              };
+            }
+
+            function renderMessageAttachment(meta) {
+              if (!meta) return null;
+              const chip = document.createElement("div");
+              chip.className = "message-attachment";
+              chip.textContent = `${meta.kind === "pdf" ? "PDF" : meta.kind === "image" ? "Image" : "File"} • ${meta.name}`;
+              return chip;
+            }
+
+            function abortGeneration() {
+              if (abortController) {
+                abortController.abort();
+                abortController = null;
+              }
+              setGeneratingState(false);
+            }
+
+            async function streamGeminiResponse(text, aiMessage, attachment = null) {
+              abortController = new AbortController();
+
+              const historyForApi = currentMessages()
+                .slice(0, -1)
+                .slice(-30)
+                .map(item => ({
+                  role: item.role,
+                  content: item.content
+                }));
+
+              const requestBody = {
+                userId: FAYNEX_USER_ID,
+                message: text,
+                history: historyForApi
+              };
+
+              if (attachment?.kind === "image" || attachment?.kind === "pdf") {
+                requestBody.attachments = [{
+                  name: attachment.name,
+                  mimeType: attachment.mimeType,
+                  data: attachment.data
+                }];
+              }
+
+              const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody),
+                signal: abortController.signal
+              });
+
+              if (!response.ok) {
+                let errorData = null;
+                try {
+                  errorData = await response.json();
+                } catch {}
+
+                throw new Error(
+                  errorData?.details ||
+                  errorData?.error ||
+                  `API request failed with status ${response.status}.`
+                );
+              }
+
+              /*
+                Persistent-memory commands are returned by the Worker
+                as JSON instead of an SSE stream. Handle that response
+                before starting the streaming parser.
+              */
+              const responseContentType =
+                response.headers.get("content-type") || "";
+
+              if (responseContentType.includes("application/json")) {
+                const data = await response.json();
+                const backendMessage =
+                  data?.message ||
+                  data?.error ||
+                  "FAYNEX returned a response.";
+
+                updateAIMessage(aiMessage, backendMessage);
+                return backendMessage;
+              }
+
+              if (!response.body) {
+                throw new Error("Streaming is not supported by this browser.");
+              }
+
+              const reader = response.body.getReader();
+              const decoder = new TextDecoder("utf-8");
+              let buffer = "";
+              let fullText = "";
+              let lastRender = 0;
+
+              const processEvent = (eventText) => {
+                const lines = eventText.split(/\r?\n/);
+                const dataLines = lines
+                  .filter(line => line.startsWith("data:"))
+                  .map(line => line.slice(5).trimStart());
+
+                if (!dataLines.length) return;
+
+                const dataText = dataLines.join("\n").trim();
+                if (!dataText || dataText === "[DONE]") return;
+
+                let payload;
+                try {
+                  payload = JSON.parse(dataText);
+                } catch {
+                  return;
+                }
+
+                const parts = payload?.candidates?.[0]?.content?.parts || [];
+
+                for (const part of parts) {
+                  if (typeof part?.text === "string") {
+                    fullText += part.text;
+
+                    const now = performance.now();
+                    if (now - lastRender > 45) {
+                      updateAIMessage(aiMessage, fullText);
+                      lastRender = now;
+                    }
+                  }
+                }
+              };
+
+              while (true) {
+                const { value, done } = await reader.read();
+
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+
+                const events = buffer.split(/\r?\n\r?\n/);
+                buffer = events.pop() || "";
+
+                for (const eventText of events) {
+                  processEvent(eventText);
+                }
+              }
+
+              buffer += decoder.decode();
+
+              if (buffer.trim()) {
+                processEvent(buffer);
+              }
+
+              if (!fullText.trim()) {
+                throw new Error("FAYNEX received an empty response from Gemini.");
+              }
+
+              updateAIMessage(aiMessage, fullText);
+
+              return fullText;
+            }
+
+            async function sendMessage(customText = null) {
+              if (isGenerating) {
+                abortGeneration();
+                return;
+              }
+
+              const typedText = (customText ?? input.value).trim();
+              const attachment = customText ? null : pendingAttachment;
+
+              if (!typedText && !attachment) return;
+
+              /*
+                Memory commands are intentionally sent to the Worker.
+                The Worker is the source of truth for persistent memory.
+              */
+
+              const text = typedText || "Please analyze the attached file and explain what you find.";
+              const basePrompt = text;
+              const apiText = attachment?.kind === "text"
+                ? `${basePrompt}${getAttachmentPromptText(attachment)}`
+                : basePrompt;
+
+              welcome.style.display = "none";
+              input.value = "";
+              input.style.height = "auto";
+
+              if (!customText) {
+                clearAttachment();
+              }
+
+              const chat = getActiveConversation();
+              if (!chat) return;
+
+              chat.messages.push({
+                role: "user",
+                content: text,
+                attachment: getStoredAttachmentMeta(attachment)
+              });
+
+              if (
+                chat.title === "New conversation" ||
+                !chat.title
+              ) {
+                chat.title = titleFromMessage(text);
+              }
+
+              chat.updatedAt = Date.now();
+
+              const userMessage = addMessage("user", text, { markdown: false });
+              if (attachment) {
+                const metaChip = renderMessageAttachment(getStoredAttachmentMeta(attachment));
+                if (metaChip) {
+                  userMessage.parentElement?.appendChild(metaChip);
+                }
+              }
+
+              const aiMessage = addMessage("ai", "", {
+                typing: true,
+                actions: false
+              });
+
+              saveChats();
+              renderRecentChats();
+              setGeneratingState(true);
+
+              try {
+                const answer = await streamGeminiResponse(apiText, aiMessage, attachment);
+
+                chat.messages.push({
+                  role: "assistant",
+                  content: answer
+                });
+
+                chat.updatedAt = Date.now();
+                saveChats();
+                renderRecentChats();
+
+                // Add actions after streaming is complete.
+                const content = aiMessage.parentElement;
+                if (content && !content.querySelector(".message-actions")) {
+                  const actions = document.createElement("div");
+                  actions.className = "message-actions";
+                  actions.innerHTML = `
+                    <button class="message-action copy-answer" type="button">Copy</button>
+                    <button class="message-action speak-answer" type="button">Speak</button>
+                    <button class="message-action regenerate-answer" type="button">Regenerate</button>
+                  `;
+                  content.appendChild(actions);
+
+                  actions.querySelector(".copy-answer").addEventListener("click", async () => {
+                    try {
+                      await navigator.clipboard.writeText(answer);
+                      actions.querySelector(".copy-answer").textContent = "Copied";
+                      setTimeout(() => {
+                        actions.querySelector(".copy-answer").textContent = "Copy";
+                      }, 1200);
+                    } catch {}
+                  });
+
+                  actions.querySelector(".speak-answer").addEventListener("click", event => {
+                    speakText(answer, event.currentTarget);
+                  });
+
+                  actions.querySelector(".regenerate-answer").addEventListener("click", () => {
+                    stopSpeech();
+                    regenerateLastAnswer();
+                  });
+                }
+
+              } catch (error) {
+                if (error?.name === "AbortError") {
+                  // Keep the partial streamed answer.
+                  const partial = aiMessage.textContent?.trim() || "";
+                  if (partial) {
+                    chat.messages.push({
+                      role: "assistant",
+                      content: partial
+                    });
+                    chat.updatedAt = Date.now();
+                    saveChats();
+                    renderRecentChats();
+                  }
+                } else {
+                  console.error("FAYNEX API error:", error);
+
+                  const errorText =
+                    "Sorry, I couldn't connect to the FAYNEX AI engine right now.\n\n" +
+                    "Error: " +
+                    (error?.message || "Unknown error.");
+
+                  aiMessage.classList.remove("markdown");
+                  aiMessage.textContent = errorText;
+
+                  /*
+                    The failed assistant placeholder was never
+                    added to chat.messages, so the conversation
+                    remains clean.
+                  */
+                  saveChats();
+                }
+              } finally {
+                abortController = null;
+                setGeneratingState(false);
+                input.focus();
+              }
+            }
+
+            function regenerateLastAnswer() {
+              if (
+                isGenerating ||
+                !getActiveConversation()
+              ) return;
+
+              const chat =
+                getActiveConversation();
+
+              let lastUserIndex = -1;
+
+              for (
+                let i = chat.messages.length - 1;
+                i >= 0;
+                i--
+              ) {
+                if (
+                  chat.messages[i].role === "user"
+                ) {
+                  lastUserIndex = i;
+                  break;
+                }
+              }
+
+              if (lastUserIndex === -1) return;
+
+              const lastUserMessage =
+                chat.messages[lastUserIndex].content;
+
+              chat.messages =
+                chat.messages.slice(
                   0,
-                  120
-                )
-              )}
-              •
-              ${escapeHtml(
-                formatDate(
-                  chat.updatedAt
-                )
-              )}
-            </div>
+                  lastUserIndex
+                );
 
-          `;
+              chat.updatedAt = Date.now();
 
+              saveChats();
 
-          button.addEventListener(
-            "click",
-            () => {
+              renderActiveConversation();
 
-              openConversation(
-                chat.id
-              );
-
-              closeSearch();
-
+              sendMessage(lastUserMessage);
             }
-          );
 
+            attachBtn?.addEventListener("click", () => {
+              if (isGenerating) {
+                showToast("Please wait until the current response finishes.");
+                return;
+              }
+              fileInput?.click();
+            });
 
-          searchResults.appendChild(
-            button
-          );
+            fileInput?.addEventListener("change", async event => {
+              const file = event.target.files?.[0];
+              await handleFileSelection(file);
+            });
 
-        }
-      );
+            input.addEventListener("input", () => {
+              input.style.height = "auto";
+              input.style.height = Math.min(input.scrollHeight, 150) + "px";
+            });
 
-    }
+            input.addEventListener("keydown", event => {
+              if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+              }
+            });
 
+            sendBtn.addEventListener("click", () => {
+              sendMessage();
+            });
 
-    /* =================================================
-       VOICE INPUT
-    ================================================= */
+            document.querySelectorAll(".suggestion").forEach(button => {
+              button.addEventListener("click", () => {
+                input.value = button.dataset.prompt || "";
+                input.dispatchEvent(new Event("input"));
+                input.focus();
+              });
+            });
 
-    function setupVoiceInput(){
-
-      const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
-
-
-      if(!SpeechRecognition){
-
-        voiceBtn.style.display =
-          "none";
-
-        return;
-
-      }
-
-
-      recognition =
-        new SpeechRecognition();
-
-
-      recognition.lang =
-        "en-US";
-
-
-      recognition.continuous =
-        false;
-
-
-      recognition.interimResults =
-        true;
-
-
-      recognition.onstart =
-        () => {
-
-          isListening =
-            true;
-
-          voiceBtn.classList.add(
-            "active"
-          );
-
-        };
-
-
-      recognition.onresult =
-        event => {
-
-          let transcript =
-            "";
-
-
-          for(
-            let i =
-              event.resultIndex;
-            i <
-              event.results.length;
-            i++
-          ){
-
-            transcript +=
-              event.results[i][0]
-                .transcript;
-
-          }
-
-
-          input.value =
-            transcript;
-
-
-          input.dispatchEvent(
-            new Event(
-              "input"
-            )
-          );
-
-        };
-
-
-      recognition.onerror =
-        event => {
-
-          console.warn(
-            "Voice input error:",
-            event.error
-          );
-
-
-          showToast(
-            "Voice input error: " +
-            event.error
-          );
-
-        };
-
-
-      recognition.onend =
-        () => {
-
-          isListening =
-            false;
-
-          voiceBtn.classList.remove(
-            "active"
-          );
-
-        };
-
-
-      voiceBtn.addEventListener(
-        "click",
-        () => {
-
-          if(isListening){
-
-            recognition.stop();
-
-            return;
-
-          }
-
-
-          try{
-
-            recognition.start();
-
-          }catch(error){
-
-            console.warn(
-              "Voice start error:",
-              error
+            newChatBtn.addEventListener(
+              "click",
+              newConversation
             );
 
-          }
-
-        }
-      );
-
-    }
-
-
-    /* =================================================
-       VOICE OUTPUT
-    ================================================= */
-
-    function speakText(
-      text,
-      button
-    ){
-
-      if(
-        !(
-          "speechSynthesis" in
-          window
-        )
-      ){
-
-        showToast(
-          "Voice output is not supported by this browser."
-        );
-
-        return;
-
-      }
-
-
-      stopSpeech();
-
-
-      const utterance =
-        new SpeechSynthesisUtterance(
-          String(
-            text || ""
-          )
-        );
-
-
-      utterance.lang =
-        "en-US";
-
-      utterance.rate =
-        1;
-
-      utterance.pitch =
-        1;
-
-
-      if(button){
-
-        button.textContent =
-          "Speaking...";
-
-      }
-
-
-      utterance.onend =
-        () => {
-
-          if(button){
-
-            button.textContent =
-              "Speak";
-
-          }
-
-        };
-
-
-      utterance.onerror =
-        () => {
-
-          if(button){
-
-            button.textContent =
-              "Speak";
-
-          }
-
-        };
-
-
-      window.speechSynthesis.speak(
-        utterance
-      );
-
-    }
-
-
-    function stopSpeech(){
-
-      if(
-        "speechSynthesis" in
-        window
-      ){
-
-        window.speechSynthesis.cancel();
-
-      }
-
-    }
-
-
-    /* =================================================
-       INPUT
-    ================================================= */
-
-    input.addEventListener(
-      "input",
-      () => {
-
-        input.style.height =
-          "auto";
-
-
-        input.style.height =
-          Math.min(
-            input.scrollHeight,
-            150
-          ) + "px";
-
-      }
-    );
-
-
-    input.addEventListener(
-      "keydown",
-      event => {
-
-        if(
-          event.key ===
-          "Enter" &&
-          !event.shiftKey
-        ){
-
-          event.preventDefault();
-
-          sendMessage();
-
-        }
-
-      }
-    );
-
-
-    sendBtn.addEventListener(
-      "click",
-      () => {
-
-        if(isGenerating){
-
-          abortGeneration();
-
-        }else{
-
-          sendMessage();
-
-        }
-
-      }
-    );
-
-
-    /* =================================================
-       FILE
-    ================================================= */
-
-    attachBtn.addEventListener(
-      "click",
-      () => {
-
-        if(isGenerating){
-
-          showToast(
-            "Please wait until the current response finishes."
-          );
-
-          return;
-
-        }
-
-
-        fileInput.click();
-
-      }
-    );
-
-
-    fileInput.addEventListener(
-      "change",
-      event => {
-
-        const file =
-          event.target.files?.[0];
-
-
-        handleFileSelection(
-          file
-        );
-
-      }
-    );
-
-
-    /* =================================================
-       MEMORY EVENTS
-    ================================================= */
-
-    memoryBtn.addEventListener(
-      "click",
-      openMemory
-    );
-
-
-    topMemoryBtn.addEventListener(
-      "click",
-      openMemory
-    );
-
-
-    closeMemoryBtn.addEventListener(
-      "click",
-      closeMemory
-    );
-
-
-    memoryOverlay.addEventListener(
-      "click",
-      event => {
-
-        if(
-          event.target ===
-          memoryOverlay
-        ){
-
-          closeMemory();
-
-        }
-
-      }
-    );
-
-
-    addMemoryBtn.addEventListener(
-      "click",
-      () => {
-
-        const text =
-          memoryInput.value.trim();
-
-
-        if(!text){
-
-          return;
-
-        }
-
-
-        if(
-          addMemory(
-            text,
-            "manual"
-          )
-        ){
-
-          memoryInput.value =
-            "";
-
-          showToast(
-            "🧠 Memory saved."
-          );
-
-        }
-
-      }
-    );
-
-
-    memoryInput.addEventListener(
-      "keydown",
-      event => {
-
-        if(
-          event.key ===
-          "Enter"
-        ){
-
-          event.preventDefault();
-
-          addMemoryBtn.click();
-
-        }
-
-      }
-    );
-
-
-    clearMemoryBtn.addEventListener(
-      "click",
-      clearAllMemories
-    );
-
-
-    /* =================================================
-       CHAT EVENTS
-    ================================================= */
-
-    newChatBtn.addEventListener(
-      "click",
-      newConversation
-    );
-
-
-    homeBtn.addEventListener(
-      "click",
-      () => {
-
-        renderActiveConversation();
-
-
-        if(
-          window.innerWidth <= 800
-        ){
-
-          sidebar.classList.remove(
-            "open"
-          );
-
-        }
-
-      }
-    );
-
-
-    searchChatsBtn.addEventListener(
-      "click",
-      openSearch
-    );
-
-
-    topSearchBtn.addEventListener(
-      "click",
-      openSearch
-    );
-
-
-    chatSearchInput.addEventListener(
-      "input",
-      event =>
-        renderSearchResults(
-          event.target.value
-        )
-    );
-
-
-    closeSearchBtn.addEventListener(
-      "click",
-      closeSearch
-    );
-
-
-    searchOverlay.addEventListener(
-      "click",
-      event => {
-
-        if(
-          event.target ===
-          searchOverlay
-        ){
-
-          closeSearch();
-
-        }
-
-      }
-    );
-
-
-    menuBtn.addEventListener(
-      "click",
-      () => {
-
-        sidebar.classList.toggle(
-          "open"
-        );
-
-      }
-    );
-
-
-    document.addEventListener(
-      "keydown",
-      event => {
-
-        if(
-          event.key ===
-          "Escape"
-        ){
-
-          closeSearch();
-
-          closeMemory();
-
-        }
-
-
-        if(
-          (
-            event.ctrlKey ||
-            event.metaKey
-          ) &&
-          event.key.toLowerCase() ===
-          "k"
-        ){
-
-          event.preventDefault();
-
-          openSearch();
-
-        }
-
-      }
-    );
-
-
-    /* =================================================
-       API HEALTH
-    ================================================= */
-
-    async function checkFaynexAPI(){
-
-      try{
-
-        const response =
-          await fetch(
-            API_URL
-          );
-
-
-        if(!response.ok){
-
-          throw new Error(
-            "API offline"
-          );
-
-        }
-
-
-        const data =
-          await response.json();
-
-
-        if(data?.ok){
-
-          document
-            .querySelectorAll(
-              ".status-line span:last-child"
-            )
-            .forEach(
-              element => {
-
-                element.textContent =
-                  "FAYNEX systems online";
-
+            document
+              .getElementById("searchChatsBtn")
+              .addEventListener(
+                "click",
+                openSearch
+              );
+
+            settingsBtn?.addEventListener("click", openMemorySettings);
+            sidebarSettingsBtn?.addEventListener("click", openMemorySettings);
+            closeMemoryBtn?.addEventListener("click", closeMemorySettings);
+            clearMemoryBtn?.addEventListener("click", clearAllMemories);
+            memoryOverlay?.addEventListener("click", event => {
+              if (event.target === memoryOverlay) closeMemorySettings();
+            });
+
+            document
+              .querySelector(".top-actions .icon-btn")
+              .addEventListener(
+                "click",
+                openSearch
+              );
+
+            document
+              .getElementById("chatSearchInput")
+              .addEventListener(
+                "input",
+                event =>
+                  renderSearchResults(
+                    event.target.value
+                  )
+              );
+
+            document
+              .getElementById("closeSearchBtn")
+              .addEventListener(
+                "click",
+                closeSearch
+              );
+
+            document
+              .getElementById("searchOverlay")
+              .addEventListener(
+                "click",
+                event => {
+                  if (
+                    event.target.id ===
+                    "searchOverlay"
+                  ) {
+                    closeSearch();
+                  }
+                }
+              );
+
+            document.addEventListener(
+              "keydown",
+              event => {
+                if (
+                  event.key === "Escape"
+                ) {
+                  closeSearch();
+                  closeMemorySettings();
+                }
+
+                if (
+                  (event.ctrlKey || event.metaKey) &&
+                  event.key.toLowerCase() === "k"
+                ) {
+                  event.preventDefault();
+                  openSearch();
+                }
               }
             );
 
-        }
+            menuBtn.addEventListener("click", () => {
+              sidebar.classList.toggle("open");
+            });
 
-      }catch(error){
+            document.querySelectorAll(".nav-item").forEach(item => {
+              item.addEventListener("click", () => {
+                if (window.innerWidth <= 800) {
+                  sidebar.classList.remove("open");
+                }
+              });
+            });
 
-        console.warn(
-          "FAYNEX API health check failed:",
-          error
-        );
+            async function checkFaynexAPI() {
+              try {
+                const response = await fetch(API_URL);
 
+                if (!response.ok) {
+                  throw new Error("API offline");
+                }
 
-        document
-          .querySelectorAll(
-            ".status-line span:last-child"
-          )
-          .forEach(
-            element => {
+                const data = await response.json();
 
-              element.textContent =
-                "FAYNEX API offline";
+                if (data?.ok) {
+                  document.querySelectorAll(".status-line").forEach(line => {
+                    const statusText = line.querySelector("span:last-child");
+                    if (statusText) {
+                      statusText.textContent = "FAYNEX systems online";
+                    }
+                  });
+                }
+              } catch (error) {
+                console.warn("FAYNEX API health check failed:", error);
 
+                document.querySelectorAll(".status-line").forEach(line => {
+                  const statusText = line.querySelector("span:last-child");
+                  if (statusText) {
+                    statusText.textContent = "FAYNEX API offline";
+                  }
+                });
+              }
             }
-          );
 
+            setupVoiceInput();
+            loadMemories();
+            loadConversations();
+            checkFaynexAPI();
+
+      } catch (startupError) {
+        console.error("FAYNEX startup error:", startupError);
+        const toastEl = document.getElementById("toast");
+        if (toastEl) {
+          toastEl.textContent = "FAYNEX startup error: " + (startupError?.message || "Unknown error");
+          toastEl.classList.add("show");
+          setTimeout(() => toastEl.classList.remove("show"), 6000);
+        }
       }
-
-    }
-
-
-    /* =================================================
-       START
-    ================================================= */
-
-    loadMemories();
-
-    renderMemoryList();
-
-    setupVoiceInput();
-
-    loadConversations();
-
-    checkFaynexAPI();
-
-    input.focus();
-
-  }
-);
+    });
 </script>
-
 </body>
 </html>
