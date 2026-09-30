@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>FAYNEX AI</title>
-<meta name="description" content="FAYNEX AI — Next-Generation Intelligence">
+
+<meta
+  name="description"
+  content="FAYNEX AI — Next-Generation Intelligence"
+/>
 
 <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
@@ -81,9 +85,9 @@ button{
   display:flex;
 }
 
-/* =========================
+/* =====================================================
    SIDEBAR
-========================= */
+===================================================== */
 
 .sidebar{
   width:270px;
@@ -191,6 +195,11 @@ button{
   color:#fff;
 }
 
+.nav-item.active{
+  background:rgba(139,92,246,.10);
+  color:#ddd6fe;
+}
+
 .nav-icon{
   width:20px;
   text-align:center;
@@ -200,7 +209,7 @@ button{
   display:flex;
   flex-direction:column;
   gap:3px;
-  max-height:42vh;
+  max-height:38vh;
   overflow-y:auto;
 }
 
@@ -306,9 +315,9 @@ button{
   box-shadow:0 0 10px rgba(34,197,94,.8);
 }
 
-/* =========================
+/* =====================================================
    MAIN
-========================= */
+===================================================== */
 
 .main{
   flex:1;
@@ -380,9 +389,9 @@ button{
   display:none;
 }
 
-/* =========================
-   CHAT AREA
-========================= */
+/* =====================================================
+   CHAT
+===================================================== */
 
 .chat-area{
   flex:1;
@@ -471,9 +480,9 @@ button{
   background:rgba(139,92,246,.08);
 }
 
-/* =========================
+/* =====================================================
    MESSAGES
-========================= */
+===================================================== */
 
 .message{
   display:flex;
@@ -573,10 +582,6 @@ button{
   border-left:3px solid var(--accent);
   background:rgba(139,92,246,.06);
   color:#aeb4c1;
-}
-
-.message-text a{
-  color:#a78bfa;
 }
 
 .message-text table{
@@ -707,37 +712,21 @@ button{
   }
 }
 
-/* =========================
-   COMPOSER
-========================= */
+/* =====================================================
+   ATTACHMENTS
+===================================================== */
 
-.composer-area{
-  position:fixed;
-  left:270px;
-  right:0;
-  bottom:0;
-  z-index:30;
-  padding:20px 25px 25px;
-  pointer-events:none;
-  background:linear-gradient(
-    to top,
-    rgba(6,7,11,1) 20%,
-    rgba(6,7,11,.85) 65%,
-    transparent
-  );
-}
-
-.composer{
-  width:min(900px,100%);
-  margin:0 auto;
-  pointer-events:auto;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:17px;
-  background:rgba(12,15,22,.96);
-  box-shadow:
-    0 20px 70px rgba(0,0,0,.45),
-    0 0 0 1px rgba(255,255,255,.02);
-  overflow:hidden;
+.message-attachment{
+  margin-top:8px;
+  padding:8px 10px;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border-radius:9px;
+  background:rgba(139,92,246,.07);
+  border:1px solid rgba(139,92,246,.16);
+  color:#aaa3c7;
+  font-size:10px;
 }
 
 .attachment-preview{
@@ -803,6 +792,39 @@ button{
   background:rgba(255,255,255,.06);
 }
 
+/* =====================================================
+   COMPOSER
+===================================================== */
+
+.composer-area{
+  position:fixed;
+  left:270px;
+  right:0;
+  bottom:0;
+  z-index:30;
+  padding:20px 25px 25px;
+  pointer-events:none;
+  background:linear-gradient(
+    to top,
+    rgba(6,7,11,1) 20%,
+    rgba(6,7,11,.85) 65%,
+    transparent
+  );
+}
+
+.composer{
+  width:min(900px,100%);
+  margin:0 auto;
+  pointer-events:auto;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:17px;
+  background:rgba(12,15,22,.96);
+  box-shadow:
+    0 20px 70px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.02);
+  overflow:hidden;
+}
+
 .composer-main{
   display:flex;
   align-items:flex-end;
@@ -864,12 +886,6 @@ button{
   transform:translateY(-1px);
 }
 
-.send-btn:disabled{
-  opacity:.4;
-  cursor:not-allowed;
-  transform:none;
-}
-
 #messageInput{
   flex:1;
   min-width:0;
@@ -899,26 +915,225 @@ button{
   font-size:9px;
 }
 
-/* =========================
-   MESSAGE ATTACHMENT
-========================= */
+/* =====================================================
+   MEMORY PANEL
+===================================================== */
 
-.message-attachment{
-  margin-top:8px;
-  padding:8px 10px;
-  display:inline-flex;
+.memory-overlay{
+  position:fixed;
+  inset:0;
+  z-index:120;
+  display:none;
   align-items:center;
-  gap:7px;
-  border-radius:9px;
-  background:rgba(139,92,246,.07);
-  border:1px solid rgba(139,92,246,.16);
-  color:#aaa3c7;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.62);
+  backdrop-filter:blur(10px);
+}
+
+.memory-overlay.open{
+  display:flex;
+}
+
+.memory-panel{
+  width:min(620px,100%);
+  max-height:78vh;
+  display:flex;
+  flex-direction:column;
+  border:1px solid var(--border2);
+  border-radius:20px;
+  background:#0c0f16;
+  box-shadow:0 30px 100px rgba(0,0,0,.6);
+  overflow:hidden;
+}
+
+.memory-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+}
+
+.memory-title-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.memory-title-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  background:rgba(139,92,246,.12);
+  color:#c4b5fd;
+}
+
+.memory-title{
+  font-size:15px;
+  font-weight:700;
+}
+
+.memory-subtitle{
+  margin-top:3px;
+  color:#6f7685;
   font-size:10px;
 }
 
-/* =========================
+.memory-close{
+  width:34px;
+  height:34px;
+  border-radius:9px;
+  background:rgba(255,255,255,.05);
+  color:#969daa;
+  font-size:18px;
+}
+
+.memory-close:hover{
+  background:rgba(255,255,255,.09);
+  color:#fff;
+}
+
+.memory-body{
+  overflow-y:auto;
+  padding:18px 20px 20px;
+}
+
+.memory-body::-webkit-scrollbar{
+  width:5px;
+}
+
+.memory-body::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.08);
+  border-radius:20px;
+}
+
+.memory-info{
+  padding:13px;
+  border-radius:12px;
+  background:rgba(139,92,246,.06);
+  border:1px solid rgba(139,92,246,.12);
+  color:#9b93b7;
+  font-size:11px;
+  line-height:1.6;
+  margin-bottom:16px;
+}
+
+.memory-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.memory-item{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:rgba(255,255,255,.025);
+}
+
+.memory-item-content{
+  flex:1;
+  min-width:0;
+}
+
+.memory-item-text{
+  color:#d8dbe3;
+  font-size:12px;
+  line-height:1.6;
+  word-break:break-word;
+}
+
+.memory-item-date{
+  margin-top:4px;
+  color:#5f6674;
+  font-size:9px;
+}
+
+.memory-delete{
+  width:28px;
+  height:28px;
+  flex-shrink:0;
+  border-radius:8px;
+  background:transparent;
+  color:#696f7c;
+}
+
+.memory-delete:hover{
+  color:#f87171;
+  background:rgba(239,68,68,.08);
+}
+
+.memory-empty{
+  padding:28px 10px;
+  text-align:center;
+  color:#626977;
+  font-size:12px;
+}
+
+.memory-add{
+  display:flex;
+  gap:8px;
+  margin-top:16px;
+}
+
+.memory-add input{
+  flex:1;
+  min-width:0;
+  height:40px;
+  border:1px solid var(--border2);
+  outline:none;
+  border-radius:10px;
+  background:#090b11;
+  color:#fff;
+  padding:0 12px;
+  font-size:12px;
+}
+
+.memory-add input:focus{
+  border-color:rgba(139,92,246,.45);
+}
+
+.memory-add button{
+  padding:0 14px;
+  border-radius:10px;
+  background:linear-gradient(
+    135deg,
+    var(--accent),
+    var(--accent2)
+  );
+  color:#fff;
+  font-size:11px;
+  font-weight:650;
+}
+
+.memory-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:14px;
+}
+
+.clear-memory{
+  padding:8px 11px;
+  border-radius:8px;
+  background:rgba(239,68,68,.07);
+  color:#ef8585;
+  font-size:10px;
+}
+
+.clear-memory:hover{
+  background:rgba(239,68,68,.13);
+}
+
+/* =====================================================
    SEARCH
-========================= */
+===================================================== */
 
 .search-overlay{
   position:fixed;
@@ -1012,9 +1227,9 @@ button{
   text-align:center;
 }
 
-/* =========================
+/* =====================================================
    TOAST
-========================= */
+===================================================== */
 
 .toast{
   position:fixed;
@@ -1039,9 +1254,9 @@ button{
   transform:translate(-50%,0);
 }
 
-/* =========================
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
 @media(max-width:800px){
 
@@ -1102,6 +1317,18 @@ button{
   .composer-hint{
     display:none;
   }
+
+  .memory-panel{
+    max-height:86vh;
+  }
+
+  .memory-add{
+    flex-direction:column;
+  }
+
+  .memory-add button{
+    height:40px;
+  }
 }
 </style>
 </head>
@@ -1110,27 +1337,42 @@ button{
 
 <div class="app">
 
-  <!-- =========================
+  <!-- =================================================
        SIDEBAR
-  ========================== -->
+  ================================================== -->
 
   <aside class="sidebar" id="sidebar">
 
     <div class="brand">
-      <div class="brand-logo">F</div>
+
+      <div class="brand-logo">
+        F
+      </div>
 
       <div>
-        <div class="brand-name">FAYNEX</div>
+
+        <div class="brand-name">
+          FAYNEX
+        </div>
+
         <div class="brand-subtitle">
           Next-Generation Intelligence
         </div>
+
       </div>
+
     </div>
 
-    <button class="new-chat" id="newChatBtn">
+
+    <button
+      class="new-chat"
+      id="newChatBtn"
+      type="button"
+    >
       <span>＋</span>
       <span>New conversation</span>
     </button>
+
 
     <div class="sidebar-section">
 
@@ -1138,22 +1380,47 @@ button{
         Workspace
       </div>
 
-      <button class="nav-item" id="homeBtn">
+
+      <button
+        class="nav-item active"
+        id="homeBtn"
+        type="button"
+      >
         <span class="nav-icon">⌂</span>
         <span>Home</span>
       </button>
 
-      <button class="nav-item">
+
+      <button
+        class="nav-item"
+        type="button"
+      >
         <span class="nav-icon">✦</span>
         <span>Explore</span>
       </button>
 
-      <button class="nav-item" id="searchChatsBtn">
+
+      <button
+        class="nav-item"
+        id="searchChatsBtn"
+        type="button"
+      >
         <span class="nav-icon">⌕</span>
         <span>Search chats</span>
       </button>
 
+
+      <button
+        class="nav-item"
+        id="memoryBtn"
+        type="button"
+      >
+        <span class="nav-icon">🧠</span>
+        <span>Memory</span>
+      </button>
+
     </div>
+
 
     <div class="sidebar-section">
 
@@ -1161,9 +1428,13 @@ button{
         Recent
       </div>
 
-      <div class="recent-list" id="recentList"></div>
+      <div
+        class="recent-list"
+        id="recentList"
+      ></div>
 
     </div>
+
 
     <div class="sidebar-bottom">
 
@@ -1186,9 +1457,9 @@ button{
   </aside>
 
 
-  <!-- =========================
+  <!-- =================================================
        MAIN
-  ========================== -->
+  ================================================== -->
 
   <main class="main">
 
@@ -1199,6 +1470,7 @@ button{
         <button
           class="icon-btn mobile-menu"
           id="menuBtn"
+          type="button"
           title="Menu"
         >
           ☰
@@ -1220,24 +1492,31 @@ button{
 
       </div>
 
+
       <div class="top-actions">
 
         <button
           class="icon-btn"
           id="topSearchBtn"
+          type="button"
           title="Search"
         >
           ⌕
+        </button>
+
+        <button
+          class="icon-btn"
+          id="topMemoryBtn"
+          type="button"
+          title="Memory"
+        >
+          🧠
         </button>
 
       </div>
 
     </header>
 
-
-    <!-- =========================
-         CHAT
-    ========================== -->
 
     <section
       class="chat-area"
@@ -1247,11 +1526,7 @@ button{
       <div
         class="chat-container"
         id="chatContainer"
-      >
-
-        <!-- Welcome screen appears here -->
-
-      </div>
+      ></div>
 
     </section>
 
@@ -1260,9 +1535,9 @@ button{
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      COMPOSER
-========================= -->
+===================================================== -->
 
 <div class="composer-area">
 
@@ -1273,16 +1548,18 @@ button{
       id="attachmentPreview"
     ></div>
 
+
     <div class="composer-main">
 
       <button
         class="attach-btn"
         id="attachBtn"
-        title="Attach file"
         type="button"
+        title="Attach file"
       >
         ＋
       </button>
+
 
       <input
         type="file"
@@ -1306,31 +1583,35 @@ button{
         "
       >
 
+
       <textarea
         id="messageInput"
         rows="1"
         placeholder="Ask FAYNEX anything..."
       ></textarea>
 
+
       <button
         class="voice-btn"
         id="voiceBtn"
-        title="Voice input"
         type="button"
+        title="Voice input"
       >
         ◉
       </button>
 
+
       <button
         class="send-btn"
         id="sendBtn"
-        title="Send"
         type="button"
+        title="Send"
       >
         ↑
       </button>
 
     </div>
+
 
     <div class="composer-hint">
       Enter to send • Shift + Enter for new line • Attach image, PDF or code files
@@ -1341,9 +1622,9 @@ button{
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      SEARCH
-========================= -->
+===================================================== -->
 
 <div
   class="search-overlay"
@@ -1373,10 +1654,110 @@ button{
 
     </div>
 
+
     <div
       class="search-results"
       id="searchResults"
     ></div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     MEMORY PANEL
+===================================================== -->
+
+<div
+  class="memory-overlay"
+  id="memoryOverlay"
+>
+
+  <div class="memory-panel">
+
+    <div class="memory-head">
+
+      <div class="memory-title-wrap">
+
+        <div class="memory-title-icon">
+          🧠
+        </div>
+
+        <div>
+
+          <div class="memory-title">
+            FAYNEX Memory
+          </div>
+
+          <div class="memory-subtitle">
+            Your saved information
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="memory-close"
+        id="closeMemoryBtn"
+        type="button"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="memory-body">
+
+      <div class="memory-info">
+        FAYNEX can use these memories in future conversations
+        on this browser. Say
+        <strong>“Remember that…”</strong>
+        to save something, or add a memory manually below.
+      </div>
+
+
+      <div
+        class="memory-list"
+        id="memoryList"
+      ></div>
+
+
+      <div class="memory-add">
+
+        <input
+          id="memoryInput"
+          type="text"
+          maxlength="300"
+          placeholder="Add something for FAYNEX to remember..."
+        >
+
+        <button
+          id="addMemoryBtn"
+          type="button"
+        >
+          Add memory
+        </button>
+
+      </div>
+
+
+      <div class="memory-actions">
+
+        <button
+          class="clear-memory"
+          id="clearMemoryBtn"
+          type="button"
+        >
+          Clear all memories
+        </button>
+
+      </div>
+
+    </div>
 
   </div>
 
@@ -1390,3160 +1771,1064 @@ button{
 
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-  /* =====================================================
-     CONFIG
-  ===================================================== */
+    /* =================================================
+       CONFIG
+    ================================================= */
 
-  const API_URL =
-    "https://faynex-ai-api.mf16348011.workers.dev";
-
-
-  const MAX_FILE_SIZE =
-    12 * 1024 * 1024;
+    const API_URL =
+      "https://faynex-ai-api.mf16348011.workers.dev";
 
 
-  const BINARY_TYPES =
-    new Set([
-      "application/pdf",
-      "image/jpeg",
-      "image/png",
-      "image/webp",
-      "image/gif"
-    ]);
+    const MAX_FILE_SIZE =
+      12 * 1024 * 1024;
 
 
-  const TEXT_EXTENSIONS =
-    new Set([
-      "txt",
-      "md",
-      "csv",
-      "json",
-      "html",
-      "css",
-      "js",
-      "jsx",
-      "ts",
-      "tsx"
-    ]);
+    const BINARY_TYPES =
+      new Set([
+        "application/pdf",
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/gif"
+      ]);
 
 
-  /* =====================================================
-     ELEMENTS
-  ===================================================== */
-
-  const sidebar =
-    document.getElementById("sidebar");
-
-  const menuBtn =
-    document.getElementById("menuBtn");
-
-  const newChatBtn =
-    document.getElementById("newChatBtn");
-
-  const homeBtn =
-    document.getElementById("homeBtn");
-
-  const searchChatsBtn =
-    document.getElementById("searchChatsBtn");
-
-  const topSearchBtn =
-    document.getElementById("topSearchBtn");
-
-  const chatArea =
-    document.getElementById("chatArea");
-
-  const chatContainer =
-    document.getElementById("chatContainer");
-
-  const input =
-    document.getElementById("messageInput");
-
-  const sendBtn =
-    document.getElementById("sendBtn");
-
-  const attachBtn =
-    document.getElementById("attachBtn");
-
-  const fileInput =
-    document.getElementById("fileInput");
-
-  const voiceBtn =
-    document.getElementById("voiceBtn");
-
-  const attachmentPreview =
-    document.getElementById("attachmentPreview");
-
-  const recentList =
-    document.getElementById("recentList");
-
-  const searchOverlay =
-    document.getElementById("searchOverlay");
-
-  const chatSearchInput =
-    document.getElementById("chatSearchInput");
-
-  const searchResults =
-    document.getElementById("searchResults");
-
-  const closeSearchBtn =
-    document.getElementById("closeSearchBtn");
-
-  const toast =
-    document.getElementById("toast");
+    const TEXT_EXTENSIONS =
+      new Set([
+        "txt",
+        "md",
+        "csv",
+        "json",
+        "html",
+        "css",
+        "js",
+        "jsx",
+        "ts",
+        "tsx"
+      ]);
 
 
-  /* =====================================================
-     STATE
-  ===================================================== */
+    /* =================================================
+       ELEMENTS
+    ================================================= */
 
-  let conversations = [];
+    const sidebar =
+      document.getElementById("sidebar");
 
-  let activeConversationId = null;
+    const menuBtn =
+      document.getElementById("menuBtn");
 
-  let pendingAttachment = null;
+    const newChatBtn =
+      document.getElementById("newChatBtn");
 
-  let abortController = null;
+    const homeBtn =
+      document.getElementById("homeBtn");
 
-  let isGenerating = false;
+    const searchChatsBtn =
+      document.getElementById("searchChatsBtn");
 
-  let recognition = null;
+    const topSearchBtn =
+      document.getElementById("topSearchBtn");
 
-  let isListening = false;
+    const memoryBtn =
+      document.getElementById("memoryBtn");
+
+    const topMemoryBtn =
+      document.getElementById("topMemoryBtn");
+
+    const chatArea =
+      document.getElementById("chatArea");
+
+    const chatContainer =
+      document.getElementById("chatContainer");
+
+    const input =
+      document.getElementById("messageInput");
+
+    const sendBtn =
+      document.getElementById("sendBtn");
+
+    const attachBtn =
+      document.getElementById("attachBtn");
+
+    const fileInput =
+      document.getElementById("fileInput");
+
+    const voiceBtn =
+      document.getElementById("voiceBtn");
+
+    const attachmentPreview =
+      document.getElementById("attachmentPreview");
+
+    const recentList =
+      document.getElementById("recentList");
+
+    const searchOverlay =
+      document.getElementById("searchOverlay");
+
+    const chatSearchInput =
+      document.getElementById("chatSearchInput");
+
+    const searchResults =
+      document.getElementById("searchResults");
+
+    const closeSearchBtn =
+      document.getElementById("closeSearchBtn");
+
+    const memoryOverlay =
+      document.getElementById("memoryOverlay");
+
+    const memoryList =
+      document.getElementById("memoryList");
+
+    const memoryInput =
+      document.getElementById("memoryInput");
+
+    const addMemoryBtn =
+      document.getElementById("addMemoryBtn");
+
+    const clearMemoryBtn =
+      document.getElementById("clearMemoryBtn");
+
+    const closeMemoryBtn =
+      document.getElementById("closeMemoryBtn");
+
+    const toast =
+      document.getElementById("toast");
 
 
-  /* =====================================================
-     UTILITIES
-  ===================================================== */
+    /* =================================================
+       STATE
+    ================================================= */
 
-  function showToast(message){
+    let conversations = [];
 
-    toast.textContent =
-      String(message || "");
+    let activeConversationId = null;
 
-    toast.classList.add("show");
+    let pendingAttachment = null;
 
-    clearTimeout(
-      showToast.timer
-    );
+    let abortController = null;
 
-    showToast.timer =
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3000);
-  }
+    let isGenerating = false;
+
+    let recognition = null;
+
+    let isListening = false;
 
 
-  function escapeHtml(value){
+    /* =================================================
+       MEMORY SYSTEM
+    ================================================= */
 
-    return String(value || "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
-  }
+    const MEMORY_STORAGE_KEY =
+      "faynex_long_term_memory_v1";
 
 
-  function renderMarkdown(text){
-
-    const source =
-      String(text || "");
+    let memories = [];
 
 
-    let html = "";
-
-
-    if(
-      window.marked &&
-      typeof window.marked.parse === "function"
-    ){
+    function loadMemories(){
 
       try{
 
-        html =
-          window.marked.parse(
-            source,
-            {
-              gfm:true,
-              breaks:true
-            }
+        const saved =
+          localStorage.getItem(
+            MEMORY_STORAGE_KEY
           );
 
-      }catch(error){
-
-        console.warn(
-          "Markdown render error:",
-          error
-        );
-
-        html =
-          escapeHtml(source)
-            .replace(/\n/g,"<br>");
-
-      }
-
-    }else{
-
-      html =
-        escapeHtml(source)
-          .replace(/\n/g,"<br>");
-
-    }
-
-
-    if(
-      window.DOMPurify &&
-      typeof window.DOMPurify.sanitize === "function"
-    ){
-
-      return window.DOMPurify.sanitize(
-        html,
-        {
-          USE_PROFILES:{
-            html:true
-          }
-        }
-      );
-
-    }
-
-
-    return html;
-  }
-
-
-  function formatDate(timestamp){
-
-    const date =
-      new Date(timestamp);
-
-    return date.toLocaleDateString(
-      undefined,
-      {
-        month:"short",
-        day:"numeric"
-      }
-    );
-  }
-
-
-  function generateId(){
-
-    return (
-      Date.now().toString(36) +
-      Math.random()
-        .toString(36)
-        .slice(2)
-    );
-  }
-
-
-  /* =====================================================
-     LOCAL STORAGE
-  ===================================================== */
-
-  function saveChats(){
-
-    try{
-
-      localStorage.setItem(
-        "faynex_conversations",
-        JSON.stringify(conversations)
-      );
-
-    }catch(error){
-
-      console.warn(
-        "Could not save conversations:",
-        error
-      );
-
-    }
-  }
-
-
-  function loadConversations(){
-
-    try{
-
-      const saved =
-        localStorage.getItem(
-          "faynex_conversations"
-        );
-
-
-      if(saved){
 
         const parsed =
-          JSON.parse(saved);
+          saved
+            ? JSON.parse(saved)
+            : [];
 
 
         if(Array.isArray(parsed)){
 
-          conversations =
-            parsed;
+          memories =
+            parsed.filter(
+              item =>
+                item &&
+                typeof item.text ===
+                  "string"
+            );
+
+        }else{
+
+          memories = [];
 
         }
 
+      }catch(error){
+
+        console.warn(
+          "Memory load failed:",
+          error
+        );
+
+        memories = [];
+
       }
 
-    }catch(error){
+    }
 
-      console.warn(
-        "Conversation load failed:",
-        error
-      );
 
-      conversations = [];
+    function saveMemories(){
+
+      try{
+
+        localStorage.setItem(
+          MEMORY_STORAGE_KEY,
+          JSON.stringify(
+            memories
+          )
+        );
+
+      }catch(error){
+
+        console.warn(
+          "Memory save failed:",
+          error
+        );
+
+        showToast(
+          "Could not save memory."
+        );
+
+      }
 
     }
 
 
-    if(!conversations.length){
+    function generateMemoryId(){
 
-      createConversation();
-
-    }else{
-
-      activeConversationId =
-        conversations[0].id;
-
-    }
-
-
-    renderRecentChats();
-
-    renderActiveConversation();
-  }
-
-
-  /* =====================================================
-     CONVERSATIONS
-  ===================================================== */
-
-  function createConversation(){
-
-    const conversation = {
-
-      id:generateId(),
-
-      title:"New conversation",
-
-      createdAt:Date.now(),
-
-      updatedAt:Date.now(),
-
-      messages:[]
-
-    };
-
-
-    conversations.unshift(
-      conversation
-    );
-
-
-    activeConversationId =
-      conversation.id;
-
-
-    saveChats();
-
-    renderRecentChats();
-
-    renderActiveConversation();
-
-
-    return conversation;
-  }
-
-
-  function getActiveConversation(){
-
-    return conversations.find(
-      item =>
-        item.id ===
-        activeConversationId
-    ) || null;
-  }
-
-
-  function titleFromMessage(text){
-
-    const clean =
-      String(text || "")
-        .replace(/\s+/g," ")
-        .trim();
-
-
-    if(!clean){
-
-      return "New conversation";
-
-    }
-
-
-    return clean.length > 38
-      ? clean.slice(0,38) + "..."
-      : clean;
-  }
-
-
-  function newConversation(){
-
-    if(isGenerating){
-
-      showToast(
-        "Please wait until the current response finishes."
-      );
-
-      return;
-    }
-
-
-    createConversation();
-
-    input.value = "";
-
-    input.style.height = "auto";
-
-    clearPendingAttachment();
-
-    input.focus();
-
-
-    if(window.innerWidth <= 800){
-
-      sidebar.classList.remove(
-        "open"
+      return (
+        "mem_" +
+        Date.now().toString(36) +
+        "_" +
+        Math.random()
+          .toString(36)
+          .slice(2,9)
       );
 
     }
-  }
 
 
-  function openConversation(id){
-
-    if(isGenerating){
-
-      showToast(
-        "Please wait until the current response finishes."
-      );
-
-      return;
-    }
-
-
-    activeConversationId =
-      id;
-
-
-    saveChats();
-
-    renderRecentChats();
-
-    renderActiveConversation();
-
-
-    if(window.innerWidth <= 800){
-
-      sidebar.classList.remove(
-        "open"
-      );
-
-    }
-  }
-
-
-  function renameConversation(id){
-
-    const chat =
-      conversations.find(
-        item =>
-          item.id === id
-      );
-
-
-    if(!chat) return;
-
-
-    const newTitle =
-      prompt(
-        "Rename conversation:",
-        chat.title
-      );
-
-
-    if(
-      newTitle === null
-    ) return;
-
-
-    const clean =
-      newTitle.trim();
-
-
-    if(!clean) return;
-
-
-    chat.title =
-      clean.slice(0,80);
-
-    chat.updatedAt =
-      Date.now();
-
-
-    saveChats();
-
-    renderRecentChats();
-
-  }
-
-
-  function deleteConversation(id){
-
-    const index =
-      conversations.findIndex(
-        item =>
-          item.id === id
-      );
-
-
-    if(index === -1) return;
-
-
-    conversations.splice(
-      index,
-      1
-    );
-
-
-    if(
-      activeConversationId === id
+    function addMemory(
+      text,
+      source = "manual"
     ){
 
-      if(conversations.length){
+      const clean =
+        String(text || "")
+          .replace(/\s+/g," ")
+          .trim();
 
-        activeConversationId =
-          conversations[0].id;
 
-      }else{
+      if(!clean){
 
-        createConversation();
+        return false;
+
+      }
+
+
+      if(clean.length > 300){
+
+        showToast(
+          "Memory is too long. Keep it under 300 characters."
+        );
+
+        return false;
+
+      }
+
+
+      const duplicate =
+        memories.some(
+          memory =>
+            memory.text.toLowerCase() ===
+            clean.toLowerCase()
+        );
+
+
+      if(duplicate){
+
+        showToast(
+          "FAYNEX already remembers this."
+        );
+
+        return false;
+
+      }
+
+
+      memories.unshift({
+
+        id:
+          generateMemoryId(),
+
+        text:
+          clean,
+
+        source:
+          source,
+
+        createdAt:
+          Date.now()
+
+      });
+
+
+      /*
+        Keep local memory compact.
+        This version stores up to 100 memories.
+      */
+
+      memories =
+        memories.slice(
+          0,
+          100
+        );
+
+
+      saveMemories();
+
+      renderMemoryList();
+
+      return true;
+
+    }
+
+
+    function deleteMemory(
+      id
+    ){
+
+      memories =
+        memories.filter(
+          memory =>
+            memory.id !== id
+        );
+
+
+      saveMemories();
+
+      renderMemoryList();
+
+    }
+
+
+    function clearAllMemories(){
+
+      if(!memories.length){
+
+        showToast(
+          "There are no saved memories."
+        );
 
         return;
 
       }
 
-    }
 
-
-    saveChats();
-
-    renderRecentChats();
-
-    renderActiveConversation();
-
-  }
-
-
-  /* =====================================================
-     RECENT CHATS
-  ===================================================== */
-
-  function renderRecentChats(){
-
-    recentList.innerHTML = "";
-
-
-    const sorted =
-      [...conversations]
-        .sort(
-          (a,b) =>
-            b.updatedAt -
-            a.updatedAt
-        )
-        .slice(0,25);
-
-
-    if(!sorted.length){
-
-      recentList.innerHTML =
-        '<div class="empty-recent">No conversations yet.</div>';
-
-      return;
-    }
-
-
-    sorted.forEach(chat => {
-
-      const row =
-        document.createElement("div");
-
-      row.className =
-        "recent-chat" +
-        (
-          chat.id === activeConversationId
-            ? " active"
-            : ""
+      const confirmed =
+        confirm(
+          "Delete all FAYNEX memories?"
         );
 
 
-      const titleBtn =
-        document.createElement("button");
+      if(!confirmed){
 
-      titleBtn.type =
-        "button";
-
-      titleBtn.className =
-        "recent-chat-title";
-
-      titleBtn.textContent =
-        chat.title || "New conversation";
-
-      titleBtn.title =
-        chat.title || "New conversation";
-
-
-      titleBtn.addEventListener(
-        "click",
-        () =>
-          openConversation(
-            chat.id
-          )
-      );
-
-
-      const actions =
-        document.createElement("div");
-
-      actions.className =
-        "recent-chat-actions";
-
-
-      const renameBtn =
-        document.createElement("button");
-
-      renameBtn.type =
-        "button";
-
-      renameBtn.className =
-        "recent-mini";
-
-      renameBtn.textContent =
-        "✎";
-
-      renameBtn.title =
-        "Rename";
-
-
-      renameBtn.addEventListener(
-        "click",
-        event => {
-
-          event.stopPropagation();
-
-          renameConversation(
-            chat.id
-          );
-
-        }
-      );
-
-
-      const deleteBtn =
-        document.createElement("button");
-
-      deleteBtn.type =
-        "button";
-
-      deleteBtn.className =
-        "recent-mini";
-
-      deleteBtn.textContent =
-        "×";
-
-      deleteBtn.title =
-        "Delete";
-
-
-      deleteBtn.addEventListener(
-        "click",
-        event => {
-
-          event.stopPropagation();
-
-          deleteConversation(
-            chat.id
-          );
-
-        }
-      );
-
-
-      actions.appendChild(
-        renameBtn
-      );
-
-      actions.appendChild(
-        deleteBtn
-      );
-
-
-      row.appendChild(
-        titleBtn
-      );
-
-      row.appendChild(
-        actions
-      );
-
-
-      recentList.appendChild(
-        row
-      );
-
-    });
-
-  }
-
-
-  /* =====================================================
-     RENDER ACTIVE CHAT
-  ===================================================== */
-
-  function renderActiveConversation(){
-
-    chatContainer.innerHTML = "";
-
-
-    const chat =
-      getActiveConversation();
-
-
-    if(!chat){
-
-      createConversation();
-
-      return;
-    }
-
-
-    if(!chat.messages.length){
-
-      renderWelcome();
-
-      return;
-    }
-
-
-    chat.messages.forEach(
-      message => {
-
-        addMessage(
-          message.role === "assistant"
-            ? "ai"
-            : "user",
-          message.content,
-          {
-            markdown:
-              message.role ===
-              "assistant"
-          }
-        );
-
-        if(
-          message.role === "user" &&
-          message.attachment
-        ){
-
-          const messages =
-            chatContainer.querySelectorAll(
-              ".message"
-            );
-
-          const last =
-            messages[
-              messages.length - 1
-            ];
-
-          if(last){
-
-            const wrap =
-              last.querySelector(
-                ".message-content-wrap"
-              );
-
-
-            if(wrap){
-
-              const chip =
-                renderMessageAttachment(
-                  message.attachment
-                );
-
-              if(chip){
-
-                wrap.appendChild(
-                  chip
-                );
-
-              }
-
-            }
-
-          }
-
-        }
+        return;
 
       }
-    );
 
 
-    scrollToBottom();
-  }
+      memories = [];
 
+      saveMemories();
 
-  function renderWelcome(){
+      renderMemoryList();
 
-    const welcome =
-      document.createElement("div");
-
-    welcome.className =
-      "welcome";
-
-
-    welcome.innerHTML = `
-
-      <div class="welcome-logo">
-        F
-      </div>
-
-      <h1>
-        How can I help you?
-      </h1>
-
-      <p>
-        FAYNEX AI is your next-generation
-        intelligent assistant for research,
-        coding, writing, files, images and more.
-      </p>
-
-      <div class="suggestions">
-
-        <button
-          class="suggestion"
-          data-prompt="Explain artificial intelligence in simple terms."
-        >
-          Explain AI
-        </button>
-
-        <button
-          class="suggestion"
-          data-prompt="Create a modern responsive website using HTML, CSS and JavaScript."
-        >
-          Build a website
-        </button>
-
-        <button
-          class="suggestion"
-          data-prompt="Help me write a professional project proposal."
-        >
-          Write a proposal
-        </button>
-
-        <button
-          class="suggestion"
-          data-prompt="Give me 10 creative ideas for a motion graphics project."
-        >
-          Creative ideas
-        </button>
-
-      </div>
-
-    `;
-
-
-    chatContainer.appendChild(
-      welcome
-    );
-
-
-    welcome
-      .querySelectorAll(
-        ".suggestion"
-      )
-      .forEach(button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            input.value =
-              button.dataset.prompt ||
-              "";
-
-            input.dispatchEvent(
-              new Event("input")
-            );
-
-            input.focus();
-
-          }
-        );
-
-      });
-
-  }
-
-
-  /* =====================================================
-     ADD MESSAGE
-  ===================================================== */
-
-  function addMessage(
-    type,
-    text,
-    options = {}
-  ){
-
-    const row =
-      document.createElement("div");
-
-    row.className =
-      "message " +
-      type;
-
-
-    const avatar =
-      document.createElement("div");
-
-    avatar.className =
-      "avatar";
-
-    avatar.textContent =
-      type === "ai"
-        ? "F"
-        : "You";
-
-
-    const wrap =
-      document.createElement("div");
-
-    wrap.className =
-      "message-content-wrap";
-
-
-    const messageText =
-      document.createElement("div");
-
-    messageText.className =
-      "message-text";
-
-
-    if(
-      options.typing
-    ){
-
-      messageText.innerHTML = `
-
-        <div class="typing">
-
-          <span></span>
-          <span></span>
-          <span></span>
-
-        </div>
-
-      `;
-
-    }else if(
-      options.markdown !== false &&
-      type === "ai"
-    ){
-
-      messageText.classList.add(
-        "markdown"
+      showToast(
+        "All memories cleared."
       );
-
-      messageText.innerHTML =
-        renderMarkdown(
-          text
-        );
-
-      enhanceCodeBlocks(
-        messageText
-      );
-
-    }else{
-
-      messageText.textContent =
-        text || "";
 
     }
 
 
-    wrap.appendChild(
-      messageText
-    );
+    function renderMemoryList(){
+
+      memoryList.innerHTML =
+        "";
 
 
-    row.appendChild(
-      avatar
-    );
+      if(!memories.length){
 
-    row.appendChild(
-      wrap
-    );
+        memoryList.innerHTML = `
 
+          <div class="memory-empty">
 
-    chatContainer.appendChild(
-      row
-    );
+            FAYNEX doesn't remember anything yet.
 
+            <br><br>
 
-    scrollToBottom();
+            Try:
+            <strong>
+              “Remember that I prefer dark UI.”
+            </strong>
 
-
-    return messageText;
-  }
-
-
-  /* =====================================================
-     CODE BLOCKS
-  ===================================================== */
-
-  function enhanceCodeBlocks(container){
-
-    container
-      .querySelectorAll(
-        "pre"
-      )
-      .forEach(pre => {
-
-        if(
-          pre.parentElement.classList.contains(
-            "code-wrap"
-          )
-        ){
-
-          return;
-
-        }
-
-
-        const code =
-          pre.querySelector(
-            "code"
-          );
-
-
-        if(!code) return;
-
-
-        const wrapper =
-          document.createElement(
-            "div"
-          );
-
-        wrapper.className =
-          "code-wrap";
-
-
-        const header =
-          document.createElement(
-            "div"
-          );
-
-        header.className =
-          "code-head";
-
-
-        const language =
-          (
-            code.className
-              .match(
-                /language-([\w-]+)/
-              ) || []
-          )[1] ||
-          "code";
-
-
-        header.innerHTML = `
-
-          <span>
-            ${escapeHtml(language)}
-          </span>
-
-          <button
-            class="copy-code"
-            type="button"
-          >
-            Copy
-          </button>
+          </div>
 
         `;
 
+        return;
 
-        const copyBtn =
-          header.querySelector(
-            ".copy-code"
+      }
+
+
+      memories.forEach(
+        memory => {
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.className =
+            "memory-item";
+
+
+          const content =
+            document.createElement(
+              "div"
+            );
+
+
+          content.className =
+            "memory-item-content";
+
+
+          const text =
+            document.createElement(
+              "div"
+            );
+
+
+          text.className =
+            "memory-item-text";
+
+          text.textContent =
+            memory.text;
+
+
+          const date =
+            document.createElement(
+              "div"
+            );
+
+
+          date.className =
+            "memory-item-date";
+
+
+          date.textContent =
+            new Date(
+              memory.createdAt
+            ).toLocaleString();
+
+
+          content.appendChild(
+            text
+          );
+
+          content.appendChild(
+            date
           );
 
 
-        copyBtn.addEventListener(
-          "click",
-          async () => {
-
-            try{
-
-              await navigator.clipboard.writeText(
-                code.textContent || ""
-              );
-
-              copyBtn.textContent =
-                "Copied";
-
-              setTimeout(
-                () => {
-                  copyBtn.textContent =
-                    "Copy";
-                },
-                1200
-              );
-
-            }catch(error){
-
-              showToast(
-                "Could not copy code."
-              );
-
-            }
-
-          }
-        );
+          const deleteButton =
+            document.createElement(
+              "button"
+            );
 
 
-        const parent =
-          pre.parentNode;
+          deleteButton.type =
+            "button";
+
+          deleteButton.className =
+            "memory-delete";
+
+          deleteButton.textContent =
+            "×";
+
+          deleteButton.title =
+            "Delete memory";
 
 
-        parent.insertBefore(
-          wrapper,
-          pre
-        );
+          deleteButton.addEventListener(
+            "click",
+            () =>
+              deleteMemory(
+                memory.id
+              )
+          );
 
 
-        wrapper.appendChild(
-          header
-        );
+          item.appendChild(
+            content
+          );
 
-        wrapper.appendChild(
-          pre
-        );
-
-      });
-
-  }
+          item.appendChild(
+            deleteButton
+          );
 
 
-  /* =====================================================
-     SCROLL
-  ===================================================== */
+          memoryList.appendChild(
+            item
+          );
 
-  function scrollToBottom(){
-
-    requestAnimationFrame(
-      () => {
-
-        chatArea.scrollTop =
-          chatArea.scrollHeight;
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     FILE UTILITIES
-  ===================================================== */
-
-  function getExtension(name){
-
-    const parts =
-      String(name || "")
-        .toLowerCase()
-        .split(".");
-
-
-    return parts.length > 1
-      ? parts.pop()
-      : "";
-
-  }
-
-
-  function formatBytes(bytes){
-
-    if(bytes < 1024){
-
-      return bytes + " B";
-
-    }
-
-    if(bytes < 1024 * 1024){
-
-      return (
-        (bytes / 1024)
-          .toFixed(1)
-        + " KB"
+        }
       );
 
     }
 
-    return (
-      (bytes / (1024 * 1024))
-        .toFixed(1)
-      + " MB"
-    );
 
-  }
+    function openMemory(){
+
+      renderMemoryList();
+
+      memoryOverlay.classList.add(
+        "open"
+      );
+
+      setTimeout(
+        () =>
+          memoryInput.focus(),
+        50
+      );
+
+    }
 
 
-  function readFileAsBase64(file){
+    function closeMemory(){
 
-    return new Promise(
-      (resolve,reject) => {
+      memoryOverlay.classList.remove(
+        "open"
+      );
 
-        const reader =
-          new FileReader();
+    }
 
 
-        reader.onload =
-          () => {
+    function getMemoryPrompt(){
 
-            const result =
-              String(
-                reader.result || ""
+      if(!memories.length){
+
+        return "";
+
+      }
+
+
+      const memoryLines =
+        memories
+          .slice(0,50)
+          .map(
+            (memory,index) =>
+              `${index + 1}. ${memory.text}`
+          )
+          .join("\n");
+
+
+      return `
+
+IMPORTANT USER MEMORY
+
+The following information was explicitly saved by the user for future conversations.
+
+Use it only when it is relevant to the user's current request.
+Do not mention the memory system unless the user asks about it.
+Do not invent additional memories.
+If a memory conflicts with the user's current message, follow the current message.
+
+Saved memories:
+${memoryLines}
+
+END USER MEMORY
+
+`;
+
+    }
+
+
+    /*
+      Detect explicit memory commands.
+
+      Examples:
+      "Remember that my name is Fahim."
+      "Please remember I prefer dark UI."
+      "Don't forget that I use JavaScript."
+    */
+
+    function detectMemoryCommand(
+      text
+    ){
+
+      const clean =
+        String(text || "")
+          .trim();
+
+
+      if(!clean){
+
+        return null;
+
+      }
+
+
+      const patterns = [
+
+        /^remember(?:\s+that)?\s+(.+)$/i,
+
+        /^please\s+remember(?:\s+that)?\s+(.+)$/i,
+
+        /^don't\s+forget(?:\s+that)?\s+(.+)$/i,
+
+        /^do\s+not\s+forget(?:\s+that)?\s+(.+)$/i
+
+      ];
+
+
+      for(
+        const pattern of patterns
+      ){
+
+        const match =
+          clean.match(
+            pattern
+          );
+
+
+        if(match){
+
+          const memory =
+            match[1]
+              .trim()
+              .replace(
+                /[.!?]+$/,
+                ""
               );
 
 
-            const comma =
-              result.indexOf(",");
+          if(memory){
 
+            return memory;
 
-            if(comma === -1){
+          }
 
-              reject(
-                new Error(
-                  "Could not encode file."
-                )
-              );
-
-              return;
-            }
-
-
-            resolve(
-              result.slice(
-                comma + 1
-              )
-            );
-
-          };
-
-
-        reader.onerror =
-          () =>
-            reject(
-              new Error(
-                "Could not read file."
-              )
-            );
-
-
-        reader.readAsDataURL(
-          file
-        );
+        }
 
       }
-    );
 
-  }
-
-
-  function readFileAsText(file){
-
-    return new Promise(
-      (resolve,reject) => {
-
-        const reader =
-          new FileReader();
-
-
-        reader.onload =
-          () =>
-            resolve(
-              String(
-                reader.result || ""
-              )
-            );
-
-
-        reader.onerror =
-          () =>
-            reject(
-              new Error(
-                "Could not read text file."
-              )
-            );
-
-
-        reader.readAsText(
-          file
-        );
-
-      }
-    );
-
-  }
-
-
-  function getStoredAttachmentMeta(
-    attachment
-  ){
-
-    if(!attachment){
 
       return null;
 
     }
 
 
-    return {
-
-      name:
-        attachment.name || "Attachment",
-
-      mimeType:
-        attachment.mimeType || "",
-
-      size:
-        attachment.size || 0,
-
-      kind:
-        attachment.kind || "file"
-
-    };
-
-  }
-
-
-  function renderMessageAttachment(
-    attachment
-  ){
-
-    if(!attachment) return null;
-
-
-    const chip =
-      document.createElement(
-        "div"
-      );
-
-    chip.className =
-      "message-attachment";
-
-
-    let icon =
-      "📎";
-
-
-    if(
-      attachment.kind ===
-      "image"
+    function processMemoryCommand(
+      text
     ){
 
-      icon = "🖼️";
+      const memory =
+        detectMemoryCommand(
+          text
+        );
 
-    }else if(
-      attachment.kind ===
-      "pdf"
-    ){
 
-      icon = "📄";
+      if(!memory){
 
-    }else if(
-      attachment.kind ===
-      "text"
-    ){
+        return false;
 
-      icon = "💻";
+      }
+
+
+      const saved =
+        addMemory(
+          memory,
+          "explicit-user-command"
+        );
+
+
+      if(saved){
+
+        showToast(
+          "🧠 FAYNEX remembered that."
+        );
+
+      }
+
+
+      return true;
 
     }
 
 
-    chip.textContent =
-      icon +
-      " " +
-      (
-        attachment.name ||
-        "Attachment"
-      );
+    /* =================================================
+       GENERAL UTILITIES
+    ================================================= */
 
+    function showToast(
+      message
+    ){
 
-    return chip;
-  }
+      toast.textContent =
+        String(message || "");
 
-
-  /* =====================================================
-     ATTACHMENT UI
-  ===================================================== */
-
-  function renderPendingAttachment(){
-
-    attachmentPreview.innerHTML =
-      "";
-
-
-    if(!pendingAttachment){
-
-      attachmentPreview.classList.remove(
+      toast.classList.add(
         "show"
       );
 
-      return;
 
-    }
-
-
-    attachmentPreview.classList.add(
-      "show"
-    );
-
-
-    const chip =
-      document.createElement(
-        "div"
+      clearTimeout(
+        showToast.timer
       );
 
-    chip.className =
-      "attachment-chip";
 
-
-    let icon =
-      "📎";
-
-
-    if(
-      pendingAttachment.kind ===
-      "image"
-    ){
-
-      icon = "🖼️";
-
-    }else if(
-      pendingAttachment.kind ===
-      "pdf"
-    ){
-
-      icon = "📄";
-
-    }else if(
-      pendingAttachment.kind ===
-      "text"
-    ){
-
-      icon = "💻";
+      showToast.timer =
+        setTimeout(
+          () =>
+            toast.classList.remove(
+              "show"
+            ),
+          3000
+        );
 
     }
 
 
-    chip.innerHTML = `
+    function escapeHtml(
+      value
+    ){
 
-      <div class="attachment-icon">
-        ${icon}
-      </div>
-
-      <div class="attachment-info">
-
-        <div class="attachment-name">
-          ${escapeHtml(
-            pendingAttachment.name
-          )}
-        </div>
-
-        <div class="attachment-type">
-          ${escapeHtml(
-            pendingAttachment.typeLabel ||
-            pendingAttachment.mimeType ||
-            "File"
-          )}
-        </div>
-
-      </div>
-
-      <button
-        class="remove-attachment"
-        type="button"
-        title="Remove"
-      >
-        ×
-      </button>
-
-    `;
-
-
-    chip
-      .querySelector(
-        ".remove-attachment"
+      return String(
+        value || ""
       )
-      .addEventListener(
-        "click",
-        clearPendingAttachment
-      );
-
-
-    attachmentPreview.appendChild(
-      chip
-    );
-
-  }
-
-
-  function clearPendingAttachment(){
-
-    pendingAttachment =
-      null;
-
-    renderPendingAttachment();
-
-    fileInput.value =
-      "";
-
-  }
-
-
-  async function handleFileSelection(
-    file
-  ){
-
-    if(!file) return;
-
-
-    if(file.size > MAX_FILE_SIZE){
-
-      showToast(
-        "File is too large. Maximum size is 12 MB."
-      );
-
-      fileInput.value =
-        "";
-
-      return;
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
 
 
-    try{
+    function renderMarkdown(
+      text
+    ){
 
-      const extension =
-        getExtension(
-          file.name
+      const source =
+        String(
+          text || ""
         );
 
 
-      /* =====================
-         IMAGE / PDF
-      ===================== */
+      let html = "";
+
 
       if(
-        BINARY_TYPES.has(
-          file.type
-        )
+        window.marked &&
+        typeof window.marked.parse ===
+          "function"
       ){
 
-        const data =
-          await readFileAsBase64(
-            file
+        try{
+
+          html =
+            window.marked.parse(
+              source,
+              {
+                gfm:true,
+                breaks:true
+              }
+            );
+
+        }catch(error){
+
+          console.warn(
+            "Markdown render error:",
+            error
           );
 
-
-        pendingAttachment = {
-
-          name:
-            file.name,
-
-          mimeType:
-            file.type,
-
-          size:
-            file.size,
-
-          data,
-
-          kind:
-            file.type ===
-            "application/pdf"
-              ? "pdf"
-              : "image",
-
-          typeLabel:
-            file.type ===
-            "application/pdf"
-              ? "PDF document"
-              : "Image"
-
-        };
-
-
-        renderPendingAttachment();
-
-        showToast(
-          "File attached successfully."
-        );
-
-        return;
-
-      }
-
-
-      /* =====================
-         TEXT / CODE
-      ===================== */
-
-      if(
-        TEXT_EXTENSIONS.has(
-          extension
-        )
-      ){
-
-        const text =
-          await readFileAsText(
-            file
-          );
-
-
-        if(
-          !text.trim()
-        ){
-
-          showToast(
-            "This file appears to be empty."
-          );
-
-          return;
+          html =
+            escapeHtml(
+              source
+            ).replace(
+              /\n/g,
+              "<br>"
+            );
 
         }
 
+      }else{
 
-        pendingAttachment = {
-
-          name:
-            file.name,
-
-          mimeType:
-            file.type ||
-            "text/plain",
-
-          size:
-            file.size,
-
-          text,
-
-          kind:
-            "text",
-
-          typeLabel:
-            extension.toUpperCase() +
-            " text file"
-
-        };
-
-
-        renderPendingAttachment();
-
-        showToast(
-          "Text/code file attached."
-        );
-
-        return;
+        html =
+          escapeHtml(
+            source
+          ).replace(
+            /\n/g,
+            "<br>"
+          );
 
       }
 
 
-      showToast(
-        "This file type is not supported."
-      );
+      if(
+        window.DOMPurify &&
+        typeof window.DOMPurify.sanitize ===
+          "function"
+      ){
 
-
-    }catch(error){
-
-      console.error(
-        "File attachment error:",
-        error
-      );
-
-      showToast(
-        error?.message ||
-        "Could not attach file."
-      );
-
-    }finally{
-
-      fileInput.value =
-        "";
-
-    }
-
-  }
-
-
-  /* =====================================================
-     SEND MESSAGE
-  ===================================================== */
-
-  async function sendMessage(
-    forcedText = null
-  ){
-
-    if(isGenerating){
-
-      return;
-
-    }
-
-
-    const typedText =
-      forcedText !== null
-        ? String(forcedText)
-        : input.value.trim();
-
-
-    const attachment =
-      pendingAttachment;
-
-
-    if(
-      !typedText &&
-      !attachment
-    ){
-
-      return;
-
-    }
-
-
-    let apiText =
-      typedText;
-
-
-    /*
-      Text/code files are sent inside
-      the prompt because their content
-      is plain text.
-    */
-
-    if(
-      attachment &&
-      attachment.kind ===
-      "text"
-    ){
-
-      apiText =
-        (
-          typedText ||
-          "Please analyze this file."
-        ) +
-        "\n\n" +
-        "===== ATTACHED FILE =====\n" +
-        "Filename: " +
-        attachment.name +
-        "\n" +
-        "=========================\n\n" +
-        attachment.text +
-        "\n\n" +
-        "===== END ATTACHED FILE =====";
-
-    }
-
-
-    const chat =
-      getActiveConversation();
-
-
-    if(!chat){
-
-      createConversation();
-
-    }
-
-
-    const activeChat =
-      getActiveConversation();
-
-
-    if(!activeChat) return;
-
-
-    if(
-      activeChat.messages.length ===
-      0
-    ){
-
-      activeChat.title =
-        titleFromMessage(
-          typedText ||
-          attachment?.name ||
-          "File analysis"
+        return window.DOMPurify.sanitize(
+          html,
+          {
+            USE_PROFILES:{
+              html:true
+            }
+          }
         );
 
+      }
+
+
+      return html;
+
     }
 
 
-    activeChat.messages.push({
+    function formatDate(
+      timestamp
+    ){
 
-      role:"user",
-
-      content:
-        typedText ||
-        (
-          attachment
-            ? "Please analyze this file."
-            : ""
-        ),
-
-      attachment:
-        getStoredAttachmentMeta(
-          attachment
-        )
-
-    });
-
-
-    activeChat.updatedAt =
-      Date.now();
-
-
-    saveChats();
-
-    renderRecentChats();
-
-
-    /*
-      Clear the UI attachment only
-      after storing metadata.
-    */
-
-    const attachmentForRequest =
-      attachment;
-
-
-    clearPendingAttachment();
-
-    input.value =
-      "";
-
-    input.style.height =
-      "auto";
-
-
-    /*
-      Render user message manually
-      so attachment metadata appears.
-    */
-
-    const userMessage =
-      addMessage(
-        "user",
-        typedText ||
-        (
-          attachment
-            ? "Please analyze this file."
-            : ""
-        ),
+      return new Date(
+        timestamp
+      ).toLocaleDateString(
+        undefined,
         {
-          markdown:false
+          month:"short",
+          day:"numeric"
         }
       );
 
-
-    if(attachment){
-
-      const wrap =
-        userMessage.parentElement;
+    }
 
 
-      if(wrap){
+    function generateId(){
 
-        const chip =
-          renderMessageAttachment(
-            getStoredAttachmentMeta(
-              attachment
+      return (
+        Date.now().toString(36) +
+        Math.random()
+          .toString(36)
+          .slice(2)
+      );
+
+    }
+
+
+    /* =================================================
+       CHAT STORAGE
+    ================================================= */
+
+    function saveChats(){
+
+      try{
+
+        localStorage.setItem(
+          "faynex_conversations",
+          JSON.stringify(
+            conversations
+          )
+        );
+
+      }catch(error){
+
+        console.warn(
+          "Could not save conversations:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function loadConversations(){
+
+      try{
+
+        const saved =
+          localStorage.getItem(
+            "faynex_conversations"
+          );
+
+
+        if(saved){
+
+          const parsed =
+            JSON.parse(
+              saved
+            );
+
+
+          if(
+            Array.isArray(
+              parsed
             )
-          );
+          ){
 
+            conversations =
+              parsed;
 
-        if(chip){
-
-          wrap.appendChild(
-            chip
-          );
+          }
 
         }
 
+      }catch(error){
+
+        console.warn(
+          "Conversation load failed:",
+          error
+        );
+
+        conversations = [];
+
       }
+
+
+      if(
+        !conversations.length
+      ){
+
+        createConversation();
+
+      }else{
+
+        activeConversationId =
+          conversations[0].id;
+
+      }
+
+
+      renderRecentChats();
+
+      renderActiveConversation();
 
     }
 
 
-    const aiMessage =
-      addMessage(
-        "ai",
-        "",
-        {
-          typing:true,
-          actions:false
-        }
+    function createConversation(){
+
+      const conversation = {
+
+        id:
+          generateId(),
+
+        title:
+          "New conversation",
+
+        createdAt:
+          Date.now(),
+
+        updatedAt:
+          Date.now(),
+
+        messages:
+          []
+
+      };
+
+
+      conversations.unshift(
+        conversation
       );
 
 
-    setGeneratingState(
-      true
-    );
-
-
-    try{
-
-      const answer =
-        await streamGeminiResponse(
-          apiText,
-          aiMessage,
-          attachmentForRequest
-        );
-
-
-      activeChat.messages.push({
-
-        role:"assistant",
-
-        content:
-          answer
-
-      });
-
-
-      activeChat.updatedAt =
-        Date.now();
+      activeConversationId =
+        conversation.id;
 
 
       saveChats();
 
       renderRecentChats();
 
-
-      addMessageActions(
-        aiMessage,
-        answer
-      );
+      renderActiveConversation();
 
 
-    }catch(error){
-
-      console.error(
-        "FAYNEX API error:",
-        error
-      );
-
-
-      if(
-        error?.name ===
-        "AbortError"
-      ){
-
-        const partial =
-          aiMessage.textContent?.trim() ||
-          "";
-
-
-        if(partial){
-
-          activeChat.messages.push({
-
-            role:"assistant",
-
-            content:
-              partial
-
-          });
-
-
-          activeChat.updatedAt =
-            Date.now();
-
-
-          saveChats();
-
-        }
-
-      }else{
-
-        aiMessage.classList.remove(
-          "markdown"
-        );
-
-
-        aiMessage.textContent =
-          "Sorry, I couldn't connect to the FAYNEX AI engine right now.\n\n" +
-          "Error: " +
-          (
-            error?.message ||
-            "Unknown error."
-          );
-
-      }
-
-    }finally{
-
-      abortController =
-        null;
-
-      setGeneratingState(
-        false
-      );
-
-      input.focus();
+      return conversation;
 
     }
 
-  }
+
+    function getActiveConversation(){
+
+      return conversations.find(
+        item =>
+          item.id ===
+          activeConversationId
+      ) || null;
+
+    }
 
 
-  /* =====================================================
-     STREAM GEMINI
-  ===================================================== */
-
-  async function streamGeminiResponse(
-    message,
-    aiMessage,
-    attachment
-  ){
-
-    abortController =
-      new AbortController();
-
-
-    const chat =
-      getActiveConversation();
-
-
-    const history =
-      chat
-        ? chat.messages
-            .slice(0,-1)
-            .slice(-30)
-            .map(item => ({
-
-              role:
-                item.role,
-
-              content:
-                item.content
-
-            }))
-        : [];
-
-
-    const requestBody = {
-
-      message:
-        message,
-
-      history:
-        history
-
-    };
-
-
-    /*
-      Image / PDF binary attachment
-      is sent as base64 to Worker.
-    */
-
-    if(
-      attachment &&
-      (
-        attachment.kind ===
-        "image" ||
-        attachment.kind ===
-        "pdf"
-      )
+    function titleFromMessage(
+      text
     ){
 
-      requestBody.attachments = [{
-
-        name:
-          attachment.name,
-
-        mimeType:
-          attachment.mimeType,
-
-        data:
-          attachment.data
-
-      }];
-
-    }
-
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:
-            JSON.stringify(
-              requestBody
-            ),
-
-          signal:
-            abortController.signal
-
-        }
-      );
-
-
-    if(!response.ok){
-
-      let errorMessage =
-        "API request failed.";
-
-      try{
-
-        const data =
-          await response.json();
-
-
-        errorMessage =
-          data?.details ||
-          data?.error ||
-          errorMessage;
-
-      }catch{
-
-        try{
-
-          errorMessage =
-            await response.text();
-
-        }catch{}
-
-      }
-
-
-      throw new Error(
-        errorMessage
-      );
-
-    }
-
-
-    if(!response.body){
-
-      throw new Error(
-        "Streaming response is not available."
-      );
-
-    }
-
-
-    const reader =
-      response.body.getReader();
-
-
-    const decoder =
-      new TextDecoder();
-
-
-    let buffer =
-      "";
-
-    let fullText =
-      "";
-
-
-    aiMessage.classList.remove(
-      "markdown"
-    );
-
-
-    aiMessage.innerHTML =
-      "";
-
-
-    function processSSELine(
-      line
-    ){
-
-      if(
-        !line.startsWith(
-          "data:"
+      const clean =
+        String(
+          text || ""
         )
-      ){
-
-        return;
-
-      }
-
-
-      const data =
-        line.slice(5).trim();
+          .replace(
+            /\s+/g,
+            " "
+          )
+          .trim();
 
 
-      if(
-        !data ||
-        data === "[DONE]"
-      ){
+      if(!clean){
 
-        return;
+        return "New conversation";
 
       }
 
 
-      try{
-
-        const json =
-          JSON.parse(
-            data
-          );
-
-
-        const text =
-          json?.candidates?.[0]?.content?.parts
-            ?.map(
-              part =>
-                part.text || ""
-            )
-            .join("") ||
-          "";
-
-
-        if(text){
-
-          fullText +=
-            text;
-
-
-          aiMessage.innerHTML =
-            renderMarkdown(
-              fullText
-            );
-
-
-          enhanceCodeBlocks(
-            aiMessage
-          );
-
-
-          scrollToBottom();
-
-        }
-
-      }catch(error){
-
-        /*
-          Ignore incomplete SSE chunks.
-        */
-
-      }
+      return clean.length > 38
+        ? clean.slice(0,38) + "..."
+        : clean;
 
     }
 
 
-    while(true){
-
-      const {
-        value,
-        done
-      } =
-        await reader.read();
-
-
-      if(done){
-
-        break;
-
-      }
-
-
-      buffer +=
-        decoder.decode(
-          value,
-          {
-            stream:true
-          }
-        );
-
-
-      const lines =
-        buffer.split(
-          "\n"
-        );
-
-
-      buffer =
-        lines.pop() || "";
-
-
-      for(
-        const line of lines
-      ){
-
-        processSSELine(
-          line
-        );
-
-      }
-
-    }
-
-
-    if(buffer.trim()){
-
-      processSSELine(
-        buffer
-      );
-
-    }
-
-
-    if(!fullText.trim()){
-
-      fullText =
-        "I received an empty response from the AI engine.";
-
-      aiMessage.textContent =
-        fullText;
-
-    }
-
-
-    return fullText;
-
-  }
-
-
-  /* =====================================================
-     MESSAGE ACTIONS
-  ===================================================== */
-
-  function addMessageActions(
-    aiMessage,
-    answer
-  ){
-
-    const wrap =
-      aiMessage.parentElement;
-
-
-    if(!wrap) return;
-
-
-    if(
-      wrap.querySelector(
-        ".message-actions"
-      )
-    ){
-
-      return;
-
-    }
-
-
-    const actions =
-      document.createElement(
-        "div"
-      );
-
-    actions.className =
-      "message-actions";
-
-
-    actions.innerHTML = `
-
-      <button
-        class="message-action copy-answer"
-        type="button"
-      >
-        Copy
-      </button>
-
-      <button
-        class="message-action speak-answer"
-        type="button"
-      >
-        Speak
-      </button>
-
-      <button
-        class="message-action regenerate-answer"
-        type="button"
-      >
-        Regenerate
-      </button>
-
-    `;
-
-
-    wrap.appendChild(
-      actions
-    );
-
-
-    const copyBtn =
-      actions.querySelector(
-        ".copy-answer"
-      );
-
-
-    copyBtn.addEventListener(
-      "click",
-      async () => {
-
-        try{
-
-          await navigator.clipboard.writeText(
-            answer
-          );
-
-
-          copyBtn.textContent =
-            "Copied";
-
-
-          setTimeout(
-            () => {
-
-              copyBtn.textContent =
-                "Copy";
-
-            },
-            1200
-          );
-
-        }catch{
-
-          showToast(
-            "Could not copy answer."
-          );
-
-        }
-
-      }
-    );
-
-
-    const speakBtn =
-      actions.querySelector(
-        ".speak-answer"
-      );
-
-
-    speakBtn.addEventListener(
-      "click",
-      () =>
-        speakText(
-          answer,
-          speakBtn
-        )
-    );
-
-
-    const regenerateBtn =
-      actions.querySelector(
-        ".regenerate-answer"
-      );
-
-
-    regenerateBtn.addEventListener(
-      "click",
-      () => {
-
-        stopSpeech();
-
-        regenerateLastAnswer();
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     GENERATING STATE
-  ===================================================== */
-
-  function setGeneratingState(
-    state
-  ){
-
-    isGenerating =
-      state;
-
-
-    sendBtn.disabled =
-      state;
-
-
-    attachBtn.disabled =
-      state;
-
-
-    if(state){
-
-      sendBtn.textContent =
-        "■";
-
-      sendBtn.title =
-        "Stop";
-
-      sendBtn.disabled =
-        false;
-
-
-      sendBtn.onclick =
-        () => {
-
-          abortGeneration();
-
-        };
-
-    }else{
-
-      sendBtn.textContent =
-        "↑";
-
-      sendBtn.title =
-        "Send";
-
-      sendBtn.onclick =
-        () => {
-
-          sendMessage();
-
-        };
-
-    }
-
-  }
-
-
-  function abortGeneration(){
-
-    if(
-      abortController
-    ){
-
-      abortController.abort();
-
-    }
-
-
-    setGeneratingState(
-      false
-    );
-
-  }
-
-
-  /* =====================================================
-     REGENERATE
-  ===================================================== */
-
-  function regenerateLastAnswer(){
-
-    if(
-      isGenerating
-    ){
-
-      return;
-
-    }
-
-
-    const chat =
-      getActiveConversation();
-
-
-    if(!chat) return;
-
-
-    let userIndex =
-      -1;
-
-
-    for(
-      let i =
-        chat.messages.length - 1;
-      i >= 0;
-      i--
-    ){
-
-      if(
-        chat.messages[i].role ===
-        "user"
-      ){
-
-        userIndex =
-          i;
-
-        break;
-
-      }
-
-    }
-
-
-    if(
-      userIndex === -1
-    ){
-
-      return;
-
-    }
-
-
-    const message =
-      chat.messages[
-        userIndex
-      ];
-
-
-    const content =
-      message.content;
-
-
-    chat.messages =
-      chat.messages.slice(
-        0,
-        userIndex
-      );
-
-
-    chat.updatedAt =
-      Date.now();
-
-
-    saveChats();
-
-    renderActiveConversation();
-
-
-    input.value =
-      content;
-
-
-    sendMessage();
-
-  }
-
-
-  /* =====================================================
-     SEARCH
-  ===================================================== */
-
-  function openSearch(){
-
-    searchOverlay.classList.add(
-      "open"
-    );
-
-
-    chatSearchInput.value =
-      "";
-
-
-    renderSearchResults(
-      ""
-    );
-
-
-    setTimeout(
-      () =>
-        chatSearchInput.focus(),
-      50
-    );
-
-  }
-
-
-  function closeSearch(){
-
-    searchOverlay.classList.remove(
-      "open"
-    );
-
-  }
-
-
-  function renderSearchResults(
-    query
-  ){
-
-    const q =
-      String(query || "")
-        .trim()
-        .toLowerCase();
-
-
-    searchResults.innerHTML =
-      "";
-
-
-    const matches =
-      conversations
-        .filter(chat => {
-
-          if(!q){
-
-            return true;
-
-          }
-
-
-          return (
-            chat.title
-              .toLowerCase()
-              .includes(q) ||
-
-            chat.messages.some(
-              message =>
-                String(
-                  message.content ||
-                  ""
-                )
-                .toLowerCase()
-                .includes(q)
-            )
-          );
-
-        })
-        .sort(
-          (a,b) =>
-            b.updatedAt -
-            a.updatedAt
-        )
-        .slice(0,30);
-
-
-    if(!matches.length){
-
-      searchResults.innerHTML =
-        '<div class="search-empty">No conversations found.</div>';
-
-      return;
-
-    }
-
-
-    matches.forEach(
-      chat => {
-
-        const button =
-          document.createElement(
-            "button"
-          );
-
-
-        button.type =
-          "button";
-
-        button.className =
-          "search-result";
-
-
-        const preview =
-          chat.messages
-            .find(
-              message =>
-                message.role ===
-                "user"
-            )
-            ?.content ||
-          "";
-
-
-        button.innerHTML = `
-
-          <div class="search-result-title">
-            ${escapeHtml(
-              chat.title
-            )}
-          </div>
-
-          <div class="search-result-meta">
-            ${escapeHtml(
-              preview.slice(0,120)
-            )}
-            •
-            ${escapeHtml(
-              formatDate(
-                chat.updatedAt
-              )
-            )}
-          </div>
-
-        `;
-
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            openConversation(
-              chat.id
-            );
-
-            closeSearch();
-
-          }
-        );
-
-
-        searchResults.appendChild(
-          button
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     VOICE INPUT
-  ===================================================== */
-
-  function setupVoiceInput(){
-
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
-
-
-    if(!SpeechRecognition){
-
-      voiceBtn.style.display =
-        "none";
-
-      return;
-
-    }
-
-
-    recognition =
-      new SpeechRecognition();
-
-
-    recognition.lang =
-      "en-US";
-
-
-    recognition.continuous =
-      false;
-
-
-    recognition.interimResults =
-      true;
-
-
-    recognition.onstart =
-      () => {
-
-        isListening =
-          true;
-
-        voiceBtn.classList.add(
-          "active"
-        );
-
-      };
-
-
-    recognition.onresult =
-      event => {
-
-        let transcript =
-          "";
-
-
-        for(
-          let i =
-            event.resultIndex;
-          i < event.results.length;
-          i++
-        ){
-
-          transcript +=
-            event.results[i][0].transcript;
-
-        }
-
-
-        input.value =
-          transcript;
-
-
-        input.dispatchEvent(
-          new Event("input")
-        );
-
-      };
-
-
-    recognition.onerror =
-      event => {
-
-        console.warn(
-          "Voice input error:",
-          event.error
-        );
-
-        showToast(
-          "Voice input error: " +
-          event.error
-        );
-
-      };
-
-
-    recognition.onend =
-      () => {
-
-        isListening =
-          false;
-
-        voiceBtn.classList.remove(
-          "active"
-        );
-
-      };
-
-
-    voiceBtn.addEventListener(
-      "click",
-      () => {
-
-        if(isListening){
-
-          recognition.stop();
-
-          return;
-
-        }
-
-
-        try{
-
-          recognition.start();
-
-        }catch(error){
-
-          console.warn(
-            "Voice start error:",
-            error
-          );
-
-        }
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     VOICE OUTPUT
-  ===================================================== */
-
-  function speakText(
-    text,
-    button
-  ){
-
-    if(
-      !("speechSynthesis" in window)
-    ){
-
-      showToast(
-        "Voice output is not supported by this browser."
-      );
-
-      return;
-
-    }
-
-
-    stopSpeech();
-
-
-    const utterance =
-      new SpeechSynthesisUtterance(
-        String(text || "")
-      );
-
-
-    utterance.lang =
-      "en-US";
-
-
-    utterance.rate =
-      1;
-
-
-    utterance.pitch =
-      1;
-
-
-    if(button){
-
-      button.textContent =
-        "Speaking...";
-
-    }
-
-
-    utterance.onend =
-      () => {
-
-        if(button){
-
-          button.textContent =
-            "Speak";
-
-        }
-
-      };
-
-
-    utterance.onerror =
-      () => {
-
-        if(button){
-
-          button.textContent =
-            "Speak";
-
-        }
-
-      };
-
-
-    window.speechSynthesis.speak(
-      utterance
-    );
-
-  }
-
-
-  function stopSpeech(){
-
-    if(
-      "speechSynthesis" in window
-    ){
-
-      window.speechSynthesis.cancel();
-
-    }
-
-  }
-
-
-  /* =====================================================
-     INPUT AUTO RESIZE
-  ===================================================== */
-
-  input.addEventListener(
-    "input",
-    () => {
-
-      input.style.height =
-        "auto";
-
-
-      input.style.height =
-        Math.min(
-          input.scrollHeight,
-          150
-        ) + "px";
-
-    }
-  );
-
-
-  /* =====================================================
-     ENTER TO SEND
-  ===================================================== */
-
-  input.addEventListener(
-    "keydown",
-    event => {
-
-      if(
-        event.key ===
-        "Enter" &&
-        !event.shiftKey
-      ){
-
-        event.preventDefault();
-
-        sendMessage();
-
-      }
-
-    }
-  );
-
-
-  /* =====================================================
-     SEND BUTTON
-  ===================================================== */
-
-  sendBtn.addEventListener(
-    "click",
-    () => {
-
-      if(isGenerating){
-
-        abortGeneration();
-
-      }else{
-
-        sendMessage();
-
-      }
-
-    }
-  );
-
-
-  /* =====================================================
-     FILE BUTTON
-  ===================================================== */
-
-  attachBtn.addEventListener(
-    "click",
-    () => {
+    function newConversation(){
 
       if(isGenerating){
 
@@ -4556,53 +2841,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
 
-      fileInput.click();
+      createConversation();
 
-    }
-  );
+      input.value =
+        "";
 
+      input.style.height =
+        "auto";
 
-  fileInput.addEventListener(
-    "change",
-    event => {
+      clearPendingAttachment();
 
-      const file =
-        event.target.files?.[0];
-
-
-      handleFileSelection(
-        file
-      );
-
-    }
-  );
-
-
-  /* =====================================================
-     NEW CHAT
-  ===================================================== */
-
-  newChatBtn.addEventListener(
-    "click",
-    newConversation
-  );
-
-
-  homeBtn.addEventListener(
-    "click",
-    () => {
-
-      if(
-        !getActiveConversation()
-      ){
-
-        createConversation();
-
-      }else{
-
-        renderActiveConversation();
-
-      }
+      input.focus();
 
 
       if(
@@ -4616,139 +2865,3185 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
     }
-  );
 
 
-  /* =====================================================
-     SEARCH BUTTONS
-  ===================================================== */
+    function openConversation(
+      id
+    ){
 
-  searchChatsBtn.addEventListener(
-    "click",
-    openSearch
-  );
+      if(isGenerating){
+
+        showToast(
+          "Please wait until the current response finishes."
+        );
+
+        return;
+
+      }
 
 
-  topSearchBtn.addEventListener(
-    "click",
-    openSearch
-  );
+      activeConversationId =
+        id;
 
 
-  chatSearchInput.addEventListener(
-    "input",
-    event => {
+      saveChats();
 
-      renderSearchResults(
-        event.target.value
+      renderRecentChats();
+
+      renderActiveConversation();
+
+
+      if(
+        window.innerWidth <= 800
+      ){
+
+        sidebar.classList.remove(
+          "open"
+        );
+
+      }
+
+    }
+
+
+    function renameConversation(
+      id
+    ){
+
+      const chat =
+        conversations.find(
+          item =>
+            item.id === id
+        );
+
+
+      if(!chat) return;
+
+
+      const newTitle =
+        prompt(
+          "Rename conversation:",
+          chat.title
+        );
+
+
+      if(
+        newTitle === null
+      ){
+
+        return;
+
+      }
+
+
+      const clean =
+        newTitle.trim();
+
+
+      if(!clean) return;
+
+
+      chat.title =
+        clean.slice(
+          0,
+          80
+        );
+
+
+      chat.updatedAt =
+        Date.now();
+
+
+      saveChats();
+
+      renderRecentChats();
+
+    }
+
+
+    function deleteConversation(
+      id
+    ){
+
+      const index =
+        conversations.findIndex(
+          item =>
+            item.id === id
+        );
+
+
+      if(index === -1) return;
+
+
+      conversations.splice(
+        index,
+        1
+      );
+
+
+      if(
+        activeConversationId === id
+      ){
+
+        if(
+          conversations.length
+        ){
+
+          activeConversationId =
+            conversations[0].id;
+
+        }else{
+
+          createConversation();
+
+          return;
+
+        }
+
+      }
+
+
+      saveChats();
+
+      renderRecentChats();
+
+      renderActiveConversation();
+
+    }
+
+
+    function renderRecentChats(){
+
+      recentList.innerHTML =
+        "";
+
+
+      const sorted =
+        [...conversations]
+          .sort(
+            (a,b) =>
+              b.updatedAt -
+              a.updatedAt
+          )
+          .slice(
+            0,
+            25
+          );
+
+
+      if(!sorted.length){
+
+        recentList.innerHTML =
+          '<div class="empty-recent">No conversations yet.</div>';
+
+        return;
+
+      }
+
+
+      sorted.forEach(
+        chat => {
+
+          const row =
+            document.createElement(
+              "div"
+            );
+
+
+          row.className =
+            "recent-chat" +
+            (
+              chat.id ===
+              activeConversationId
+                ? " active"
+                : ""
+            );
+
+
+          const titleBtn =
+            document.createElement(
+              "button"
+            );
+
+
+          titleBtn.type =
+            "button";
+
+          titleBtn.className =
+            "recent-chat-title";
+
+          titleBtn.textContent =
+            chat.title ||
+            "New conversation";
+
+
+          titleBtn.addEventListener(
+            "click",
+            () =>
+              openConversation(
+                chat.id
+              )
+          );
+
+
+          const actions =
+            document.createElement(
+              "div"
+            );
+
+
+          actions.className =
+            "recent-chat-actions";
+
+
+          const renameBtn =
+            document.createElement(
+              "button"
+            );
+
+
+          renameBtn.type =
+            "button";
+
+          renameBtn.className =
+            "recent-mini";
+
+          renameBtn.textContent =
+            "✎";
+
+
+          renameBtn.addEventListener(
+            "click",
+            event => {
+
+              event.stopPropagation();
+
+              renameConversation(
+                chat.id
+              );
+
+            }
+          );
+
+
+          const deleteBtn =
+            document.createElement(
+              "button"
+            );
+
+
+          deleteBtn.type =
+            "button";
+
+          deleteBtn.className =
+            "recent-mini";
+
+          deleteBtn.textContent =
+            "×";
+
+
+          deleteBtn.addEventListener(
+            "click",
+            event => {
+
+              event.stopPropagation();
+
+              deleteConversation(
+                chat.id
+              );
+
+            }
+          );
+
+
+          actions.appendChild(
+            renameBtn
+          );
+
+          actions.appendChild(
+            deleteBtn
+          );
+
+
+          row.appendChild(
+            titleBtn
+          );
+
+          row.appendChild(
+            actions
+          );
+
+
+          recentList.appendChild(
+            row
+          );
+
+        }
       );
 
     }
-  );
 
 
-  closeSearchBtn.addEventListener(
-    "click",
-    closeSearch
-  );
+    /* =================================================
+       RENDER CHAT
+    ================================================= */
+
+    function renderActiveConversation(){
+
+      chatContainer.innerHTML =
+        "";
 
 
-  searchOverlay.addEventListener(
-    "click",
-    event => {
+      const chat =
+        getActiveConversation();
 
-      if(
-        event.target ===
-        searchOverlay
-      ){
 
-        closeSearch();
+      if(!chat){
+
+        createConversation();
+
+        return;
 
       }
+
+
+      if(
+        !chat.messages.length
+      ){
+
+        renderWelcome();
+
+        return;
+
+      }
+
+
+      chat.messages.forEach(
+        message => {
+
+          addMessage(
+            message.role ===
+              "assistant"
+              ? "ai"
+              : "user",
+            message.content,
+            {
+              markdown:
+                message.role ===
+                "assistant"
+            }
+          );
+
+
+          if(
+            message.role ===
+              "user" &&
+            message.attachment
+          ){
+
+            const rows =
+              chatContainer.querySelectorAll(
+                ".message"
+              );
+
+
+            const last =
+              rows[
+                rows.length - 1
+              ];
+
+
+            if(last){
+
+              const wrap =
+                last.querySelector(
+                  ".message-content-wrap"
+                );
+
+
+              if(wrap){
+
+                const chip =
+                  renderMessageAttachment(
+                    message.attachment
+                  );
+
+
+                if(chip){
+
+                  wrap.appendChild(
+                    chip
+                  );
+
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+      );
+
+
+      scrollToBottom();
 
     }
-  );
 
 
-  /* =====================================================
-     KEYBOARD SHORTCUTS
-  ===================================================== */
+    function renderWelcome(){
 
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if(
-        event.key ===
-        "Escape"
-      ){
-
-        closeSearch();
-
-      }
+      const welcome =
+        document.createElement(
+          "div"
+        );
 
 
-      if(
-        (event.ctrlKey ||
-         event.metaKey) &&
-        event.key.toLowerCase() ===
-        "k"
-      ){
+      welcome.className =
+        "welcome";
 
-        event.preventDefault();
 
-        openSearch();
+      welcome.innerHTML = `
 
-      }
+        <div class="welcome-logo">
+          F
+        </div>
+
+        <h1>
+          How can I help you?
+        </h1>
+
+        <p>
+          FAYNEX AI is your next-generation
+          intelligent assistant for research,
+          coding, writing, files, images and more.
+        </p>
+
+        <div class="suggestions">
+
+          <button
+            class="suggestion"
+            data-prompt="Explain artificial intelligence in simple terms."
+          >
+            Explain AI
+          </button>
+
+          <button
+            class="suggestion"
+            data-prompt="Create a modern responsive website using HTML, CSS and JavaScript."
+          >
+            Build a website
+          </button>
+
+          <button
+            class="suggestion"
+            data-prompt="Help me write a professional project proposal."
+          >
+            Write a proposal
+          </button>
+
+          <button
+            class="suggestion"
+            data-prompt="Give me 10 creative ideas for a motion graphics project."
+          >
+            Creative ideas
+          </button>
+
+        </div>
+
+      `;
+
+
+      chatContainer.appendChild(
+        welcome
+      );
+
+
+      welcome
+        .querySelectorAll(
+          ".suggestion"
+        )
+        .forEach(
+          button => {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                input.value =
+                  button.dataset.prompt ||
+                  "";
+
+                input.dispatchEvent(
+                  new Event(
+                    "input"
+                  )
+                );
+
+                input.focus();
+
+              }
+            );
+
+          }
+        );
 
     }
-  );
 
 
-  /* =====================================================
-     MOBILE MENU
-  ===================================================== */
+    function addMessage(
+      type,
+      text,
+      options = {}
+    ){
 
-  menuBtn.addEventListener(
-    "click",
-    () => {
+      const row =
+        document.createElement(
+          "div"
+        );
 
-      sidebar.classList.toggle(
-        "open"
+
+      row.className =
+        "message " +
+        type;
+
+
+      const avatar =
+        document.createElement(
+          "div"
+        );
+
+
+      avatar.className =
+        "avatar";
+
+
+      avatar.textContent =
+        type === "ai"
+          ? "F"
+          : "You";
+
+
+      const wrap =
+        document.createElement(
+          "div"
+        );
+
+
+      wrap.className =
+        "message-content-wrap";
+
+
+      if(type === "user"){
+
+        wrap.classList.add(
+          "user-message-wrap"
+        );
+
+      }
+
+
+      const messageText =
+        document.createElement(
+          "div"
+        );
+
+
+      messageText.className =
+        "message-text";
+
+
+      if(options.typing){
+
+        messageText.innerHTML = `
+
+          <div class="typing">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+          </div>
+
+        `;
+
+      }else if(
+        options.markdown !== false &&
+        type === "ai"
+      ){
+
+        messageText.innerHTML =
+          renderMarkdown(
+            text
+          );
+
+
+        enhanceCodeBlocks(
+          messageText
+        );
+
+      }else{
+
+        messageText.textContent =
+          text || "";
+
+      }
+
+
+      wrap.appendChild(
+        messageText
+      );
+
+
+      row.appendChild(
+        avatar
+      );
+
+      row.appendChild(
+        wrap
+      );
+
+
+      chatContainer.appendChild(
+        row
+      );
+
+
+      scrollToBottom();
+
+
+      return messageText;
+
+    }
+
+
+    function enhanceCodeBlocks(
+      container
+    ){
+
+      container
+        .querySelectorAll(
+          "pre"
+        )
+        .forEach(
+          pre => {
+
+            if(
+              pre.parentElement.classList.contains(
+                "code-wrap"
+              )
+            ){
+
+              return;
+
+            }
+
+
+            const code =
+              pre.querySelector(
+                "code"
+              );
+
+
+            if(!code) return;
+
+
+            const wrapper =
+              document.createElement(
+                "div"
+              );
+
+
+            wrapper.className =
+              "code-wrap";
+
+
+            const header =
+              document.createElement(
+                "div"
+              );
+
+
+            header.className =
+              "code-head";
+
+
+            const language =
+              (
+                code.className.match(
+                  /language-([\w-]+)/
+                ) || []
+              )[1] ||
+              "code";
+
+
+            header.innerHTML = `
+
+              <span>
+                ${escapeHtml(
+                  language
+                )}
+              </span>
+
+              <button
+                class="copy-code"
+                type="button"
+              >
+                Copy
+              </button>
+
+            `;
+
+
+            const copyBtn =
+              header.querySelector(
+                ".copy-code"
+              );
+
+
+            copyBtn.addEventListener(
+              "click",
+              async () => {
+
+                try{
+
+                  await navigator.clipboard.writeText(
+                    code.textContent ||
+                    ""
+                  );
+
+
+                  copyBtn.textContent =
+                    "Copied";
+
+
+                  setTimeout(
+                    () => {
+
+                      copyBtn.textContent =
+                        "Copy";
+
+                    },
+                    1200
+                  );
+
+                }catch{
+
+                  showToast(
+                    "Could not copy code."
+                  );
+
+                }
+
+              }
+            );
+
+
+            const parent =
+              pre.parentNode;
+
+
+            parent.insertBefore(
+              wrapper,
+              pre
+            );
+
+
+            wrapper.appendChild(
+              header
+            );
+
+            wrapper.appendChild(
+              pre
+            );
+
+          }
+        );
+
+    }
+
+
+    function scrollToBottom(){
+
+      requestAnimationFrame(
+        () => {
+
+          chatArea.scrollTop =
+            chatArea.scrollHeight;
+
+        }
       );
 
     }
-  );
 
 
-  /* =====================================================
-     API HEALTH CHECK
-  ===================================================== */
+    /* =================================================
+       FILE FUNCTIONS
+    ================================================= */
 
-  async function checkFaynexAPI(){
+    function getExtension(
+      name
+    ){
 
-    try{
+      const parts =
+        String(
+          name || ""
+        )
+          .toLowerCase()
+          .split(".");
+
+
+      return parts.length > 1
+        ? parts.pop()
+        : "";
+
+    }
+
+
+    function readFileAsBase64(
+      file
+    ){
+
+      return new Promise(
+        (
+          resolve,
+          reject
+        ) => {
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            () => {
+
+              const result =
+                String(
+                  reader.result ||
+                  ""
+                );
+
+
+              const comma =
+                result.indexOf(
+                  ","
+                );
+
+
+              if(
+                comma === -1
+              ){
+
+                reject(
+                  new Error(
+                    "Could not encode file."
+                  )
+                );
+
+                return;
+
+              }
+
+
+              resolve(
+                result.slice(
+                  comma + 1
+                )
+              );
+
+            };
+
+
+          reader.onerror =
+            () =>
+              reject(
+                new Error(
+                  "Could not read file."
+                )
+              );
+
+
+          reader.readAsDataURL(
+            file
+          );
+
+        }
+      );
+
+    }
+
+
+    function readFileAsText(
+      file
+    ){
+
+      return new Promise(
+        (
+          resolve,
+          reject
+        ) => {
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            () =>
+              resolve(
+                String(
+                  reader.result ||
+                  ""
+                )
+              );
+
+
+          reader.onerror =
+            () =>
+              reject(
+                new Error(
+                  "Could not read text file."
+                )
+              );
+
+
+          reader.readAsText(
+            file
+          );
+
+        }
+      );
+
+    }
+
+
+    function getStoredAttachmentMeta(
+      attachment
+    ){
+
+      if(!attachment){
+
+        return null;
+
+      }
+
+
+      return {
+
+        name:
+          attachment.name ||
+          "Attachment",
+
+        mimeType:
+          attachment.mimeType ||
+          "",
+
+        size:
+          attachment.size ||
+          0,
+
+        kind:
+          attachment.kind ||
+          "file"
+
+      };
+
+    }
+
+
+    function renderMessageAttachment(
+      attachment
+    ){
+
+      if(!attachment){
+
+        return null;
+
+      }
+
+
+      const chip =
+        document.createElement(
+          "div"
+        );
+
+
+      chip.className =
+        "message-attachment";
+
+
+      let icon =
+        "📎";
+
+
+      if(
+        attachment.kind ===
+        "image"
+      ){
+
+        icon =
+          "🖼️";
+
+      }else if(
+        attachment.kind ===
+        "pdf"
+      ){
+
+        icon =
+          "📄";
+
+      }else if(
+        attachment.kind ===
+        "text"
+      ){
+
+        icon =
+          "💻";
+
+      }
+
+
+      chip.textContent =
+        icon +
+        " " +
+        (
+          attachment.name ||
+          "Attachment"
+        );
+
+
+      return chip;
+
+    }
+
+
+    function renderPendingAttachment(){
+
+      attachmentPreview.innerHTML =
+        "";
+
+
+      if(!pendingAttachment){
+
+        attachmentPreview.classList.remove(
+          "show"
+        );
+
+        return;
+
+      }
+
+
+      attachmentPreview.classList.add(
+        "show"
+      );
+
+
+      const chip =
+        document.createElement(
+          "div"
+        );
+
+
+      chip.className =
+        "attachment-chip";
+
+
+      let icon =
+        "📎";
+
+
+      if(
+        pendingAttachment.kind ===
+        "image"
+      ){
+
+        icon =
+          "🖼️";
+
+      }else if(
+        pendingAttachment.kind ===
+        "pdf"
+      ){
+
+        icon =
+          "📄";
+
+      }else if(
+        pendingAttachment.kind ===
+        "text"
+      ){
+
+        icon =
+          "💻";
+
+      }
+
+
+      chip.innerHTML = `
+
+        <div class="attachment-icon">
+          ${icon}
+        </div>
+
+        <div class="attachment-info">
+
+          <div class="attachment-name">
+            ${escapeHtml(
+              pendingAttachment.name
+            )}
+          </div>
+
+          <div class="attachment-type">
+            ${escapeHtml(
+              pendingAttachment.typeLabel ||
+              pendingAttachment.mimeType ||
+              "File"
+            )}
+          </div>
+
+        </div>
+
+        <button
+          class="remove-attachment"
+          type="button"
+        >
+          ×
+        </button>
+
+      `;
+
+
+      chip
+        .querySelector(
+          ".remove-attachment"
+        )
+        .addEventListener(
+          "click",
+          clearPendingAttachment
+        );
+
+
+      attachmentPreview.appendChild(
+        chip
+      );
+
+    }
+
+
+    function clearPendingAttachment(){
+
+      pendingAttachment =
+        null;
+
+      renderPendingAttachment();
+
+      fileInput.value =
+        "";
+
+    }
+
+
+    async function handleFileSelection(
+      file
+    ){
+
+      if(!file) return;
+
+
+      if(
+        file.size >
+        MAX_FILE_SIZE
+      ){
+
+        showToast(
+          "File is too large. Maximum size is 12 MB."
+        );
+
+        fileInput.value =
+          "";
+
+        return;
+
+      }
+
+
+      try{
+
+        const extension =
+          getExtension(
+            file.name
+          );
+
+
+        if(
+          BINARY_TYPES.has(
+            file.type
+          )
+        ){
+
+          const data =
+            await readFileAsBase64(
+              file
+            );
+
+
+          pendingAttachment = {
+
+            name:
+              file.name,
+
+            mimeType:
+              file.type,
+
+            size:
+              file.size,
+
+            data,
+
+            kind:
+              file.type ===
+              "application/pdf"
+                ? "pdf"
+                : "image",
+
+            typeLabel:
+              file.type ===
+              "application/pdf"
+                ? "PDF document"
+                : "Image"
+
+          };
+
+
+          renderPendingAttachment();
+
+          showToast(
+            "File attached successfully."
+          );
+
+          return;
+
+        }
+
+
+        if(
+          TEXT_EXTENSIONS.has(
+            extension
+          )
+        ){
+
+          const text =
+            await readFileAsText(
+              file
+            );
+
+
+          if(
+            !text.trim()
+          ){
+
+            showToast(
+              "This file appears to be empty."
+            );
+
+            return;
+
+          }
+
+
+          pendingAttachment = {
+
+            name:
+              file.name,
+
+            mimeType:
+              file.type ||
+              "text/plain",
+
+            size:
+              file.size,
+
+            text,
+
+            kind:
+              "text",
+
+            typeLabel:
+              extension.toUpperCase() +
+              " text file"
+
+          };
+
+
+          renderPendingAttachment();
+
+          showToast(
+            "Text/code file attached."
+          );
+
+          return;
+
+        }
+
+
+        showToast(
+          "This file type is not supported."
+        );
+
+
+      }catch(error){
+
+        console.error(
+          "File attachment error:",
+          error
+        );
+
+
+        showToast(
+          error?.message ||
+          "Could not attach file."
+        );
+
+      }finally{
+
+        fileInput.value =
+          "";
+
+      }
+
+    }
+
+
+    /* =================================================
+       SEND MESSAGE
+    ================================================= */
+
+    async function sendMessage(
+      forcedText = null
+    ){
+
+      if(isGenerating){
+
+        return;
+
+      }
+
+
+      const typedText =
+        forcedText !== null
+          ? String(
+              forcedText
+            )
+          : input.value.trim();
+
+
+      const attachment =
+        pendingAttachment;
+
+
+      if(
+        !typedText &&
+        !attachment
+      ){
+
+        return;
+
+      }
+
+
+      /*
+        If the user explicitly asks FAYNEX
+        to remember something, save it locally.
+      */
+
+      const memoryCommand =
+        processMemoryCommand(
+          typedText
+        );
+
+
+      let apiText =
+        typedText;
+
+
+      if(
+        attachment &&
+        attachment.kind ===
+        "text"
+      ){
+
+        apiText =
+          (
+            typedText ||
+            "Please analyze this file."
+          ) +
+          "\n\n" +
+          "===== ATTACHED FILE =====\n" +
+          "Filename: " +
+          attachment.name +
+          "\n" +
+          "=========================\n\n" +
+          attachment.text +
+          "\n\n" +
+          "===== END ATTACHED FILE =====";
+
+      }
+
+
+      /*
+        If this was only a memory command,
+        still let the AI acknowledge it.
+      */
+
+      if(
+        memoryCommand &&
+        !attachment
+      ){
+
+        apiText =
+          typedText;
+
+      }
+
+
+      let chat =
+        getActiveConversation();
+
+
+      if(!chat){
+
+        chat =
+          createConversation();
+
+      }
+
+
+      if(
+        chat.messages.length ===
+        0
+      ){
+
+        chat.title =
+          titleFromMessage(
+            typedText ||
+            attachment?.name ||
+            "Memory"
+
+          );
+
+      }
+
+
+      chat.messages.push({
+
+        role:
+          "user",
+
+        content:
+          typedText ||
+          (
+            attachment
+              ? "Please analyze this file."
+              : ""
+          ),
+
+        attachment:
+          getStoredAttachmentMeta(
+            attachment
+          )
+
+      });
+
+
+      chat.updatedAt =
+        Date.now();
+
+
+      saveChats();
+
+      renderRecentChats();
+
+
+      const attachmentForRequest =
+        attachment;
+
+
+      clearPendingAttachment();
+
+      input.value =
+        "";
+
+      input.style.height =
+        "auto";
+
+
+      const userMessage =
+        addMessage(
+          "user",
+          typedText ||
+          (
+            attachment
+              ? "Please analyze this file."
+              : ""
+          ),
+          {
+            markdown:false
+          }
+        );
+
+
+      if(attachment){
+
+        const wrap =
+          userMessage.parentElement;
+
+
+        if(wrap){
+
+          const chip =
+            renderMessageAttachment(
+              getStoredAttachmentMeta(
+                attachment
+              )
+            );
+
+
+          if(chip){
+
+            wrap.appendChild(
+              chip
+            );
+
+          }
+
+        }
+
+      }
+
+
+      /*
+        If this was only a memory command,
+        show the acknowledgement directly
+        and don't waste a Gemini request.
+      */
+
+      if(
+        memoryCommand &&
+        !attachment
+      ){
+
+        const aiMessage =
+          addMessage(
+            "ai",
+            "🧠 Got it. I’ll remember that for future conversations.",
+            {
+              markdown:true
+            }
+          );
+
+
+        chat.messages.push({
+
+          role:
+            "assistant",
+
+          content:
+            "🧠 Got it. I’ll remember that for future conversations."
+
+        });
+
+
+        chat.updatedAt =
+          Date.now();
+
+
+        saveChats();
+
+        renderRecentChats();
+
+
+        input.focus();
+
+        return;
+
+      }
+
+
+      const aiMessage =
+        addMessage(
+          "ai",
+          "",
+          {
+            typing:true
+          }
+        );
+
+
+      setGeneratingState(
+        true
+      );
+
+
+      try{
+
+        const answer =
+          await streamGeminiResponse(
+            apiText,
+            aiMessage,
+            attachmentForRequest
+          );
+
+
+        chat.messages.push({
+
+          role:
+            "assistant",
+
+          content:
+            answer
+
+        });
+
+
+        chat.updatedAt =
+          Date.now();
+
+
+        saveChats();
+
+        renderRecentChats();
+
+
+        addMessageActions(
+          aiMessage,
+          answer
+        );
+
+
+      }catch(error){
+
+        console.error(
+          "FAYNEX API error:",
+          error
+        );
+
+
+        if(
+          error?.name ===
+          "AbortError"
+        ){
+
+          const partial =
+            aiMessage.textContent?.trim() ||
+            "";
+
+
+          if(partial){
+
+            chat.messages.push({
+
+              role:
+                "assistant",
+
+              content:
+                partial
+
+            });
+
+
+            chat.updatedAt =
+              Date.now();
+
+
+            saveChats();
+
+          }
+
+        }else{
+
+          aiMessage.classList.remove(
+            "markdown"
+          );
+
+
+          aiMessage.textContent =
+            "Sorry, I couldn't connect to the FAYNEX AI engine right now.\n\n" +
+            "Error: " +
+            (
+              error?.message ||
+              "Unknown error."
+            );
+
+        }
+
+      }finally{
+
+        abortController =
+          null;
+
+        setGeneratingState(
+          false
+        );
+
+        input.focus();
+
+      }
+
+    }
+
+
+    /* =================================================
+       STREAM GEMINI
+    ================================================= */
+
+    async function streamGeminiResponse(
+      message,
+      aiMessage,
+      attachment
+    ){
+
+      abortController =
+        new AbortController();
+
+
+      const chat =
+        getActiveConversation();
+
+
+      const history =
+        chat
+          ? chat.messages
+              .slice(
+                0,
+                -1
+              )
+              .slice(
+                -30
+              )
+              .map(
+                item => ({
+
+                  role:
+                    item.role,
+
+                  content:
+                    item.content
+
+                })
+              )
+          : [];
+
+
+      /*
+        Add long-term memory to the
+        request context.
+      */
+
+      const memoryContext =
+        getMemoryPrompt();
+
+
+      const finalMessage =
+        memoryContext +
+        "\n\n" +
+        message;
+
+
+      const requestBody = {
+
+        message:
+          finalMessage,
+
+        history:
+          history
+
+      };
+
+
+      if(
+        attachment &&
+        (
+          attachment.kind ===
+          "image" ||
+          attachment.kind ===
+          "pdf"
+        )
+      ){
+
+        requestBody.attachments = [{
+
+          name:
+            attachment.name,
+
+          mimeType:
+            attachment.mimeType,
+
+          data:
+            attachment.data
+
+        }];
+
+      }
+
 
       const response =
         await fetch(
-          API_URL
+          API_URL,
+          {
+
+            method:
+              "POST",
+
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify(
+                requestBody
+              ),
+
+            signal:
+              abortController.signal
+
+          }
         );
 
 
       if(!response.ok){
 
+        let errorMessage =
+          "API request failed.";
+
+
+        try{
+
+          const data =
+            await response.json();
+
+
+          errorMessage =
+            data?.details ||
+            data?.error ||
+            errorMessage;
+
+        }catch{
+
+          try{
+
+            errorMessage =
+              await response.text();
+
+          }catch{}
+
+        }
+
+
         throw new Error(
-          "API offline"
+          errorMessage
         );
 
       }
 
 
-      const data =
-        await response.json();
+      if(!response.body){
+
+        throw new Error(
+          "Streaming response is not available."
+        );
+
+      }
 
 
-      if(data?.ok){
+      const reader =
+        response.body.getReader();
+
+
+      const decoder =
+        new TextDecoder();
+
+
+      let buffer =
+        "";
+
+      let fullText =
+        "";
+
+
+      aiMessage.innerHTML =
+        "";
+
+
+      function processSSELine(
+        line
+      ){
+
+        if(
+          !line.startsWith(
+            "data:"
+          )
+        ){
+
+          return;
+
+        }
+
+
+        const data =
+          line
+            .slice(
+              5
+            )
+            .trim();
+
+
+        if(
+          !data ||
+          data ===
+            "[DONE]"
+        ){
+
+          return;
+
+        }
+
+
+        try{
+
+          const json =
+            JSON.parse(
+              data
+            );
+
+
+          const text =
+            json
+              ?.candidates?.[0]
+              ?.content?.parts
+              ?.map(
+                part =>
+                  part.text ||
+                  ""
+              )
+              .join("") ||
+            "";
+
+
+          if(text){
+
+            fullText +=
+              text;
+
+
+            aiMessage.innerHTML =
+              renderMarkdown(
+                fullText
+              );
+
+
+            enhanceCodeBlocks(
+              aiMessage
+            );
+
+
+            scrollToBottom();
+
+          }
+
+        }catch{
+
+          /*
+            Ignore incomplete SSE chunks.
+          */
+
+        }
+
+      }
+
+
+      while(true){
+
+        const {
+          value,
+          done
+        } =
+          await reader.read();
+
+
+        if(done){
+
+          break;
+
+        }
+
+
+        buffer +=
+          decoder.decode(
+            value,
+            {
+              stream:true
+            }
+          );
+
+
+        const lines =
+          buffer.split(
+            "\n"
+          );
+
+
+        buffer =
+          lines.pop() ||
+          "";
+
+
+        for(
+          const line of lines
+        ){
+
+          processSSELine(
+            line
+          );
+
+        }
+
+      }
+
+
+      if(
+        buffer.trim()
+      ){
+
+        processSSELine(
+          buffer
+        );
+
+      }
+
+
+      if(
+        !fullText.trim()
+      ){
+
+        fullText =
+          "I received an empty response from the AI engine.";
+
+        aiMessage.textContent =
+          fullText;
+
+      }
+
+
+      return fullText;
+
+    }
+
+
+    /* =================================================
+       MESSAGE ACTIONS
+    ================================================= */
+
+    function addMessageActions(
+      aiMessage,
+      answer
+    ){
+
+      const wrap =
+        aiMessage.parentElement;
+
+
+      if(!wrap){
+
+        return;
+
+      }
+
+
+      if(
+        wrap.querySelector(
+          ".message-actions"
+        )
+      ){
+
+        return;
+
+      }
+
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+
+      actions.className =
+        "message-actions";
+
+
+      actions.innerHTML = `
+
+        <button
+          class="message-action copy-answer"
+          type="button"
+        >
+          Copy
+        </button>
+
+        <button
+          class="message-action speak-answer"
+          type="button"
+        >
+          Speak
+        </button>
+
+        <button
+          class="message-action regenerate-answer"
+          type="button"
+        >
+          Regenerate
+        </button>
+
+      `;
+
+
+      wrap.appendChild(
+        actions
+      );
+
+
+      const copyBtn =
+        actions.querySelector(
+          ".copy-answer"
+        );
+
+
+      copyBtn.addEventListener(
+        "click",
+        async () => {
+
+          try{
+
+            await navigator.clipboard.writeText(
+              answer
+            );
+
+
+            copyBtn.textContent =
+              "Copied";
+
+
+            setTimeout(
+              () =>
+                copyBtn.textContent =
+                  "Copy",
+              1200
+            );
+
+          }catch{
+
+            showToast(
+              "Could not copy answer."
+            );
+
+          }
+
+        }
+      );
+
+
+      const speakBtn =
+        actions.querySelector(
+          ".speak-answer"
+        );
+
+
+      speakBtn.addEventListener(
+        "click",
+        () =>
+          speakText(
+            answer,
+            speakBtn
+          )
+      );
+
+
+      const regenerateBtn =
+        actions.querySelector(
+          ".regenerate-answer"
+        );
+
+
+      regenerateBtn.addEventListener(
+        "click",
+        () =>
+          regenerateLastAnswer()
+      );
+
+    }
+
+
+    /* =================================================
+       GENERATION
+    ================================================= */
+
+    function setGeneratingState(
+      state
+    ){
+
+      isGenerating =
+        state;
+
+
+      attachBtn.disabled =
+        state;
+
+
+      if(state){
+
+        sendBtn.textContent =
+          "■";
+
+        sendBtn.title =
+          "Stop";
+
+        sendBtn.disabled =
+          false;
+
+      }else{
+
+        sendBtn.textContent =
+          "↑";
+
+        sendBtn.title =
+          "Send";
+
+        sendBtn.disabled =
+          false;
+
+      }
+
+    }
+
+
+    function abortGeneration(){
+
+      if(
+        abortController
+      ){
+
+        abortController.abort();
+
+      }
+
+
+      setGeneratingState(
+        false
+      );
+
+    }
+
+
+    /* =================================================
+       REGENERATE
+    ================================================= */
+
+    function regenerateLastAnswer(){
+
+      if(isGenerating){
+
+        return;
+
+      }
+
+
+      const chat =
+        getActiveConversation();
+
+
+      if(!chat){
+
+        return;
+
+      }
+
+
+      let userIndex =
+        -1;
+
+
+      for(
+        let i =
+          chat.messages.length - 1;
+        i >= 0;
+        i--
+      ){
+
+        if(
+          chat.messages[i].role ===
+          "user"
+        ){
+
+          userIndex =
+            i;
+
+          break;
+
+        }
+
+      }
+
+
+      if(
+        userIndex === -1
+      ){
+
+        return;
+
+      }
+
+
+      const message =
+        chat.messages[
+          userIndex
+        ];
+
+
+      const content =
+        message.content;
+
+
+      chat.messages =
+        chat.messages.slice(
+          0,
+          userIndex
+        );
+
+
+      chat.updatedAt =
+        Date.now();
+
+
+      saveChats();
+
+      renderActiveConversation();
+
+
+      input.value =
+        content;
+
+
+      sendMessage();
+
+    }
+
+
+    /* =================================================
+       SEARCH
+    ================================================= */
+
+    function openSearch(){
+
+      searchOverlay.classList.add(
+        "open"
+      );
+
+
+      chatSearchInput.value =
+        "";
+
+
+      renderSearchResults(
+        ""
+      );
+
+
+      setTimeout(
+        () =>
+          chatSearchInput.focus(),
+        50
+      );
+
+    }
+
+
+    function closeSearch(){
+
+      searchOverlay.classList.remove(
+        "open"
+      );
+
+    }
+
+
+    function renderSearchResults(
+      query
+    ){
+
+      const q =
+        String(
+          query || ""
+        )
+          .trim()
+          .toLowerCase();
+
+
+      searchResults.innerHTML =
+        "";
+
+
+      const matches =
+        conversations
+          .filter(
+            chat => {
+
+              if(!q){
+
+                return true;
+
+              }
+
+
+              return (
+                chat.title
+                  .toLowerCase()
+                  .includes(q) ||
+
+                chat.messages.some(
+                  message =>
+                    String(
+                      message.content ||
+                      ""
+                    )
+                      .toLowerCase()
+                      .includes(q)
+                )
+              );
+
+            }
+          )
+          .sort(
+            (a,b) =>
+              b.updatedAt -
+              a.updatedAt
+          )
+          .slice(
+            0,
+            30
+          );
+
+
+      if(
+        !matches.length
+      ){
+
+        searchResults.innerHTML =
+          '<div class="search-empty">No conversations found.</div>';
+
+        return;
+
+      }
+
+
+      matches.forEach(
+        chat => {
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.type =
+            "button";
+
+          button.className =
+            "search-result";
+
+
+          const preview =
+            chat.messages
+              .find(
+                message =>
+                  message.role ===
+                  "user"
+              )
+              ?.content ||
+            "";
+
+
+          button.innerHTML = `
+
+            <div class="search-result-title">
+              ${escapeHtml(
+                chat.title
+              )}
+            </div>
+
+            <div class="search-result-meta">
+              ${escapeHtml(
+                preview.slice(
+                  0,
+                  120
+                )
+              )}
+              •
+              ${escapeHtml(
+                formatDate(
+                  chat.updatedAt
+                )
+              )}
+            </div>
+
+          `;
+
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              openConversation(
+                chat.id
+              );
+
+              closeSearch();
+
+            }
+          );
+
+
+          searchResults.appendChild(
+            button
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =================================================
+       VOICE INPUT
+    ================================================= */
+
+    function setupVoiceInput(){
+
+      const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+      if(!SpeechRecognition){
+
+        voiceBtn.style.display =
+          "none";
+
+        return;
+
+      }
+
+
+      recognition =
+        new SpeechRecognition();
+
+
+      recognition.lang =
+        "en-US";
+
+
+      recognition.continuous =
+        false;
+
+
+      recognition.interimResults =
+        true;
+
+
+      recognition.onstart =
+        () => {
+
+          isListening =
+            true;
+
+          voiceBtn.classList.add(
+            "active"
+          );
+
+        };
+
+
+      recognition.onresult =
+        event => {
+
+          let transcript =
+            "";
+
+
+          for(
+            let i =
+              event.resultIndex;
+            i <
+              event.results.length;
+            i++
+          ){
+
+            transcript +=
+              event.results[i][0]
+                .transcript;
+
+          }
+
+
+          input.value =
+            transcript;
+
+
+          input.dispatchEvent(
+            new Event(
+              "input"
+            )
+          );
+
+        };
+
+
+      recognition.onerror =
+        event => {
+
+          console.warn(
+            "Voice input error:",
+            event.error
+          );
+
+
+          showToast(
+            "Voice input error: " +
+            event.error
+          );
+
+        };
+
+
+      recognition.onend =
+        () => {
+
+          isListening =
+            false;
+
+          voiceBtn.classList.remove(
+            "active"
+          );
+
+        };
+
+
+      voiceBtn.addEventListener(
+        "click",
+        () => {
+
+          if(isListening){
+
+            recognition.stop();
+
+            return;
+
+          }
+
+
+          try{
+
+            recognition.start();
+
+          }catch(error){
+
+            console.warn(
+              "Voice start error:",
+              error
+            );
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =================================================
+       VOICE OUTPUT
+    ================================================= */
+
+    function speakText(
+      text,
+      button
+    ){
+
+      if(
+        !(
+          "speechSynthesis" in
+          window
+        )
+      ){
+
+        showToast(
+          "Voice output is not supported by this browser."
+        );
+
+        return;
+
+      }
+
+
+      stopSpeech();
+
+
+      const utterance =
+        new SpeechSynthesisUtterance(
+          String(
+            text || ""
+          )
+        );
+
+
+      utterance.lang =
+        "en-US";
+
+      utterance.rate =
+        1;
+
+      utterance.pitch =
+        1;
+
+
+      if(button){
+
+        button.textContent =
+          "Speaking...";
+
+      }
+
+
+      utterance.onend =
+        () => {
+
+          if(button){
+
+            button.textContent =
+              "Speak";
+
+          }
+
+        };
+
+
+      utterance.onerror =
+        () => {
+
+          if(button){
+
+            button.textContent =
+              "Speak";
+
+          }
+
+        };
+
+
+      window.speechSynthesis.speak(
+        utterance
+      );
+
+    }
+
+
+    function stopSpeech(){
+
+      if(
+        "speechSynthesis" in
+        window
+      ){
+
+        window.speechSynthesis.cancel();
+
+      }
+
+    }
+
+
+    /* =================================================
+       INPUT
+    ================================================= */
+
+    input.addEventListener(
+      "input",
+      () => {
+
+        input.style.height =
+          "auto";
+
+
+        input.style.height =
+          Math.min(
+            input.scrollHeight,
+            150
+          ) + "px";
+
+      }
+    );
+
+
+    input.addEventListener(
+      "keydown",
+      event => {
+
+        if(
+          event.key ===
+          "Enter" &&
+          !event.shiftKey
+        ){
+
+          event.preventDefault();
+
+          sendMessage();
+
+        }
+
+      }
+    );
+
+
+    sendBtn.addEventListener(
+      "click",
+      () => {
+
+        if(isGenerating){
+
+          abortGeneration();
+
+        }else{
+
+          sendMessage();
+
+        }
+
+      }
+    );
+
+
+    /* =================================================
+       FILE
+    ================================================= */
+
+    attachBtn.addEventListener(
+      "click",
+      () => {
+
+        if(isGenerating){
+
+          showToast(
+            "Please wait until the current response finishes."
+          );
+
+          return;
+
+        }
+
+
+        fileInput.click();
+
+      }
+    );
+
+
+    fileInput.addEventListener(
+      "change",
+      event => {
+
+        const file =
+          event.target.files?.[0];
+
+
+        handleFileSelection(
+          file
+        );
+
+      }
+    );
+
+
+    /* =================================================
+       MEMORY EVENTS
+    ================================================= */
+
+    memoryBtn.addEventListener(
+      "click",
+      openMemory
+    );
+
+
+    topMemoryBtn.addEventListener(
+      "click",
+      openMemory
+    );
+
+
+    closeMemoryBtn.addEventListener(
+      "click",
+      closeMemory
+    );
+
+
+    memoryOverlay.addEventListener(
+      "click",
+      event => {
+
+        if(
+          event.target ===
+          memoryOverlay
+        ){
+
+          closeMemory();
+
+        }
+
+      }
+    );
+
+
+    addMemoryBtn.addEventListener(
+      "click",
+      () => {
+
+        const text =
+          memoryInput.value.trim();
+
+
+        if(!text){
+
+          return;
+
+        }
+
+
+        if(
+          addMemory(
+            text,
+            "manual"
+          )
+        ){
+
+          memoryInput.value =
+            "";
+
+          showToast(
+            "🧠 Memory saved."
+          );
+
+        }
+
+      }
+    );
+
+
+    memoryInput.addEventListener(
+      "keydown",
+      event => {
+
+        if(
+          event.key ===
+          "Enter"
+        ){
+
+          event.preventDefault();
+
+          addMemoryBtn.click();
+
+        }
+
+      }
+    );
+
+
+    clearMemoryBtn.addEventListener(
+      "click",
+      clearAllMemories
+    );
+
+
+    /* =================================================
+       CHAT EVENTS
+    ================================================= */
+
+    newChatBtn.addEventListener(
+      "click",
+      newConversation
+    );
+
+
+    homeBtn.addEventListener(
+      "click",
+      () => {
+
+        renderActiveConversation();
+
+
+        if(
+          window.innerWidth <= 800
+        ){
+
+          sidebar.classList.remove(
+            "open"
+          );
+
+        }
+
+      }
+    );
+
+
+    searchChatsBtn.addEventListener(
+      "click",
+      openSearch
+    );
+
+
+    topSearchBtn.addEventListener(
+      "click",
+      openSearch
+    );
+
+
+    chatSearchInput.addEventListener(
+      "input",
+      event =>
+        renderSearchResults(
+          event.target.value
+        )
+    );
+
+
+    closeSearchBtn.addEventListener(
+      "click",
+      closeSearch
+    );
+
+
+    searchOverlay.addEventListener(
+      "click",
+      event => {
+
+        if(
+          event.target ===
+          searchOverlay
+        ){
+
+          closeSearch();
+
+        }
+
+      }
+    );
+
+
+    menuBtn.addEventListener(
+      "click",
+      () => {
+
+        sidebar.classList.toggle(
+          "open"
+        );
+
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if(
+          event.key ===
+          "Escape"
+        ){
+
+          closeSearch();
+
+          closeMemory();
+
+        }
+
+
+        if(
+          (
+            event.ctrlKey ||
+            event.metaKey
+          ) &&
+          event.key.toLowerCase() ===
+          "k"
+        ){
+
+          event.preventDefault();
+
+          openSearch();
+
+        }
+
+      }
+    );
+
+
+    /* =================================================
+       API HEALTH
+    ================================================= */
+
+    async function checkFaynexAPI(){
+
+      try{
+
+        const response =
+          await fetch(
+            API_URL
+          );
+
+
+        if(!response.ok){
+
+          throw new Error(
+            "API offline"
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        if(data?.ok){
+
+          document
+            .querySelectorAll(
+              ".status-line span:last-child"
+            )
+            .forEach(
+              element => {
+
+                element.textContent =
+                  "FAYNEX systems online";
+
+              }
+            );
+
+        }
+
+      }catch(error){
+
+        console.warn(
+          "FAYNEX API health check failed:",
+          error
+        );
+
 
         document
           .querySelectorAll(
@@ -4758,52 +6053,34 @@ document.addEventListener("DOMContentLoaded", () => {
             element => {
 
               element.textContent =
-                "FAYNEX systems online";
+                "FAYNEX API offline";
 
             }
           );
 
       }
 
-    }catch(error){
-
-      console.warn(
-        "FAYNEX API health check failed:",
-        error
-      );
-
-
-      document
-        .querySelectorAll(
-          ".status-line span:last-child"
-        )
-        .forEach(
-          element => {
-
-            element.textContent =
-              "FAYNEX API offline";
-
-          }
-        );
-
     }
 
+
+    /* =================================================
+       START
+    ================================================= */
+
+    loadMemories();
+
+    renderMemoryList();
+
+    setupVoiceInput();
+
+    loadConversations();
+
+    checkFaynexAPI();
+
+    input.focus();
+
   }
-
-
-  /* =====================================================
-     START
-  ===================================================== */
-
-  setupVoiceInput();
-
-  loadConversations();
-
-  checkFaynexAPI();
-
-  input.focus();
-
-});
+);
 </script>
 
 </body>
