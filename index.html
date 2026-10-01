@@ -1284,9 +1284,9 @@
 <div class="memory-overlay" id="memoryOverlay">
 <div class="memory-panel">
 <div class="memory-head"><div class="memory-title-wrap"><h2>🧠 FAYNEX Memory</h2><p>Persistent memory is securely handled by FAYNEX through Cloudflare KV for this browser.</p></div><button class="memory-close" id="closeMemoryBtn" type="button">×</button></div>
-<div class="memory-toolbar"><span class="memory-count" id="memoryCount">0 memories</span><button class="clear-memory-btn" id="clearMemoryBtn" type="button">Clear all</button></div>
+<div class="memory-toolbar"><span class="memory-count" id="memoryCount">0 memories</span><div style="display:flex;gap:8px"><button class="clear-memory-btn" id="refreshMemoryBtn" type="button">Refresh</button><button class="clear-memory-btn" id="clearMemoryBtn" type="button">Clear all</button></div></div>
 <div class="memory-list" id="memoryList"></div>
-<div class="memory-footer">FAYNEX persistent memory is handled by the Cloudflare KV backend when you explicitly use a remember command. Do not store passwords, API keys, or other sensitive secrets. The memory list shown here is the legacy browser-side list; backend KV memory is the source of truth.</div>
+<div class="memory-footer">FAYNEX persistent memory is handled by the Cloudflare KV backend when you explicitly use a remember command. Do not store passwords, API keys, or other sensitive secrets. This list is loaded directly from your FAYNEX Cloudflare KV memory for this browser.</div>
 </div></div>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 <div class="search-overlay" id="searchOverlay">
@@ -1372,6 +1372,7 @@
             const memoryOverlay = document.getElementById("memoryOverlay");
             const closeMemoryBtn = document.getElementById("closeMemoryBtn");
             const clearMemoryBtn = document.getElementById("clearMemoryBtn");
+            const refreshMemoryBtn = document.getElementById("refreshMemoryBtn");
             const memoryList = document.getElementById("memoryList");
             const memoryCount = document.getElementById("memoryCount");
 
@@ -1398,20 +1399,17 @@
             ========================= */
 
             let memories = [];
+            let backendMemory = {
+              name: "",
+              facts: []
+            };
 
             function makeMemoryId() {
               return "mem_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
             }
 
-            function loadMemories() {
-              try {
-                const saved = JSON.parse(localStorage.getItem(MEMORY_KEY) || "[]");
-                memories = Array.isArray(saved) ? saved.filter(item => item && typeof item.id === "string" && typeof item.text === "string" && item.text.trim()).slice(0, MEMORY_LIMIT) : [];
-              } catch (error) {
-                console.warn("Could not load FAYNEX memories:", error);
-                memories = [];
-              }
-              renderMemoryList();
+            function normalizeMemoryText(text) {
+              return String(text || "").trim().replace(/\s+/g, " ").slice(0, 500);
             }
 
             function saveMemories() {
@@ -1419,78 +1417,129 @@
                 localStorage.setItem(MEMORY_KEY, JSON.stringify(memories.slice(0, MEMORY_LIMIT)));
               } catch (error) {
                 console.warn("Could not save FAYNEX memories:", error);
-                showToast("Memory could not be saved in this browser.", 3200);
               }
-            }
-
-            function normalizeMemoryText(text) {
-              return String(text || "").trim().replace(/\s+/g, " ").slice(0, 500);
-            }
-
-            function addMemory(text, source = "User") {
-              const cleaned = normalizeMemoryText(text);
-              if (!cleaned) return false;
-              if (memories.some(item => item.text.toLowerCase() === cleaned.toLowerCase())) {
-                showToast("FAYNEX already remembers that.");
-                return false;
-              }
-              memories.unshift({ id: makeMemoryId(), text: cleaned, source, createdAt: Date.now() });
-              memories = memories.slice(0, MEMORY_LIMIT);
-              saveMemories();
-              renderMemoryList();
-              return true;
-            }
-
-            function deleteMemory(id) {
-              memories = memories.filter(item => item.id !== id);
-              saveMemories();
-              renderMemoryList();
-            }
-
-            function clearAllMemories() {
-              if (!memories.length) {
-                showToast("There are no saved memories.");
-                return;
-              }
-              if (!window.confirm("Delete all FAYNEX memories from this browser?")) return;
-              memories = [];
-              saveMemories();
-              renderMemoryList();
-              showToast("All memories cleared.");
             }
 
             function renderMemoryList() {
               if (!memoryList || !memoryCount) return;
-              const count = memories.length;
-              memoryCount.textContent = `${count} ${count === 1 ? "memory" : "memories"}`;
+
+              const items = [];
+
+              if (backendMemory.name) {
+                items.push({
+                  id: "backend-name",
+                  text: `Name: ${backendMemory.name}`,
+                  source: "Cloudflare KV"
+                });
+              }
+
+              if (Array.isArray(backendMemory.facts)) {
+                backendMemory.facts.forEach((fact, index) => {
+                  items.push({
+                    id: `backend-fact-${index}`,
+                    text: fact,
+                    source: "Cloudflare KV"
+                  });
+                });
+              }
+
+              memoryCount.textContent =
+                `${items.length} ${items.length === 1 ? "memory" : "memories"}`;
+
               memoryList.innerHTML = "";
-              if (!count) {
+
+              if (!items.length) {
                 const empty = document.createElement("div");
                 empty.className = "memory-empty";
-                empty.innerHTML = `<strong>No memories yet</strong>Tell FAYNEX something like:<br>“Remember that I prefer concise answers.”`;
+                empty.innerHTML =
+                  `<strong>No persistent memories yet</strong>
+                   Tell FAYNEX something like:<br>
+                   “Remember that I prefer concise answers.”`;
                 memoryList.appendChild(empty);
                 return;
               }
-              memories.forEach(memory => {
+
+              items.forEach(memory => {
                 const row = document.createElement("div");
                 row.className = "memory-item";
+
                 const bullet = document.createElement("div");
                 bullet.className = "memory-bullet";
                 bullet.textContent = "✦";
+
                 const body = document.createElement("div");
                 body.className = "memory-body";
+
                 const text = document.createElement("div");
                 text.className = "memory-text";
                 text.textContent = memory.text;
+
                 const meta = document.createElement("div");
                 meta.className = "memory-meta";
-                meta.textContent = `${memory.source || "User"} • ${formatChatDate(memory.createdAt)}`;
+                meta.textContent = memory.source;
+
                 const remove = document.createElement("button");
                 remove.type = "button";
                 remove.className = "memory-delete";
                 remove.title = "Delete memory";
                 remove.textContent = "×";
-                remove.addEventListener("click", () => deleteMemory(memory.id));
+
+                remove.addEventListener("click", async () => {
+                  if (!window.confirm("Delete this saved memory?")) return;
+
+                  try {
+                    let response;
+
+                    if (memory.id === "backend-name") {
+                      response = await fetch(API_URL, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                          action: "delete-memory-name",
+                          userId: FAYNEX_USER_ID
+                        })
+                      });
+                    } else {
+                      const index = Number(memory.id.replace("backend-fact-", ""));
+
+                      response = await fetch(API_URL, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                          action: "delete-memory-fact",
+                          userId: FAYNEX_USER_ID,
+                          index
+                        })
+                      });
+                    }
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                      throw new Error(
+                        data?.error ||
+                        data?.details ||
+                        "Memory could not be deleted."
+                      );
+                    }
+
+                    backendMemory = data.memory || {
+                      name: "",
+                      facts: []
+                    };
+
+                    renderMemoryList();
+                    showToast("Memory deleted.");
+                  } catch (error) {
+                    console.error("Memory delete error:", error);
+                    showToast(error?.message || "Memory could not be deleted.", 3500);
+                  }
+                });
+
                 body.appendChild(text);
                 body.appendChild(meta);
                 row.appendChild(bullet);
@@ -1500,20 +1549,129 @@
               });
             }
 
+            async function refreshBackendMemory(showMessage = false) {
+              try {
+                memoryCount.textContent = "Loading…";
+
+                const response = await fetch(
+                  `${API_URL}?action=memory&userId=${encodeURIComponent(FAYNEX_USER_ID)}`,
+                  {
+                    method: "GET",
+                    cache: "no-store"
+                  }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                  throw new Error(
+                    data?.error ||
+                    "Could not load persistent memory."
+                  );
+                }
+
+                backendMemory = data.memory || {
+                  name: "",
+                  facts: []
+                };
+
+                renderMemoryList();
+
+                if (showMessage) {
+                  showToast("Memory refreshed.");
+                }
+              } catch (error) {
+                console.error("Memory load error:", error);
+
+                backendMemory = {
+                  name: "",
+                  facts: []
+                };
+
+                renderMemoryList();
+                showToast(
+                  error?.message ||
+                  "Could not load persistent memory.",
+                  3500
+                );
+              }
+            }
+
+            async function clearAllMemories() {
+              if (!window.confirm(
+                "Delete ALL persistent FAYNEX memories for this browser?"
+              )) {
+                return;
+              }
+
+              try {
+                const response = await fetch(API_URL, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                    action: "clear-memory",
+                    userId: FAYNEX_USER_ID
+                  })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                  throw new Error(
+                    data?.error ||
+                    data?.details ||
+                    "Memory could not be cleared."
+                  );
+                }
+
+                backendMemory = {
+                  name: "",
+                  facts: []
+                };
+
+                memories = [];
+                saveMemories();
+                renderMemoryList();
+
+                showToast("All persistent memories cleared.");
+              } catch (error) {
+                console.error("Memory clear error:", error);
+                showToast(
+                  error?.message ||
+                  "Memory could not be cleared.",
+                  3500
+                );
+              }
+            }
+
             function openMemorySettings() {
-              renderMemoryList();
               memoryOverlay?.classList.add("open");
+              refreshBackendMemory(false);
             }
 
             function closeMemorySettings() {
               memoryOverlay?.classList.remove("open");
             }
 
+            function loadMemories() {
+              try {
+                const saved = JSON.parse(
+                  localStorage.getItem(MEMORY_KEY) || "[]"
+                );
+
+                memories = Array.isArray(saved)
+                  ? saved
+                  : [];
+              } catch {
+                memories = [];
+              }
+
+              refreshBackendMemory(false);
+            }
+
             function buildMemoryContext() {
-              /*
-                Persistent memory is now handled by the Cloudflare Worker + KV.
-                Do not inject old browser-only memories into the prompt.
-              */
               return "";
             }
 
@@ -3047,6 +3205,7 @@
             sidebarSettingsBtn?.addEventListener("click", openMemorySettings);
             closeMemoryBtn?.addEventListener("click", closeMemorySettings);
             clearMemoryBtn?.addEventListener("click", clearAllMemories);
+            refreshMemoryBtn?.addEventListener("click", () => refreshBackendMemory(true));
             memoryOverlay?.addEventListener("click", event => {
               if (event.target === memoryOverlay) closeMemorySettings();
             });
