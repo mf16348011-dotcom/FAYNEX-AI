@@ -6,6 +6,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FAYNEX AI</title>
 <meta content="FAYNEX AI — Next-Generation Intelligence" name="description"/>
+<link rel="icon" type="image/png" href="faynex-logo.png"/>
+<link rel="apple-touch-icon" href="faynex-logo.png"/>
 <style>
     * {
       margin: 0;
@@ -28,8 +30,8 @@
     body {
       min-height: 100vh;
       background:
-        linear-gradient(180deg, rgba(3, 4, 10, 0.48), rgba(3, 4, 10, 0.72)),
-        url("faynex-background.png") center center / cover no-repeat fixed,
+        linear-gradient(rgba(4, 5, 12, 0.34), rgba(4, 5, 12, 0.34)),
+        url("faynex-background.png") center center / cover fixed no-repeat,
         var(--bg);
       color: var(--text);
       font-family:
@@ -61,19 +63,6 @@
       height: 100vh;
       display: flex;
       position: relative;
-      isolation: isolate;
-      background: linear-gradient(90deg, rgba(4, 5, 11, 0.30), rgba(4, 5, 11, 0.08));
-    }
-
-    .app::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      background:
-        radial-gradient(circle at 50% 44%, rgba(5, 7, 16, 0.08), rgba(5, 7, 16, 0.42) 72%),
-        linear-gradient(90deg, rgba(5, 6, 12, 0.42), transparent 28%, transparent 72%, rgba(5, 6, 12, 0.28));
     }
 
     /* =========================
@@ -83,9 +72,9 @@
     .sidebar {
       width: 270px;
       height: 100vh;
-      background: rgba(7, 8, 14, 0.78);
+      background: rgba(8, 10, 15, 0.92);
       border-right: 1px solid var(--border);
-      backdrop-filter: blur(18px) saturate(120%);
+      backdrop-filter: blur(20px);
       display: flex;
       flex-direction: column;
       padding: 22px 16px;
@@ -112,6 +101,32 @@
       font-weight: 800;
       box-shadow:
         0 0 25px rgba(99, 102, 241, 0.35);
+    }
+
+    .brand-logo-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.55));
+      transform: scale(1.32);
+    }
+
+    .welcome-logo-image {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 0 28px rgba(124, 58, 237, 0.48));
+    }
+
+    .avatar-logo-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.48));
+      transform: scale(1.32);
     }
 
     .brand-name {
@@ -451,11 +466,12 @@
     }
 
     .model-orb {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 14px rgba(139, 92, 246, 0.9);
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background: url("faynex-logo.png") center / 150% no-repeat;
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.75);
+      flex: 0 0 18px;
     }
 
     .model-name {
@@ -515,7 +531,6 @@
 
     .welcome {
       min-height: calc(100vh - 220px);
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -525,6 +540,7 @@
     }
 
     .welcome-orb {
+      overflow: visible;
       width: 76px;
       height: 76px;
       border-radius: 24px;
@@ -588,7 +604,6 @@
 
     .suggestions {
       width: min(760px, 100%);
-      position: relative;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
@@ -966,6 +981,7 @@
       }
 
       .welcome-orb {
+      overflow: visible;
         width: 65px;
         height: 65px;
         border-radius: 20px;
@@ -1178,38 +1194,6 @@
       color: #fca5a5 !important;
     }
 
-
-    /* =========================
-       FAYNEX FUTURISTIC BACKGROUND
-    ========================== */
-
-    .main {
-      position: relative;
-      background: rgba(3, 4, 9, 0.18);
-    }
-
-    .chat-area {
-      background: radial-gradient(circle at 50% 35%, rgba(16, 12, 42, 0.10), transparent 45%);
-    }
-
-    .topbar {
-      background: rgba(4, 5, 11, 0.54) !important;
-      backdrop-filter: blur(18px) saturate(125%);
-    }
-
-    .composer-wrap {
-      background: linear-gradient(180deg, rgba(3, 4, 9, 0), rgba(3, 4, 9, 0.58));
-    }
-
-    @media (max-width: 760px) {
-      body {
-        background:
-          linear-gradient(180deg, rgba(3, 4, 10, 0.62), rgba(3, 4, 10, 0.78)),
-          url("faynex-background.png") center center / cover no-repeat fixed,
-          var(--bg);
-      }
-    }
-
   </style>
 <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
@@ -1221,7 +1205,7 @@
     ========================== -->
 <aside class="sidebar" id="sidebar">
 <div class="brand">
-<div class="brand-logo">F</div>
+<div class="brand-logo"><img class="brand-logo-image" src="faynex-logo.png" alt="FAYNEX logo"/></div>
 <div>
 <div class="brand-name">FAYNEX</div>
 <div class="brand-subtitle">Next-Generation Intelligence</div>
@@ -1296,7 +1280,7 @@
 <section class="chat-area" id="chatArea">
 <div class="welcome" id="welcome">
 <div class="welcome-orb">
-            F
+            <img class="welcome-logo-image" src="faynex-logo.png" alt="FAYNEX AI logo"/>
           </div>
 <h1>
             Meet
@@ -2011,7 +1995,15 @@
 
               const avatar = document.createElement("div");
               avatar.className = "avatar " + (type === "user" ? "user" : "ai");
-              avatar.textContent = type === "user" ? "YOU" : "F";
+              if (type === "user") {
+                avatar.textContent = "YOU";
+              } else {
+                const logo = document.createElement("img");
+                logo.className = "avatar-logo-image";
+                logo.src = "faynex-logo.png";
+                logo.alt = "FAYNEX";
+                avatar.appendChild(logo);
+              }
 
               const content = document.createElement("div");
               content.className = "message-content";
