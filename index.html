@@ -2898,11 +2898,11 @@
               };
 
               if (attachment?.kind === "image" || attachment?.kind === "pdf") {
-                requestBody.attachments = [{
+                requestBody.attachment = {
                   name: attachment.name,
                   mimeType: attachment.mimeType,
                   data: attachment.data
-                }];
+                };
               }
 
               const response = await fetch(API_URL, {
@@ -2920,11 +2920,37 @@
                   errorData = await response.json();
                 } catch {}
 
-                throw new Error(
+                let diagnosticMessage =
+                  errorData?.message ||
                   errorData?.details ||
                   errorData?.error ||
-                  `API request failed with status ${response.status}.`
-                );
+                  `API request failed with status ${response.status}.`;
+
+                if (Array.isArray(errorData?.diagnostics) && errorData.diagnostics.length) {
+                  const lines = [diagnosticMessage, "", "--- Gemini diagnostics ---"];
+
+                  errorData.diagnostics.forEach((diag) => {
+                    lines.push(`Model: ${diag?.model || "unknown"}`);
+                    lines.push(`HTTP: ${diag?.httpStatus ?? "unknown"}`);
+                    if (diag?.status) lines.push(`Status: ${diag.status}`);
+                    if (diag?.reason) lines.push(`Reason: ${diag.reason}`);
+                    if (diag?.retryDelaySeconds !== null && diag?.retryDelaySeconds !== undefined) {
+                      lines.push(`Retry delay: ${diag.retryDelaySeconds}s`);
+                    }
+                    if (diag?.message) lines.push(`Message: ${diag.message}`);
+                    if (Array.isArray(diag?.quotaDetails) && diag.quotaDetails.length) {
+                      lines.push(`Quota details: ${JSON.stringify(diag.quotaDetails)}`);
+                    }
+                    if (Array.isArray(diag?.details) && diag.details.length) {
+                      lines.push(`Details: ${JSON.stringify(diag.details)}`);
+                    }
+                    lines.push("");
+                  });
+
+                  diagnosticMessage = lines.join("\n").trim();
+                }
+
+                throw new Error(diagnosticMessage);
               }
 
               /*
