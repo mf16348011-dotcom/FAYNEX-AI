@@ -739,6 +739,43 @@
       color: #626978;
     }
 
+    .web-search-btn {
+      height: 35px;
+      padding: 0 11px;
+      border-radius: 9px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #7e8594;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .web-search-btn:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .web-search-btn.active {
+      color: #c4b5fd;
+      background: rgba(139, 92, 246, 0.12);
+      border-color: rgba(139, 92, 246, 0.28);
+      box-shadow: 0 0 18px rgba(139, 92, 246, 0.08);
+    }
+
+    .web-search-btn.active span:first-child {
+      filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.8));
+    }
+
+    @media (max-width: 500px) {
+      .web-search-btn span:last-child { display: none; }
+      .web-search-btn { width: 35px; padding: 0; }
+    }
+
     .composer-bottom {
       display: flex;
       align-items: center;
@@ -1269,6 +1306,10 @@
 <button aria-label="Voice input" class="tool-btn voice-btn" id="voiceBtn" title="Voice input" type="button">
                 ◉
               </button>
+<button aria-label="Web Search" aria-pressed="false" class="web-search-btn" id="webSearchBtn" title="Enable Web Search" type="button">
+                <span>🌐</span>
+                <span>Web</span>
+              </button>
 </div>
 <button class="send-btn" id="sendBtn" title="Send">
               ↑
@@ -1309,6 +1350,8 @@
             const OLD_STORAGE_KEY = "faynex_current_conversation_v1";
             const MEMORY_KEY = "faynex_memory_v1";
             const MEMORY_LIMIT = 100;
+            let webSearchEnabled = false;
+            const webSearchBtn = document.getElementById("webSearchBtn");
 
             /* =========================
                FAYNEX ANONYMOUS USER ID
@@ -2822,6 +2865,20 @@
               setGeneratingState(false);
             }
 
+            function buildWebSourcesMarkdown(sources) {
+              if (!webSearchEnabled || !Array.isArray(sources) || !sources.length) {
+                return "";
+              }
+
+              const lines = ["", "", "---", "", "### 🌐 Sources", ""];
+              sources.slice(0, 8).forEach(source => {
+                const title = String(source.title || "Web source").replace(/[\[\]]/g, "");
+                const url = String(source.url || "");
+                if (url) lines.push(`- [${title}](${url})`);
+              });
+              return lines.length > 6 ? lines.join("\n") : "";
+            }
+
             async function streamGeminiResponse(text, aiMessage, attachment = null) {
               abortController = new AbortController();
 
@@ -2836,7 +2893,8 @@
               const requestBody = {
                 userId: FAYNEX_USER_ID,
                 message: text,
-                history: historyForApi
+                history: historyForApi,
+                webSearch: webSearchEnabled
               };
 
               if (attachment?.kind === "image" || attachment?.kind === "pdf") {
@@ -2897,6 +2955,7 @@
               let buffer = "";
               let fullText = "";
               let lastRender = 0;
+              let groundingSources = [];
 
               const processEvent = (eventText) => {
                 const lines = eventText.split(/\r?\n/);
@@ -2914,6 +2973,20 @@
                   payload = JSON.parse(dataText);
                 } catch {
                   return;
+                }
+
+                const grounding = payload?.candidates?.[0]?.groundingMetadata;
+                if (grounding?.groundingChunks && Array.isArray(grounding.groundingChunks)) {
+                  for (const chunk of grounding.groundingChunks) {
+                    const web = chunk?.web;
+                    if (!web?.uri) continue;
+                    const title = typeof web.title === "string" && web.title.trim()
+                      ? web.title.trim()
+                      : "Web source";
+                    if (!groundingSources.some(source => source.url === web.uri)) {
+                      groundingSources.push({ title, url: web.uri });
+                    }
+                  }
                 }
 
                 const parts = payload?.candidates?.[0]?.content?.parts || [];
@@ -2956,9 +3029,12 @@
                 throw new Error("FAYNEX received an empty response from Gemini.");
               }
 
-              updateAIMessage(aiMessage, fullText);
+              const sourcesMarkdown = buildWebSourcesMarkdown(groundingSources);
+              const finalText = fullText + sourcesMarkdown;
 
-              return fullText;
+              updateAIMessage(aiMessage, finalText);
+
+              return finalText;
             }
 
             async function sendMessage(customText = null) {
@@ -3152,6 +3228,25 @@
               sendMessage(lastUserMessage);
             }
 
+            function setWebSearchEnabled(enabled) {
+              webSearchEnabled = Boolean(enabled);
+              if (!webSearchBtn) return;
+              webSearchBtn.classList.toggle("active", webSearchEnabled);
+              webSearchBtn.setAttribute("aria-pressed", String(webSearchEnabled));
+              webSearchBtn.title = webSearchEnabled
+                ? "Web Search enabled"
+                : "Enable Web Search";
+            }
+
+            webSearchBtn?.addEventListener("click", () => {
+              if (isGenerating) {
+                showToast("Please wait until the current response finishes.");
+                return;
+              }
+              setWebSearchEnabled(!webSearchEnabled);
+              showToast(webSearchEnabled ? "Web Search enabled" : "Web Search disabled");
+            });
+
             attachBtn?.addEventListener("click", () => {
               if (isGenerating) {
                 showToast("Please wait until the current response finishes.");
@@ -3310,6 +3405,7 @@
               }
             }
 
+            setWebSearchEnabled(false);
             setupVoiceInput();
             loadMemories();
             loadConversations();
