@@ -113,12 +113,11 @@
     }
 
     .welcome-logo-image {
-      width: 112px;
-      height: 112px;
+      width: 150px;
+      height: 150px;
       object-fit: contain;
       display: block;
-      filter: drop-shadow(0 0 24px rgba(124, 58, 237, 0.55));
-      transform: scale(1.02);
+      filter: drop-shadow(0 0 28px rgba(124, 58, 237, 0.48));
     }
 
     .avatar-logo-image {
@@ -542,17 +541,27 @@
 
     .welcome-orb {
       overflow: visible;
-      width: 122px;
-      height: 122px;
-      border-radius: 50%;
-      background: transparent;
+      width: 76px;
+      height: 76px;
+      border-radius: 24px;
+      background:
+        radial-gradient(
+          circle at 30% 25%,
+          #c4b5fd,
+          transparent 20%
+        ),
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #4f46e5
+        );
       display: grid;
       place-items: center;
       font-size: 27px;
       font-weight: 850;
-      box-shadow: 0 0 50px rgba(99, 102, 241, 0.16);
+      box-shadow:
+        0 0 55px rgba(99, 102, 241, 0.3);
       animation: float 4s ease-in-out infinite;
-      margin-bottom: 2px;
     }
 
     @keyframes float {
@@ -566,7 +575,7 @@
     }
 
     .welcome h1 {
-      margin-top: 12px;
+      margin-top: 26px;
       font-size: clamp(30px, 5vw, 48px);
       line-height: 1.05;
       letter-spacing: -1.8px;
@@ -784,6 +793,17 @@
       filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.8));
     }
 
+
+    .image-gen-btn { height:35px; padding:0 11px; border-radius:9px; border:1px solid transparent; background:transparent; color:#7e8594; display:inline-flex; align-items:center; justify-content:center; gap:6px; font-size:11px; cursor:pointer; transition:.2s ease; }
+    .image-gen-btn:hover { color:white; background:rgba(255,255,255,.06); }
+    .image-gen-btn.active { color:#ddd6fe; background:rgba(139,92,246,.13); border-color:rgba(139,92,246,.30); box-shadow:0 0 18px rgba(139,92,246,.10); }
+    .generated-image-wrap { margin-top:12px; width:min(720px,100%); border:1px solid rgba(139,92,246,.22); border-radius:16px; overflow:hidden; background:rgba(7,9,16,.72); box-shadow:0 18px 60px rgba(0,0,0,.30); }
+    .generated-image { display:block; width:100%; height:auto; max-height:720px; object-fit:contain; background:#080a11; }
+    .generated-image-toolbar { display:flex; flex-wrap:wrap; gap:7px; padding:9px; border-top:1px solid rgba(255,255,255,.07); }
+    .generated-image-action { padding:7px 10px; border-radius:8px; background:rgba(255,255,255,.05); color:#aeb4c1; font-size:10px; border:1px solid rgba(255,255,255,.06); }
+    .generated-image-action:hover { color:white; background:rgba(139,92,246,.10); border-color:rgba(139,92,246,.22); }
+    @media (max-width:500px) { .image-gen-btn span:last-child {display:none;} .image-gen-btn {width:35px; padding:0;} }
+
     @media (max-width: 500px) {
       .web-search-btn span:last-child { display: none; }
       .web-search-btn { width: 35px; padding: 0; }
@@ -972,13 +992,10 @@
       }
 
       .welcome-orb {
-        width: 92px;
-        height: 92px;
-      }
-
-      .welcome-logo-image {
-        width: 86px;
-        height: 86px;
+      overflow: visible;
+        width: 65px;
+        height: 65px;
+        border-radius: 20px;
       }
 
       .welcome p {
@@ -1327,6 +1344,10 @@
                 <span>🌐</span>
                 <span>Web</span>
               </button>
+<button aria-label="Image generation" aria-pressed="false" class="image-gen-btn" id="imageGenBtn" title="Generate an image" type="button">
+                <span>✦</span>
+                <span>Image</span>
+              </button>
 </div>
 <button class="send-btn" id="sendBtn" title="Send">
               ↑
@@ -1362,6 +1383,7 @@
       try {
 
             const API_URL = "https://faynex-ai-api.mf16348011.workers.dev";
+            const IMAGE_API_URL = "https://faynex-image-api.mf16348011.workers.dev";
             const CHATS_KEY = "faynex_chats_v2";
             const ACTIVE_CHAT_KEY = "faynex_active_chat_v2";
             const OLD_STORAGE_KEY = "faynex_current_conversation_v1";
@@ -1369,6 +1391,8 @@
             const MEMORY_LIMIT = 100;
             let webSearchEnabled = false;
             const webSearchBtn = document.getElementById("webSearchBtn");
+            const imageGenBtn = document.getElementById("imageGenBtn");
+            let imageGenerationEnabled = false;
 
             /* =========================
                FAYNEX ANONYMOUS USER ID
@@ -3088,6 +3112,62 @@
               return finalText;
             }
 
+            function setImageGenerationEnabled(enabled) {
+              imageGenerationEnabled = Boolean(enabled);
+              if (!imageGenBtn) return;
+              imageGenBtn.classList.toggle("active", imageGenerationEnabled);
+              imageGenBtn.setAttribute("aria-pressed", String(imageGenerationEnabled));
+              imageGenBtn.title = imageGenerationEnabled ? "Image generation enabled" : "Generate an image";
+            }
+
+            function addGeneratedImageMessage(prompt, dataUrl) {
+              const message = document.createElement("div");
+              message.className = "message";
+              const avatar = document.createElement("div");
+              avatar.className = "avatar ai";
+              const logo = document.createElement("img");
+              logo.className = "avatar-logo-image"; logo.src = "faynex-logo.png"; logo.alt = "FAYNEX"; avatar.appendChild(logo);
+              const content = document.createElement("div"); content.className = "message-content";
+              const label = document.createElement("div"); label.className = "message-label"; label.textContent = "FAYNEX";
+              const text = document.createElement("div"); text.className = "message-text markdown"; text.innerHTML = renderMarkdown("Generated image from your prompt.");
+              const wrap = document.createElement("div"); wrap.className = "generated-image-wrap";
+              const img = document.createElement("img"); img.className = "generated-image"; img.src = dataUrl; img.alt = `Generated image: ${prompt}`; img.loading = "lazy";
+              const toolbar = document.createElement("div"); toolbar.className = "generated-image-toolbar";
+              const download = document.createElement("button"); download.className = "generated-image-action"; download.type = "button"; download.textContent = "Download";
+              download.addEventListener("click", () => { const a=document.createElement("a"); a.href=dataUrl; a.download=`faynex-image-${Date.now()}.png`; document.body.appendChild(a); a.click(); a.remove(); });
+              const copy = document.createElement("button"); copy.className="generated-image-action"; copy.type="button"; copy.textContent="Copy prompt";
+              copy.addEventListener("click", async()=>{try{await navigator.clipboard.writeText(prompt); copy.textContent="Copied"; setTimeout(()=>copy.textContent="Copy prompt",1200);}catch{}});
+              const again = document.createElement("button"); again.className="generated-image-action"; again.type="button"; again.textContent="Use prompt again";
+              again.addEventListener("click",()=>{input.value=prompt; input.dispatchEvent(new Event("input")); setImageGenerationEnabled(true); input.focus();});
+              toolbar.append(download,copy,again); wrap.append(img,toolbar); content.append(label,text,wrap); message.append(avatar,content); messages.appendChild(message);
+              chatArea.scrollTo({top:chatArea.scrollHeight,behavior:"smooth"});
+            }
+
+            async function generateFaynexImage(prompt, referenceAttachment = null) {
+              abortController = new AbortController();
+              const body = { prompt, aspectRatio:"1:1", imageSize:"1K" };
+              if (referenceAttachment?.kind === "image") body.referenceImage = { name:referenceAttachment.name, mimeType:referenceAttachment.mimeType, data:referenceAttachment.data };
+              const response = await fetch(IMAGE_API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body),signal:abortController.signal});
+              let data=null; try{data=await response.json();}catch{}
+              if(!response.ok) throw new Error(data?.details||data?.error||`Image API request failed with status ${response.status}.`);
+              if(!data?.image?.data) throw new Error("FAYNEX image engine returned no image data.");
+              const mime=data.image.mimeType||"image/png"; return {dataUrl:`data:${mime};base64,${data.image.data}`};
+            }
+
+            async function sendImageMessage(prompt, attachment = null) {
+              if(!prompt) return;
+              welcome.style.display="none"; input.value=""; input.style.height="auto"; if(attachment) clearAttachment();
+              const chat=getActiveConversation(); if(!chat) return;
+              chat.messages.push({role:"user",content:prompt,attachment:getStoredAttachmentMeta(attachment)});
+              if(chat.title==="New conversation"||!chat.title) chat.title=titleFromMessage(prompt); chat.updatedAt=Date.now();
+              addMessage("user",prompt,{markdown:false});
+              if(attachment){const metaChip=renderMessageAttachment(getStoredAttachmentMeta(attachment)); if(metaChip) messages.lastElementChild?.querySelector(".message-content")?.appendChild(metaChip);}
+              const loading=addMessage("ai","",{typing:true,actions:false}); saveChats(); renderRecentChats(); setGeneratingState(true);
+              try{const result=await generateFaynexImage(prompt,attachment); loading.remove(); addGeneratedImageMessage(prompt,result.dataUrl); chat.messages.push({role:"assistant",content:`Generated an image from: ${prompt}`}); chat.updatedAt=Date.now(); saveChats(); renderRecentChats();}
+              catch(error){if(error?.name!=="AbortError"){const box=loading.querySelector(".message-content"); if(box){const e=document.createElement("div"); e.className="message-text"; e.textContent=`Sorry, image generation failed.\n\nError: ${error?.message||"Unknown error."}`; box.appendChild(e);}}}
+              finally{abortController=null; setGeneratingState(false); input.focus();}
+            }
+
             async function sendMessage(customText = null) {
               if (isGenerating) {
                 abortGeneration();
@@ -3109,6 +3189,12 @@
               const apiText = attachment?.kind === "text"
                 ? `${basePrompt}${getAttachmentPromptText(attachment)}`
                 : basePrompt;
+
+              if (imageGenerationEnabled) {
+                await sendImageMessage(basePrompt, attachment?.kind === "image" ? attachment : null);
+                setImageGenerationEnabled(false);
+                return;
+              }
 
               welcome.style.display = "none";
               input.value = "";
@@ -3296,6 +3382,12 @@
               }
               setWebSearchEnabled(!webSearchEnabled);
               showToast(webSearchEnabled ? "Web Search enabled" : "Web Search disabled");
+            });
+
+            imageGenBtn?.addEventListener("click", () => {
+              if (isGenerating) { showToast("Please wait until the current response finishes."); return; }
+              setImageGenerationEnabled(!imageGenerationEnabled);
+              showToast(imageGenerationEnabled ? "Image generation enabled — type a prompt and press send." : "Image generation disabled.");
             });
 
             attachBtn?.addEventListener("click", () => {
