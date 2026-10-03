@@ -1362,10 +1362,10 @@
 </div>
 <div class="memory-overlay" id="memoryOverlay">
 <div class="memory-panel">
-<div class="memory-head"><div class="memory-title-wrap"><h2>🧠 FAYNEX Memory</h2><p>Persistent memory is securely handled by FAYNEX through Cloudflare KV for this browser.</p></div><button class="memory-close" id="closeMemoryBtn" type="button">×</button></div>
+<div class="memory-head"><div class="memory-title-wrap"><h2>🧠 FAYNEX Memory</h2><p>Persistent memory is securely handled by FAYNEX through Supabase.</p></div><button class="memory-close" id="closeMemoryBtn" type="button">×</button></div>
 <div class="memory-toolbar"><span class="memory-count" id="memoryCount">0 memories</span><div style="display:flex;gap:8px"><button class="clear-memory-btn" id="refreshMemoryBtn" type="button">Refresh</button><button class="clear-memory-btn" id="clearMemoryBtn" type="button">Clear all</button></div></div>
 <div class="memory-list" id="memoryList"></div>
-<div class="memory-footer">FAYNEX persistent memory is handled by the Cloudflare KV backend when you explicitly use a remember command. Do not store passwords, API keys, or other sensitive secrets. This list is loaded directly from your FAYNEX Cloudflare KV memory for this browser.</div>
+<div class="memory-footer">FAYNEX persistent memory is handled by the Supabase backend when you explicitly use a remember command. Do not store passwords, API keys, or other sensitive secrets.</div>
 </div></div>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 <div class="search-overlay" id="searchOverlay">
@@ -3143,29 +3143,173 @@
               chatArea.scrollTo({top:chatArea.scrollHeight,behavior:"smooth"});
             }
 
+            /* =========================
+               FAYNEX IMAGE GENERATION
+               Hardened so the Image Worker always receives
+               a real, trimmed prompt string.
+            ========================== */
+
             async function generateFaynexImage(prompt, referenceAttachment = null) {
+              const safePrompt = String(prompt ?? "").trim();
+
+              if (!safePrompt) {
+                throw new Error("Please enter an image prompt before generating.");
+              }
+
               abortController = new AbortController();
-              const body = { prompt, aspectRatio:"1:1", imageSize:"1K" };
-              if (referenceAttachment?.kind === "image") body.referenceImage = { name:referenceAttachment.name, mimeType:referenceAttachment.mimeType, data:referenceAttachment.data };
-              const response = await fetch(IMAGE_API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body),signal:abortController.signal});
-              let data=null; try{data=await response.json();}catch{}
-              if(!response.ok) throw new Error(data?.details||data?.error||`Image API request failed with status ${response.status}.`);
-              if(!data?.image?.data) throw new Error("FAYNEX image engine returned no image data.");
-              const mime=data.image.mimeType||"image/png"; return {dataUrl:`data:${mime};base64,${data.image.data}`};
+
+              const body = {
+                prompt: safePrompt,
+                aspectRatio: "1:1",
+                imageSize: "1K"
+              };
+
+              if (referenceAttachment?.kind === "image") {
+                body.referenceImage = {
+                  name: referenceAttachment.name,
+                  mimeType: referenceAttachment.mimeType,
+                  data: referenceAttachment.data
+                };
+              }
+
+              const response = await fetch(IMAGE_API_URL, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json"
+                },
+                body: JSON.stringify(body),
+                signal: abortController.signal
+              });
+
+              let data = null;
+
+              try {
+                data = await response.json();
+              } catch {
+                data = null;
+              }
+
+              if (!response.ok) {
+                throw new Error(
+                  data?.details ||
+                  data?.error ||
+                  `Image API request failed with status ${response.status}.`
+                );
+              }
+
+              if (!data?.image?.data) {
+                throw new Error(
+                  data?.text ||
+                  "FAYNEX image engine returned no image data."
+                );
+              }
+
+              const mime = data.image.mimeType || "image/png";
+
+              return {
+                dataUrl: `data:${mime};base64,${data.image.data}`
+              };
             }
 
             async function sendImageMessage(prompt, attachment = null) {
-              if(!prompt) return;
-              welcome.style.display="none"; input.value=""; input.style.height="auto"; if(attachment) clearAttachment();
-              const chat=getActiveConversation(); if(!chat) return;
-              chat.messages.push({role:"user",content:prompt,attachment:getStoredAttachmentMeta(attachment)});
-              if(chat.title==="New conversation"||!chat.title) chat.title=titleFromMessage(prompt); chat.updatedAt=Date.now();
-              addMessage("user",prompt,{markdown:false});
-              if(attachment){const metaChip=renderMessageAttachment(getStoredAttachmentMeta(attachment)); if(metaChip) messages.lastElementChild?.querySelector(".message-content")?.appendChild(metaChip);}
-              const loading=addMessage("ai","",{typing:true,actions:false}); saveChats(); renderRecentChats(); setGeneratingState(true);
-              try{const result=await generateFaynexImage(prompt,attachment); loading.remove(); addGeneratedImageMessage(prompt,result.dataUrl); chat.messages.push({role:"assistant",content:`Generated an image from: ${prompt}`}); chat.updatedAt=Date.now(); saveChats(); renderRecentChats();}
-              catch(error){if(error?.name!=="AbortError"){const box=loading.querySelector(".message-content"); if(box){const e=document.createElement("div"); e.className="message-text"; e.textContent=`Sorry, image generation failed.\n\nError: ${error?.message||"Unknown error."}`; box.appendChild(e);}}}
-              finally{abortController=null; setGeneratingState(false); input.focus();}
+              const safePrompt = String(prompt ?? "").trim();
+
+              if (!safePrompt) {
+                showToast("Please enter an image prompt first.");
+                return;
+              }
+
+              welcome.style.display = "none";
+              input.value = "";
+              input.style.height = "auto";
+
+              if (attachment) {
+                clearAttachment();
+              }
+
+              const chat = getActiveConversation();
+
+              if (!chat) {
+                showToast("Please create a conversation first.");
+                return;
+              }
+
+              chat.messages.push({
+                role: "user",
+                content: safePrompt,
+                attachment: getStoredAttachmentMeta(attachment)
+              });
+
+              if (chat.title === "New conversation" || !chat.title) {
+                chat.title = titleFromMessage(safePrompt);
+              }
+
+              chat.updatedAt = Date.now();
+
+              const userMessage = addMessage("user", safePrompt, {
+                markdown: false
+              });
+
+              if (attachment) {
+                const metaChip = renderMessageAttachment(
+                  getStoredAttachmentMeta(attachment)
+                );
+
+                if (metaChip) {
+                  userMessage.parentElement?.appendChild(metaChip);
+                }
+              }
+
+              const loading = addMessage("ai", "", {
+                typing: true,
+                actions: false
+              });
+
+              saveChats();
+              renderRecentChats();
+              setGeneratingState(true);
+
+              try {
+                const result = await generateFaynexImage(
+                  safePrompt,
+                  attachment
+                );
+
+                loading.remove();
+
+                addGeneratedImageMessage(
+                  safePrompt,
+                  result.dataUrl
+                );
+
+                chat.messages.push({
+                  role: "assistant",
+                  content: `Generated an image from: ${safePrompt}`
+                });
+
+                chat.updatedAt = Date.now();
+                saveChats();
+                renderRecentChats();
+              } catch (error) {
+                if (error?.name !== "AbortError") {
+                  const box = loading.querySelector(".message-content");
+
+                  if (box) {
+                    const e = document.createElement("div");
+                    e.className = "message-text";
+                    e.textContent =
+                      `Sorry, image generation failed.\n\nError: ${
+                        error?.message || "Unknown error."
+                      }`;
+                    box.appendChild(e);
+                  }
+                }
+              } finally {
+                abortController = null;
+                setGeneratingState(false);
+                input.focus();
+              }
             }
 
             async function sendMessage(customText = null) {
@@ -3191,8 +3335,20 @@
                 : basePrompt;
 
               if (imageGenerationEnabled) {
-                await sendImageMessage(basePrompt, attachment?.kind === "image" ? attachment : null);
-                setImageGenerationEnabled(false);
+                // Capture the prompt before any UI state is cleared.
+                const imagePrompt = String(basePrompt ?? "").trim();
+                const imageAttachment =
+                  attachment?.kind === "image" ? attachment : null;
+
+                try {
+                  await sendImageMessage(
+                    imagePrompt,
+                    imageAttachment
+                  );
+                } finally {
+                  setImageGenerationEnabled(false);
+                }
+
                 return;
               }
 
