@@ -3161,7 +3161,7 @@
               const body = {
                 prompt: safePrompt,
                 aspectRatio: "1:1",
-                imageSize: "1K"
+                imageSize: "512"
               };
 
               if (referenceAttachment?.kind === "image") {
@@ -3172,15 +3172,27 @@
                 };
               }
 
-              const response = await fetch(IMAGE_API_URL, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Accept": "application/json"
-                },
-                body: JSON.stringify(body),
-                signal: abortController.signal
-              });
+              const timeoutId = setTimeout(() => {
+                if (abortController) {
+                  abortController.abort();
+                }
+              }, 90000);
+
+              let response;
+
+              try {
+                response = await fetch(IMAGE_API_URL, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                  },
+                  body: JSON.stringify(body),
+                  signal: abortController.signal
+                });
+              } finally {
+                clearTimeout(timeoutId);
+              }
 
               let data = null;
 
