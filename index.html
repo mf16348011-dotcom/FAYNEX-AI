@@ -3369,12 +3369,16 @@
                 ? `${basePrompt}${getAttachmentPromptText(attachment)}`
                 : basePrompt;
 
-              if (imageGenerationEnabled) {
+              // Memory commands are always normal AI chat commands. They must NEVER
+              // be routed to the image worker, even if the image button was accidentally
+              // left active by an older/cached frontend.
+              const isMemoryCommand = /\b(remember|remamber|memorize|forget|save|my name is|i am)\b/i.test(basePrompt);
+
+              if (imageGenerationEnabled && !isMemoryCommand) {
                 const imagePrompt = String(basePrompt ?? "").trim();
 
-                // If the user typed an ordinary chat question while image mode is
-                // accidentally active, silently switch back to normal chat.
-                // This prevents errors such as: "Image prompt is required."
+                // Image generation is allowed only when the user explicitly has an
+                // image-style request or attached an image. Everything else is normal chat.
                 if (!looksLikeImageRequest(imagePrompt) && attachment?.kind !== "image") {
                   resetImageMode();
                 } else {
