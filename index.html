@@ -2,6 +2,7 @@
 
 <html lang="en">
 <head>
+    <meta name="faynex-routing-version" content="v4-image-routing-hard-guard">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FAYNEX AI</title>
@@ -3369,33 +3370,40 @@
                 ? `${basePrompt}${getAttachmentPromptText(attachment)}`
                 : basePrompt;
 
-              // Memory commands are always normal AI chat commands. They must NEVER
-              // be routed to the image worker, even if the image button was accidentally
-              // left active by an older/cached frontend.
-              const isMemoryCommand = /\b(remember|remamber|memorize|forget|save|my name is|i am)\b/i.test(basePrompt);
+              // HARD IMAGE ROUTING RULE:
+              // Normal chat ALWAYS goes to the Main AI Worker.
+              // The Image Worker is allowed only when:
+              //   1) the user explicitly enabled Image Generation, AND
+              //   2) the actual prompt clearly looks like an image request.
+              //
+              // An attached image by itself is NOT enough. Attachments may be
+              // intended for analysis, OCR, description, Q&A, etc.
+              const wantsImage =
+                imageGenerationEnabled === true &&
+                looksLikeImageRequest(basePrompt);
 
-              if (imageGenerationEnabled && !isMemoryCommand) {
+              if (wantsImage) {
                 const imagePrompt = String(basePrompt ?? "").trim();
+                const imageAttachment =
+                  attachment?.kind === "image" ? attachment : null;
 
-                // Image generation is allowed only when the user explicitly has an
-                // image-style request or attached an image. Everything else is normal chat.
-                if (!looksLikeImageRequest(imagePrompt) && attachment?.kind !== "image") {
+                try {
+                  await sendImageMessage(
+                    imagePrompt,
+                    imageAttachment
+                  );
+                } finally {
+                  // Image mode is one-shot. Never leave it active for the next message.
                   resetImageMode();
-                } else {
-                  const imageAttachment =
-                    attachment?.kind === "image" ? attachment : null;
-
-                  try {
-                    await sendImageMessage(
-                      imagePrompt,
-                      imageAttachment
-                    );
-                  } finally {
-                    resetImageMode();
-                  }
-
-                  return;
                 }
+
+                return;
+              }
+
+              // If Image mode was armed but the user sent ordinary chat,
+              // immediately disarm it and continue through the normal AI path.
+              if (imageGenerationEnabled === true) {
+                resetImageMode();
               }
 
               welcome.style.display = "none";
