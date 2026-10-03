@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-    <meta name="faynex-routing-version" content="v4-image-routing-hard-guard">
+    <meta name="faynex-routing-version" content="v5-image-disabled-normal-chat">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FAYNEX AI</title>
@@ -1345,7 +1345,7 @@
                 <span>🌐</span>
                 <span>Web</span>
               </button>
-<button aria-label="Image generation" aria-pressed="false" class="image-gen-btn" id="imageGenBtn" title="Generate an image" type="button">
+<button aria-label="Image generation" aria-pressed="false" class="image-gen-btn" id="imageGenBtn" title="Generate an image" type="button" disabled aria-disabled="true" title="Image generation temporarily disabled">
                 <span>✦</span>
                 <span>Image</span>
               </button>
@@ -3370,41 +3370,10 @@
                 ? `${basePrompt}${getAttachmentPromptText(attachment)}`
                 : basePrompt;
 
-              // HARD IMAGE ROUTING RULE:
-              // Normal chat ALWAYS goes to the Main AI Worker.
-              // The Image Worker is allowed only when:
-              //   1) the user explicitly enabled Image Generation, AND
-              //   2) the actual prompt clearly looks like an image request.
-              //
-              // An attached image by itself is NOT enough. Attachments may be
-              // intended for analysis, OCR, description, Q&A, etc.
-              const wantsImage =
-                imageGenerationEnabled === true &&
-                looksLikeImageRequest(basePrompt);
-
-              if (wantsImage) {
-                const imagePrompt = String(basePrompt ?? "").trim();
-                const imageAttachment =
-                  attachment?.kind === "image" ? attachment : null;
-
-                try {
-                  await sendImageMessage(
-                    imagePrompt,
-                    imageAttachment
-                  );
-                } finally {
-                  // Image mode is one-shot. Never leave it active for the next message.
-                  resetImageMode();
-                }
-
-                return;
-              }
-
-              // If Image mode was armed but the user sent ordinary chat,
-              // immediately disarm it and continue through the normal AI path.
-              if (imageGenerationEnabled === true) {
-                resetImageMode();
-              }
+              // Image generation is temporarily disabled.
+              // All messages, including image-like prompts and image attachments,
+              // stay on the normal AI path for now.
+              resetImageMode();
 
               welcome.style.display = "none";
               input.value = "";
@@ -3594,15 +3563,16 @@
               showToast(webSearchEnabled ? "Web Search enabled" : "Web Search disabled");
             });
 
+            // Image generation is temporarily disabled.
+            // Keep the existing image backend untouched; normal chat must never route to it.
+            setImageGenerationEnabled(false);
+            if (imageGenBtn) {
+              imageGenBtn.disabled = true;
+              imageGenBtn.setAttribute("aria-disabled", "true");
+              imageGenBtn.title = "Image generation temporarily disabled";
+            }
             imageGenBtn?.addEventListener("click", () => {
-              if (isGenerating) { showToast("Please wait until the current response finishes."); return; }
-              if (imageGenerationEnabled) {
-                resetImageMode();
-                showToast("Image generation disabled.");
-              } else {
-                setImageGenerationEnabled(true);
-                showToast("Image generation enabled — type an image prompt and press send.");
-              }
+              showToast("Image generation is temporarily disabled.");
             });
 
             attachBtn?.addEventListener("click", () => {
