@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-    <meta name="faynex-routing-version" content="v4-image-routing-hard-guard">
+    <meta name="faynex-routing-version" content="v6-chat-file-only-20261005">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FAYNEX AI</title>
@@ -541,28 +541,15 @@
     }
 
     .welcome-orb {
-      overflow: visible;
-      width: 76px;
-      height: 76px;
-      border-radius: 24px;
-      background:
-        radial-gradient(
-          circle at 30% 25%,
-          #c4b5fd,
-          transparent 20%
-        ),
-        linear-gradient(
-          135deg,
-          #7c3aed,
-          #4f46e5
-        );
+      width: 150px;
+      height: 150px;
+      border-radius: 0;
+      background: transparent;
       display: grid;
       place-items: center;
-      font-size: 27px;
-      font-weight: 850;
-      box-shadow:
-        0 0 55px rgba(99, 102, 241, 0.3);
+      box-shadow: none;
       animation: float 4s ease-in-out infinite;
+      flex: 0 0 150px;
     }
 
     @keyframes float {
@@ -576,7 +563,7 @@
     }
 
     .welcome h1 {
-      margin-top: 26px;
+      margin-top: 16px;
       font-size: clamp(30px, 5vw, 48px);
       line-height: 1.05;
       letter-spacing: -1.8px;
@@ -795,16 +782,6 @@
     }
 
 
-    .image-gen-btn { height:35px; padding:0 11px; border-radius:9px; border:1px solid transparent; background:transparent; color:#7e8594; display:inline-flex; align-items:center; justify-content:center; gap:6px; font-size:11px; cursor:pointer; transition:.2s ease; }
-    .image-gen-btn:hover { color:white; background:rgba(255,255,255,.06); }
-    .image-gen-btn.active { color:#ddd6fe; background:rgba(139,92,246,.13); border-color:rgba(139,92,246,.30); box-shadow:0 0 18px rgba(139,92,246,.10); }
-    .generated-image-wrap { margin-top:12px; width:min(720px,100%); border:1px solid rgba(139,92,246,.22); border-radius:16px; overflow:hidden; background:rgba(7,9,16,.72); box-shadow:0 18px 60px rgba(0,0,0,.30); }
-    .generated-image { display:block; width:100%; height:auto; max-height:720px; object-fit:contain; background:#080a11; }
-    .generated-image-toolbar { display:flex; flex-wrap:wrap; gap:7px; padding:9px; border-top:1px solid rgba(255,255,255,.07); }
-    .generated-image-action { padding:7px 10px; border-radius:8px; background:rgba(255,255,255,.05); color:#aeb4c1; font-size:10px; border:1px solid rgba(255,255,255,.06); }
-    .generated-image-action:hover { color:white; background:rgba(139,92,246,.10); border-color:rgba(139,92,246,.22); }
-    @media (max-width:500px) { .image-gen-btn span:last-child {display:none;} .image-gen-btn {width:35px; padding:0;} }
-
     @media (max-width: 500px) {
       .web-search-btn span:last-child { display: none; }
       .web-search-btn { width: 35px; padding: 0; }
@@ -993,10 +970,15 @@
       }
 
       .welcome-orb {
-      overflow: visible;
-        width: 65px;
-        height: 65px;
-        border-radius: 20px;
+        width: 110px;
+        height: 110px;
+        border-radius: 0;
+        flex-basis: 110px;
+      }
+
+      .welcome-logo-image {
+        width: 110px;
+        height: 110px;
       }
 
       .welcome p {
@@ -1206,11 +1188,167 @@
       color: #fca5a5 !important;
     }
 
+    /* =========================
+       GOOGLE AUTH
+    ========================== */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(124, 58, 237, 0.18), transparent 34%),
+        rgba(3, 4, 10, 0.96);
+      backdrop-filter: blur(18px);
+    }
+
+    .auth-overlay.hidden {
+      display: none;
+    }
+
+    .auth-card {
+      width: min(430px, 100%);
+      padding: 34px 30px 30px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      background: rgba(12, 14, 23, 0.94);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.55), 0 0 70px rgba(124,58,237,0.12);
+      text-align: center;
+    }
+
+    .auth-logo {
+      width: 112px;
+      height: 112px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 10px;
+      filter: drop-shadow(0 0 26px rgba(124,58,237,0.55));
+    }
+
+    .auth-title {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .auth-subtitle {
+      margin: 8px auto 24px;
+      max-width: 330px;
+      color: #8e95a5;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .google-login-btn {
+      width: 100%;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      border-radius: 12px;
+      background: #fff;
+      color: #171717;
+      font-weight: 700;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .google-login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+
+    .google-login-btn:disabled {
+      opacity: .6;
+      cursor: wait;
+      transform: none;
+    }
+
+    .google-icon {
+      width: 19px;
+      height: 19px;
+      flex: 0 0 auto;
+    }
+
+    .auth-error {
+      min-height: 18px;
+      margin-top: 14px;
+      color: #fca5a5;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .auth-note {
+      margin-top: 18px;
+      color: #555d6d;
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    .account-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 220px;
+      padding: 6px 9px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255,255,255,.035);
+      color: #bfc5d1;
+      font-size: 10px;
+    }
+
+    .account-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: rgba(139,92,246,.18);
+      flex: 0 0 auto;
+    }
+
+    .account-email {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .logout-btn {
+      color: #8e95a5 !important;
+    }
+
+    .logout-btn:hover {
+      color: #fff !important;
+    }
+
   </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
 </head>
 <body>
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card">
+    <img class="auth-logo" src="faynex-logo.png" alt="FAYNEX logo">
+    <div class="auth-title">Welcome to FAYNEX</div>
+    <div class="auth-subtitle">Sign in with your Google account to use FAYNEX AI and keep your personal memory securely linked to your account.</div>
+    <button class="google-login-btn" id="googleLoginBtn" type="button">
+      <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#4285F4" d="M21.35 12.27c0-.79-.07-1.55-.22-2.27H12v4.3h5.22a4.46 4.46 0 0 1-1.94 2.93v2.43h3.14c1.84-1.69 2.93-4.18 2.93-7.39Z"/>
+        <path fill="#34A853" d="M12 21.75c2.64 0 4.86-.87 6.48-2.36l-3.14-2.43c-.87.58-1.98.92-3.34.92-2.56 0-4.73-1.73-5.51-4.05H3.25v2.51A9.79 9.79 0 0 0 12 21.75Z"/>
+        <path fill="#FBBC05" d="M6.49 13.83A5.88 5.88 0 0 1 6.18 12c0-.64.11-1.26.31-1.83V7.66H3.25A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.05 1 4.34l3.24-2.51Z"/>
+        <path fill="#EA4335" d="M12 6.12c1.44 0 2.74.5 3.76 1.49l2.82-2.82C16.85 3.21 14.64 2.25 12 2.25a9.79 9.79 0 0 0-8.75 5.41l3.24 2.51C7.27 7.85 9.44 6.12 12 6.12Z"/>
+      </svg>
+      <span>Continue with Google</span>
+    </button>
+    <div class="auth-error" id="authError"></div>
+    <div class="auth-note">Your Google password is never sent to FAYNEX. Authentication is handled by Google and Supabase.</div>
+  </div>
+</div>
+
 <div class="app">
 <!-- =========================
          SIDEBAR
@@ -1247,6 +1385,10 @@
 <div class="recent-list" id="recentList"></div>
 </div>
 <div class="sidebar-bottom">
+<div class="account-chip" id="accountChip" style="display:none;margin-bottom:10px;">
+  <img class="account-avatar" id="accountAvatar" alt="Google account">
+  <span class="account-email" id="accountEmail"></span>
+</div>
 <div class="status-card">
 <div class="status-line">
 <span class="status-dot"></span>
@@ -1256,6 +1398,10 @@
 <button class="nav-item" id="sidebarSettingsBtn" style="margin-top: 8px;">
 <span class="nav-icon">⚙</span>
 <span>Settings</span>
+</button>
+<button class="nav-item logout-btn" id="logoutBtn" style="margin-top: 3px;">
+<span class="nav-icon">↪</span>
+<span>Sign out</span>
 </button>
 </div>
 </aside>
@@ -1352,8 +1498,7 @@
 </div>
 </div>
 <div class="disclaimer">
-          FAYNEX AI can make mistakes. Verify important information.<br>
-          Created &amp; developed by <a href="https://www.behance.net/mdfahim2528" target="_blank" rel="noopener noreferrer">MD Fahim</a>.
+          FAYNEX AI can make mistakes. Verify important information.<br>Created &amp; developed by <a href="https://www.behance.net/mdfahim2528" target="_blank" rel="noopener noreferrer">MD Fahim</a>.
         </div>
 </div>
 </main>
@@ -1377,7 +1522,7 @@
 </div>
 </div>
 <script>
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", async () => {
       try {
 
             const API_URL = "https://faynex-ai-api.mf16348011.workers.dev";
@@ -1389,34 +1534,152 @@
             let webSearchEnabled = false;
             const webSearchBtn = document.getElementById("webSearchBtn");
             /* =========================
-               FAYNEX ANONYMOUS USER ID
-               This ID connects this browser to its
-               own Cloudflare KV memory record.
+               SUPABASE GOOGLE AUTH
             ========================== */
+            const SUPABASE_URL = "https://mbnktonspowrjoabftaq.supabase.co";
+            const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+            const SUPABASE_REDIRECT_URL = "https://mf16348011-dotcom.github.io/FAYNEX-AI/";
 
-            const FAYNEX_USER_ID_KEY = "faynex_anonymous_user_id_v1";
+            const authOverlay = document.getElementById("authOverlay");
+            const googleLoginBtn = document.getElementById("googleLoginBtn");
+            const authError = document.getElementById("authError");
+            const accountChip = document.getElementById("accountChip");
+            const accountAvatar = document.getElementById("accountAvatar");
+            const accountEmail = document.getElementById("accountEmail");
+            const logoutBtn = document.getElementById("logoutBtn");
 
-            function getFaynexUserId() {
-              let userId = localStorage.getItem(FAYNEX_USER_ID_KEY);
-
-              if (!userId) {
-                if (window.crypto && typeof crypto.randomUUID === "function") {
-                  userId = crypto.randomUUID().replace(/-/g, "");
-                } else {
-                  userId =
-                    "faynex_" +
-                    Date.now().toString(36) +
-                    "_" +
-                    Math.random().toString(36).slice(2, 14);
-                }
-
-                localStorage.setItem(FAYNEX_USER_ID_KEY, userId);
-              }
-
-              return userId;
+            if (!window.supabase?.createClient) {
+              throw new Error("Supabase Auth library failed to load.");
             }
 
-            const FAYNEX_USER_ID = getFaynexUserId();
+            if (!SUPABASE_PUBLISHABLE_KEY || SUPABASE_PUBLISHABLE_KEY.includes("PASTE_YOUR")) {
+              authError.textContent = "Supabase publishable key is not configured yet.";
+              googleLoginBtn.disabled = true;
+            }
+
+            const supabaseClient = window.supabase.createClient(
+              SUPABASE_URL,
+              SUPABASE_PUBLISHABLE_KEY,
+              {
+                auth: {
+                  persistSession: true,
+                  autoRefreshToken: true,
+                  detectSessionInUrl: true
+                }
+              }
+            );
+
+            let currentSession = null;
+            let FAYNEX_USER_ID = "";
+
+            function setAuthError(message = "") {
+              authError.textContent = String(message || "");
+            }
+
+            function updateAccountUI(user) {
+              if (!user) {
+                accountChip.style.display = "none";
+                accountEmail.textContent = "";
+                accountAvatar.removeAttribute("src");
+                return;
+              }
+
+              const metadata = user.user_metadata || {};
+              const email = user.email || metadata.email || "Google user";
+              const avatar = metadata.avatar_url || metadata.picture || "";
+
+              accountChip.style.display = "flex";
+              accountEmail.textContent = email;
+
+              if (avatar) {
+                accountAvatar.src = avatar;
+                accountAvatar.style.display = "block";
+              } else {
+                accountAvatar.style.display = "none";
+              }
+            }
+
+            async function applySession(session) {
+              currentSession = session || null;
+              const user = session?.user || null;
+
+              if (user?.id) {
+                FAYNEX_USER_ID = user.id;
+                updateAccountUI(user);
+                authOverlay.classList.add("hidden");
+                setAuthError("");
+              } else {
+                FAYNEX_USER_ID = "";
+                updateAccountUI(null);
+                authOverlay.classList.remove("hidden");
+              }
+            }
+
+            async function getFaynexAccessToken() {
+              const { data } = await supabaseClient.auth.getSession();
+              return data?.session?.access_token || currentSession?.access_token || "";
+            }
+
+            async function requireGoogleLogin() {
+              if (!SUPABASE_PUBLISHABLE_KEY || SUPABASE_PUBLISHABLE_KEY.includes("PASTE_YOUR")) {
+                setAuthError("Add the Supabase publishable key to index.html first.");
+                return;
+              }
+
+              googleLoginBtn.disabled = true;
+              setAuthError("Opening Google sign-in…");
+
+              const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                  redirectTo: SUPABASE_REDIRECT_URL
+                }
+              });
+
+              if (error) {
+                googleLoginBtn.disabled = false;
+                setAuthError(error.message || "Google sign-in failed.");
+              }
+            }
+
+            googleLoginBtn.addEventListener("click", requireGoogleLogin);
+
+            logoutBtn.addEventListener("click", async () => {
+              logoutBtn.disabled = true;
+              try {
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) throw error;
+                window.location.reload();
+              } catch (error) {
+                console.error("FAYNEX sign-out error:", error);
+                logoutBtn.disabled = false;
+                showToast("Could not sign out: " + (error?.message || "Unknown error"));
+              }
+            });
+
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+              if (event === "SIGNED_OUT") {
+                applySession(null);
+                return;
+              }
+
+              if (session?.user?.id) {
+                applySession(session);
+              }
+            });
+
+            const { data: authSessionData, error: authSessionError } =
+              await supabaseClient.auth.getSession();
+
+            if (authSessionError) {
+              throw authSessionError;
+            }
+
+            await applySession(authSessionData?.session || null);
+
+            if (!FAYNEX_USER_ID) {
+              return;
+            }
 
             window.addEventListener("error", event => {
               console.error("FAYNEX frontend error:", event.error || event.message);
@@ -1572,7 +1835,8 @@
                       response = await fetch(API_URL, {
                         method: "POST",
                         headers: {
-                          "Content-Type": "application/json"
+                          "Content-Type": "application/json",
+                          "Authorization": `Bearer ${await getFaynexAccessToken()}`
                         },
                         body: JSON.stringify({
                           action: "delete-memory-name",
@@ -1585,7 +1849,8 @@
                       response = await fetch(API_URL, {
                         method: "POST",
                         headers: {
-                          "Content-Type": "application/json"
+                          "Content-Type": "application/json",
+                          "Authorization": `Bearer ${await getFaynexAccessToken()}`
                         },
                         body: JSON.stringify({
                           action: "delete-memory-fact",
@@ -1635,7 +1900,10 @@
                   `${API_URL}?action=memory&userId=${encodeURIComponent(FAYNEX_USER_ID)}`,
                   {
                     method: "GET",
-                    cache: "no-store"
+                    cache: "no-store",
+                    headers: {
+                      "Authorization": `Bearer ${await getFaynexAccessToken()}`
+                    }
                   }
                 );
 
@@ -1686,7 +1954,8 @@
                 const response = await fetch(API_URL, {
                   method: "POST",
                   headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${await getFaynexAccessToken()}`
                   },
                   body: JSON.stringify({
                     action: "clear-memory",
@@ -2933,6 +3202,13 @@
                   content: item.content
                 }));
 
+              const { data: latestSessionData } = await supabaseClient.auth.getSession();
+              const accessToken = latestSessionData?.session?.access_token || currentSession?.access_token || "";
+
+              if (!FAYNEX_USER_ID || !accessToken) {
+                throw new Error("Please sign in with Google before using FAYNEX AI.");
+              }
+
               const requestBody = {
                 userId: FAYNEX_USER_ID,
                 message: text,
@@ -2951,7 +3227,8 @@
               const response = await fetch(API_URL, {
                 method: "POST",
                 headers: {
-                  "Content-Type": "application/json"
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${accessToken}`
                 },
                 body: JSON.stringify(requestBody),
                 signal: abortController.signal
